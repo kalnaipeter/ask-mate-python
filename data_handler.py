@@ -14,8 +14,5 @@ def read_data(file_name):
             story = dict(line)
             stories.append(story)
 
-
-
         return stories
-
 
