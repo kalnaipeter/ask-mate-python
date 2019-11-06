@@ -10,7 +10,7 @@ def read_data(file_name):
         for line in lines:
             for key in line.keys():
                 if key == "submission_time":
-                    line[key] = datetime.fromtimestamp(int(line[key])).strftime('%Y-%m-%d %H:%M:%S')
+                    line[key] = datetime.fromtimestamp(int(line[key])).strftime('%Y-%m-%d %H:%M')
             story = dict(line)
             stories.append(story)
 
