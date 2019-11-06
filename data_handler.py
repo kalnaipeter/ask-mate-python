@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+import time
 
 def read_data(file_name):
     stories = []
@@ -16,3 +17,22 @@ def read_data(file_name):
 
         return stories
 
+def write_data(file_name,story):
+    stories = read_data(file_name)
+    count = 0
+    with open(file_name,"w") as file:
+        writer = csv.DictWriter(file, fieldnames=['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+        writer.writeheader()
+
+        for item in stories:
+            if 'id' in item:
+                count += 1
+
+
+        for item in stories:
+            item["submission_time"] = str(int(time.mktime(datetime.strptime(item["submission_time"],'%Y-%m-%d %H:%M').timetuple())))
+            writer.writerow(item)
+
+        story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"],'%Y-%m-%d %H:%M').timetuple())))
+        story['id'] = str(count)
+        writer.writerow(story)
