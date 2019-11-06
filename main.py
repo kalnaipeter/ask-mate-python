@@ -16,8 +16,15 @@ def route_main():
     return render_template('list.html', stories=stories)
 
 
-@app.route('/question/<int:question_id>')
-def route_question(question_id=None):
+@app.route('/question/<int:question_id>', methods=["GET", "POST"])
+def route_question(question_id = None):
+    if request.method == "GET":
+        result = None
+        stories = data_handler.read_data('sample_data/answer.csv')
+        for item in stories:
+            for value in item.values():
+                if value == str(question_id):
+                    result = item
 
 
 
