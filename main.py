@@ -9,7 +9,7 @@ app = Flask(__name__)
 def start():
     return redirect('/list')
 
-
+@app.route('/list')
 @app.route('/list', methods=["GET", "POST"])
 def route_main():
     now = datetime.now()
@@ -32,7 +32,7 @@ def route_main():
         stories = data_handler.read_data('sample_data/question.csv')
         return render_template('list.html', stories=stories)
 
-
+@app.route('/question/<int:question_id>/new-answer')
 @app.route('/question/<int:question_id>', methods=["GET", "POST"])
 def route_question(question_id=None):
     if request.method == "GET":
@@ -48,6 +48,10 @@ def route_question(question_id=None):
 @app.route('/add-question')
 def route_add_question():
     return render_template("add-question.html")
+
+@app.route('/add_answer')
+def route_add_answer():
+    return render_template("add_answer.html")
 
 
 if __name__ == "__main__":
