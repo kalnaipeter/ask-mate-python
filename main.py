@@ -16,7 +16,7 @@ def route_main():
     dt_string = now.strftime("%Y-%m-%d %H:%M")
 
     if request.method == "POST":
-        story = {"id": "3",
+        story = {"id": request.form.get("question_id") if request.form.get("question_id") is not None else "",
                  "submission_time": dt_string,
                  "view_number": "0",
                  "vote_number": "0",
@@ -59,15 +59,21 @@ def route_question(question_id=None):
         data_handler.write_data('sample_data/answer.csv', story)
         stories = data_handler.read_data('sample_data/answer.csv')
         print(stories)
-        return render_template('answer.html', stories=stories,question_id=question_id)
+        return render_template('answer.html', stories=stories, question_id=question_id)
+
 
 @app.route('/question/<int:question_id>/new-answer')
 def route_add_new_answer(question_id=None):
-    return render_template("add-new-answer.html",question_id=question_id)
+    return render_template("add-new-answer.html", question_id=question_id)
 
+
+@app.route('/question/<int:question_id>/<question_title>/<question_message>/edit')
 @app.route('/add-question')
-def route_add_question():
-    return render_template("add-question.html")
+def route_add_question(question_id=None,question_title=None,question_message=None):
+    if question_id is not None:
+        return render_template("add-question.html", question_id=question_id,question_title=question_title,question_message=question_message)
+    else:
+        return render_template("add-question.html")
 
 
 if __name__ == "__main__":
