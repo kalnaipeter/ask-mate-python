@@ -43,10 +43,6 @@ def write_data(file_name, story):
             item["submission_time"] = str(int(time.mktime(datetime.strptime(item["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
             writer.writerow(item)
 
-        story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
-        story['id'] = str(count)
-        writer.writerow(story)
-
         if story["id"] == "":
             story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
             story['id'] = str(count)

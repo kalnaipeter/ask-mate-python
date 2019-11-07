@@ -77,25 +77,46 @@ def route_add_question(question_id=None,question_title=None,question_message=Non
 def route_add_answer():
     return render_template("add_answer.html")
 
-#@app.route("/upvoting/<int:story.id>")
-#def upvoting(story_id=None):
+@app.route("/upvoting/<int:question_id>")
+def upvoting(question_id=None):
+    story = {"id": "",
+             "submission_time": "",
+             "view_number": "",
+             "vote_number": "",
+             "title": "",
+             "message": "",
+             "image": ""}
 
+    stories = data_handler.read_data("sample_data/question.csv")
+    for item in stories:
+        if item["id"] == str(question_id):
+            for elements in item:
+                story = elements
+            story["vote_number"]=str(int(item["vote_number"])+1)
 
 @app.route("/downvoting/<int:question_id>")
 def downvoting(question_id=None):
     story = {"id": "",
-             "submission_time":  "",
-             "view_number":  request.form.get("view_number"),
+             "submission_time": "",
+             "view_number":  "",
              "vote_number": "",
-             "question_id": "",
-             "message":  request.form.get("message"),
-             "image":  request.form.get("image")}
+             "title": "",
+             "message": "",
+             "image":  ""}
 
     stories = data_handler.read_data('sample_data/question.csv')
-    for story in stories:
-        if story["id"] == str(question_id):
-            story["vote_number"]=str(int(story["vote_number"])-1)
+    for item in stories:
+        if item["id"] == str(question_id):
+            story["vote_number"]=str(int(item["vote_number"])-1)
+            story["id"] = item["id"]
+            story["submission_time"] = item["submission_time"]
+            story["view_number"] = item["view_number"]
+            story["title"] = item["title"]
+            story["message"] = item["message"]
+            story["image"] = item["image"]
 
 
+    print(story)
     data_handler.write_data('sample_data/question.csv', story)
-    return render_template('list.html')
+    stories = data_handler.read_data('sample_data/question.csv')
+    return render_template('list.html', stories=stories)
