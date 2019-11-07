@@ -73,10 +73,6 @@ def route_add_question(question_id=None,question_title=None,question_message=Non
     else:
         return render_template("add-question.html")
 
-@app.route('/add_answer')
-def route_add_answer():
-    return render_template("add_answer.html")
-
 @app.route("/upvoting/<int:question_id>")
 def upvoting(question_id=None):
     story = {"id": "",
@@ -90,9 +86,17 @@ def upvoting(question_id=None):
     stories = data_handler.read_data("sample_data/question.csv")
     for item in stories:
         if item["id"] == str(question_id):
-            for elements in item:
-                story = elements
-            story["vote_number"]=str(int(item["vote_number"])+1)
+            story["vote_number"] = str(int(item["vote_number"]) + 1)
+            story["id"] = item["id"]
+            story["submission_time"] = item["submission_time"]
+            story["view_number"] = item["view_number"]
+            story["title"] = item["title"]
+            story["message"] = item["message"]
+            story["image"] = item["image"]
+
+    data_handler.write_data('sample_data/question.csv', story)
+    stories = data_handler.read_data('sample_data/question.csv')
+    return render_template('list.html', stories=stories)
 
 @app.route("/downvoting/<int:question_id>")
 def downvoting(question_id=None):
@@ -115,8 +119,53 @@ def downvoting(question_id=None):
             story["message"] = item["message"]
             story["image"] = item["image"]
 
-
-    print(story)
     data_handler.write_data('sample_data/question.csv', story)
     stories = data_handler.read_data('sample_data/question.csv')
     return render_template('list.html', stories=stories)
+
+@app.route("/answer_upvoting/<int:question_id>")
+def answerupvoting(question_id=None):
+    story = {"id": "",
+             "submission_time": "",
+             "vote_number": "",
+             "question_id": "",
+             "message": "",
+             "image":  ""}
+
+    stories = data_handler.read_data('sample_data/answer.csv')
+    for item in stories:
+        if item["id"] == str(question_id):
+            story["vote_number"]=str(int(item["vote_number"])+1)
+            story["id"] = item["id"]
+            story["submission_time"] = item["submission_time"]
+            story["question_id"] = item["question_id"]
+            story["message"] = item["message"]
+            story["image"] = item["image"]
+
+    data_handler.write_data('sample_data/answer.csv', story)
+    stories = data_handler.read_data('sample_data/answer.csv')
+    return render_template('answer.html', stories=stories)
+
+
+@app.route("/answer_downvoting/<int:question_id>")
+def answerdownvoting(question_id=None):
+    story = {"id": "",
+             "submission_time": "",
+             "vote_number": "",
+             "question_id": "",
+             "message": "",
+             "image":  ""}
+
+    stories = data_handler.read_data('sample_data/answer.csv')
+    for item in stories:
+        if item["id"] == str(question_id):
+            story["vote_number"]=str(int(item["vote_number"])-1)
+            story["id"] = item["id"]
+            story["submission_time"] = item["submission_time"]
+            story["question_id"] = item["question_id"]
+            story["message"] = item["message"]
+            story["image"] = item["image"]
+
+    data_handler.write_data('sample_data/answer.csv', story)
+    stories = data_handler.read_data('sample_data/answer.csv')
+    return render_template('answer.html', stories=stories)

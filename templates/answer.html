@@ -20,7 +20,13 @@
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
-        <td>{{story.vote_number}}<td>
+        <td>{{story.vote_number}}
+            <form action="/answer_upvoting/{{story.id}}">
+            <button name="up_vote" type="submit">&#8679;</button>
+            </form>
+            <form action="/answer_downvoting/{{story.id}}">
+                <button name="down_vote" type="submit">&#8681;</button>
+            </form></td>
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
     </tr>

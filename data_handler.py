@@ -46,4 +46,5 @@ def write_data(file_name, story):
         if story["id"] == "":
             story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
             story['id'] = str(count)
+            story['vote_number'] = "0"
             writer.writerow(story)
