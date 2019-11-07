@@ -5,15 +5,16 @@
     <title>Add a question</title>
 </head>
 <body>
-    <h1>Make a new Question</h1>
+    <h2>{{ "Edit Question" if question_id else "Add Question" }}</h2>
     <form action="/list" method="post">
+        <input type="hidden" name="question_id" value="{{ question_id }}">
         <label for="title">Story Title:</label>
-        <input id="title" type="text" name="title">
+        <input id="title" type="text" name="title" value="{{ question_title }}">
         <br>
         <br>
-        <textarea rows="5" cols="30" id="message" name="message">Message</textarea>
+        <textarea rows="5" cols="30" id="message" name="message">{{question_message}}</textarea>
         <br>
-        <button type="submit"> Add new Question</button>
+        <button type="submit"> {{"Save edit"if question_id else "Add new Question"}}</button>
     </form>
 </body>
 </html>

@@ -28,6 +28,7 @@ def write_data(file_name, story):
 
     stories = read_data(file_name)
     count = 0
+
     with open(file_name, "w") as file:
         writer = csv.DictWriter(file,fieldnames= FIELDS)
         writer.writeheader()
@@ -37,6 +38,8 @@ def write_data(file_name, story):
                 count += 1
 
         for item in stories:
+            if item["id"] == str(story["id"]):
+                item = story
             item["submission_time"] = str(int(time.mktime(datetime.strptime(item["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
             writer.writerow(item)
 
@@ -44,5 +47,7 @@ def write_data(file_name, story):
         story['id'] = str(count)
         writer.writerow(story)
 
-
-
+        if story["id"] == "":
+            story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
+            story['id'] = str(count)
+            writer.writerow(story)

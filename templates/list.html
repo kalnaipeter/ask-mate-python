@@ -33,7 +33,7 @@
         <td><a href="/question/{{story.id}}" >{{story.title}}</a></td>
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
-        <td><a href="/question/<question_id>/edit">Edit</a></td>
+        <td><a href="/question/{{story.id}}/{{story.title}}/{{story.message}}/edit">Edit</a></td>
     </tr>
     {% endfor %}
     </tbody>
