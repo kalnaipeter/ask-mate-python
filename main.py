@@ -24,7 +24,7 @@ def route_main():
                  "message": request.form.get("message"),
                  "image": ""
                  }
-        print(story)
+
         data_handler.write_data('sample_data/question.csv', story)
         stories = data_handler.read_data('sample_data/question.csv')
         return render_template('list.html', stories=stories)
@@ -42,8 +42,28 @@ def route_question(question_id=None):
             if item["question_id"] == str(question_id):
                 result.append(item)
 
-        return render_template("answer.html", stories=result)
+        return render_template("answer.html", stories=result, question_id=question_id)
 
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M")
+
+    if request.method == "POST":
+        story = {"id": "3",
+                 "submission_time": dt_string,
+                 "vote_number": "0",
+                 "question_id": question_id,
+                 "message": request.form.get("message"),
+                 "image": ""
+                 }
+        print(story)
+        data_handler.write_data('sample_data/answer.csv', story)
+        stories = data_handler.read_data('sample_data/answer.csv')
+        print(stories)
+        return render_template('answer.html', stories=stories,question_id=question_id)
+
+@app.route('/question/<int:question_id>/new-answer')
+def route_add_new_answer(question_id=None):
+    return render_template("add-new-answer.html",question_id=question_id)
 
 @app.route('/add-question')
 def route_add_question():

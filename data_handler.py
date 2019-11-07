@@ -2,6 +2,7 @@ import csv
 from datetime import datetime
 import time
 
+
 def read_data(file_name):
     stories = []
 
@@ -17,22 +18,28 @@ def read_data(file_name):
 
         return stories
 
-def write_data(file_name,story):
+
+def write_data(file_name, story):
+    if file_name == "sample_data/answer.csv":
+        FIELDS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+
+    elif file_name == "sample_data/question.csv":
+        FIELDS = ['id','submission_time','view_number','vote_number','title','message','image']
+
     stories = read_data(file_name)
     count = 0
-    with open(file_name,"w") as file:
-        writer = csv.DictWriter(file, fieldnames=['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+    with open(file_name, "w") as file:
+        writer = csv.DictWriter(file,fieldnames= FIELDS)
         writer.writeheader()
 
         for item in stories:
             if 'id' in item:
                 count += 1
 
-
         for item in stories:
-            item["submission_time"] = str(int(time.mktime(datetime.strptime(item["submission_time"],'%Y-%m-%d %H:%M').timetuple())))
+            item["submission_time"] = str(int(time.mktime(datetime.strptime(item["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
             writer.writerow(item)
 
-        story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"],'%Y-%m-%d %H:%M').timetuple())))
+        story["submission_time"] = str(int(time.mktime(datetime.strptime(story["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
         story['id'] = str(count)
         writer.writerow(story)
