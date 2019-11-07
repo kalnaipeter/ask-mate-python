@@ -20,13 +20,13 @@
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
-        <td>{{story.vote_number}}
+        <td>{{story.vote_number}}<td>
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-    <p><a href="/add_answer">Add an answer</a></p>
+    <a href="/question/{{question_id}}/add-new-answer">Add new answer</a>
 </body>
 </html>

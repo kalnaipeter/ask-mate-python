@@ -24,7 +24,7 @@ def route_main():
                  "message": request.form.get("message"),
                  "image": ""
                  }
-        print(story)
+
         data_handler.write_data('sample_data/question.csv', story)
         stories = data_handler.read_data('sample_data/question.csv')
         return render_template('list.html', stories=stories)
@@ -42,8 +42,26 @@ def route_question(question_id=None):
             if item["question_id"] == str(question_id):
                 result.append(item)
 
-        return render_template("answer.html", stories=result)
+        return render_template("answer.html", stories=result, question_id=question_id)
 
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M")
+
+    if request.method == "POST":
+        story = {"id":"",
+                 "submission_time": dt_string,
+                 "vote_number": "",
+                 "question_id": question_id,
+                 "message": request.form.get("message"),
+                 "image": ""
+                 }
+        data_handler.write_data('sample_data/answer.csv', story)
+        stories = data_handler.read_data('sample_data/answer.csv')
+        return render_template('answer.html', stories=stories,question_id=question_id)
+
+@app.route('/question/<int:question_id>/add-new-answer')
+def route_add_new_answer(question_id=None):
+    return render_template("add-new-answer.html",question_id=question_id)
 
 @app.route('/add-question')
 def route_add_question():
@@ -53,6 +71,28 @@ def route_add_question():
 def route_add_answer():
     return render_template("add_answer.html")
 
+@app.route("/upvoting/<int:story.id>")
+def upvoting(story_id=None):
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
+    story = {"id":"",
+             "submission_time": "",
+             "vote_number": request.form.get("vote_number"),
+             "question_id": "",
+             "message": "",
+             "image": ""}
+    data_handler.write_data('sample_data/question.csv', story)
+    stories = data_handler.read_data('sample_data/question.csv')
+    return render_template('answer.html', stories=stories, question_id=question_id)
+
+@app.route("/downvoting/<int:question_id>")
+def downvoting(question_id=None):
+    votes = None
+    stories = data_handler.read_data('sample_data/answer.csv')
+    for story in stories:
+        if story["id"] == str(question_id):
+            votes = story["vote_number"]
+            votes-=1
+
+    data_handler.write_data('sample_data/question.csv', story)
+    return render_template('answer.html', stories=stories, question_id=question_id)
