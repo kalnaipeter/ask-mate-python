@@ -9,6 +9,17 @@ app = Flask(__name__)
 def start():
     return redirect('/list')
 
+@app.route("/list/<submission_time>/sorting")
+def sorting_time():
+
+
+
+
+
+
+
+
+
 @app.route('/list')
 @app.route('/list', methods=["GET", "POST"])
 def route_main():
@@ -27,10 +38,10 @@ def route_main():
 
         data_handler.write_data('sample_data/question.csv', story)
         stories = data_handler.read_data('sample_data/question.csv')
-        return render_template('list.html', stories=stories)
+        return render_template('questions.html', stories=stories)
     else:
         stories = data_handler.read_data('sample_data/question.csv')
-        return render_template('list.html', stories=stories)
+        return render_template('questions.html', stories=stories)
 
 @app.route('/question/<int:question_id>/new-answer')
 @app.route('/question/<int:question_id>', methods=["GET", "POST"])
@@ -96,7 +107,7 @@ def upvoting(question_id=None):
 
     data_handler.write_data('sample_data/question.csv', story)
     stories = data_handler.read_data('sample_data/question.csv')
-    return render_template('list.html', stories=stories)
+    return render_template('questions.html', stories=stories)
 
 @app.route("/downvoting/<int:question_id>")
 def downvoting(question_id=None):
@@ -121,7 +132,7 @@ def downvoting(question_id=None):
 
     data_handler.write_data('sample_data/question.csv', story)
     stories = data_handler.read_data('sample_data/question.csv')
-    return render_template('list.html', stories=stories)
+    return render_template('questions.html', stories=stories)
 
 @app.route("/answer_upvoting/<int:question_id>")
 def answerupvoting(question_id=None):
