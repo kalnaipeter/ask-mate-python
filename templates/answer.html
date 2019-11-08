@@ -5,6 +5,7 @@
     <title>Answers</title>
 </head>
 <body>
+<h2>{{ question_title }}</h2>
 <table border="1|0">
     <thead>
     <tr>
@@ -21,12 +22,16 @@
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
         <td>{{story.vote_number}}
-            <form action="/answer_upvoting/{{story.id}}">
-            <button name="up_vote" type="submit">&#8679;</button>
-            </form>
-            <form action="/answer_downvoting/{{story.id}}">
-                <button name="down_vote" type="submit">&#8681;</button>
-            </form></td>
+{#            <form action="/answer_upvoting/{{story.id}}",method="POST">#}
+{#                <input type="hidden" name="the_question" id="the_question" value="{{ the_question }}">#}
+{#                <input type="hidden" name="question_id" id="question_id" value="{{ question_id }}">#}
+{#            <button name="up_vote" type="submit">&#8679;</button>#}
+{#            </form>#}
+{#            <form action="/answer_downvoting/{{story.id}}",method="POST">#}
+{#                <input type="hidden" name="the_question" id="the_question" value="{{ the_question }}">#}
+{#                <input type="hidden" name="question_id" id="question_id" value="{{ question_id }}">#}
+{#                <button name="down_vote" type="submit">&#8681;</button>#}
+{#            </form></td>#}
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
     </tr>
@@ -34,5 +39,7 @@
     </tbody>
 </table>
     <a href="/question/{{question_id}}/add-new-answer">Add new answer</a>
+<br/>
+<a href="/list" >Back</a>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <title>List Questions</title>
 </head>
 <body>
+<h1>Ask Mate Python</h1>
 <table border="1|0">
     <thead>
     <tr>
@@ -24,16 +25,16 @@
         <td>{{story.submission_time}}</td>
         <td>{{story.view_number}}</td>
         <td>{{story.vote_number}}
-            <form action="/upvoting/{{story.id}}">
-            <button name="up_vote" type="submit">&#8679;</button>
-            </form>
-            <form action="/downvoting/{{story.id}}">
-                <button name="down_vote" type="submit">&#8681;</button>
-            </form></td>
+{#            <form action="/upvoting/{{story.id}}">#}
+{#            <button name="up_vote" type="submit">&#8679;</button>#}
+{#            </form>#}
+{#            <form action="/downvoting/{{story.id}}">#}
+{#                <button name="down_vote" type="submit">&#8681;</button>#}
+            </td>
         <td><a href="/question/{{story.id}}" >{{story.title}}</a></td>
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
-        <td><a href="/question/{{story.id}}/{{story.title}}/{{story.message}}/edit">Edit</a></td>
+        <td><a href="/question/{{story.id}}/edit">Edit</a></td>
     </tr>
     {% endfor %}
     </tbody>

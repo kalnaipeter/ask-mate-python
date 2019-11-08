@@ -21,16 +21,16 @@ def read_data(file_name):
 
 def write_data(file_name, story):
     if file_name == "sample_data/answer.csv":
-        FIELDS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+        fields = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
     elif file_name == "sample_data/question.csv":
-        FIELDS = ['id','submission_time','view_number','vote_number','title','message','image']
+        fields = ['id','submission_time','view_number','vote_number','title','message','image']
 
     stories = read_data(file_name)
     count = 0
 
     with open(file_name, "w") as file:
-        writer = csv.DictWriter(file,fieldnames= FIELDS)
+        writer = csv.DictWriter(file,fieldnames=fields)
         writer.writeheader()
 
         for item in stories:
