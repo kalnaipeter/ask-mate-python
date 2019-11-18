@@ -6,8 +6,11 @@
 </head>
 <body>
     <h2>{{ "Edit Question" if question_id else "Add Question" }}</h2>
-    <form action="/list" method="post">
+    <form action="/list" method="POST">
         <input type="hidden" name="question_id" value="{{ question_id }}">
+        <input type="hidden" name="view_number" value="{{ question_view_number }}">
+        <input type="hidden" name="vote_number" value="{{ question_vote_number }}">
+        <input type="hidden" name="image" value="{{ question_image }}">
         <label for="title">Story Title:</label>
         <input id="title" type="text" name="title" value="{{ question_title }}">
         <br>
