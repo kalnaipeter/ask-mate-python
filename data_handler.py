@@ -37,67 +37,6 @@ def write_question(cursor,submission_time,view_number,vote_number,title,message)
                   )
 
 
-def new_story(question_file, target_file, request_id, request_title, request_message,request_view_number,request_vote_number,request_image):
-    now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d %H:%M")
-
-    story = {"id": request_id if request_id is not None else "",
-             "submission_time": dt_string,
-             "view_number": request_view_number,
-             "vote_number": request_vote_number,
-             "title": request_title,
-             "message": request_message,
-             "image": request_image
-             }
-
-    write_data(question_file, story)
-    stories = read_data(question_file)
-    return render_template(target_file, stories=stories)
-
-
-def new_answer(answer_file, question_file, target_file, question_id, request_message):
-    now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d %H:%M")
-
-    story = {"id": "",
-             "submission_time": dt_string,
-             "vote_number": "",
-             "question_id": question_id,
-             "message": request_message,
-             "image": ""
-             }
-
-    questions = read_data(question_file)
-    question_title = None
-    for item in questions:
-        if item["id"] == str(question_id):
-            question_title = item["title"]
-
-    write_data(answer_file, story)
-    result = []
-    stories = read_data(answer_file)
-    for item in stories:
-        if item["question_id"] == str(question_id):
-            result.append(item)
-
-    return render_template(target_file, stories=result, question_id=question_id, question_title=question_title)
-
-
-def get_answers(question_file, answer_file, target_file, question_id):
-    questions = read_data(question_file)
-    question_title = None
-    for item in questions:
-        if item["id"] == str(question_id):
-            question_title = item["title"]
-    story = None
-    result = []
-    stories = read_data(answer_file)
-    for item in stories:
-        if item["question_id"] == str(question_id):
-            result.append(item)
-
-    return render_template(target_file, stories=result, question_id=question_id,
-                           question_title=question_title)
 
 
 def get_question_id(answer_file,question_file,answer_id,target_file):
