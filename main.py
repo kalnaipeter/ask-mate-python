@@ -18,7 +18,7 @@ def route_list_questions():
                                       request.form.get("message"),request.form.get("view_number"),
                                       request.form.get("vote_number"),request.form.get("image"))
     if request.method == "GET":
-        stories = data_handler.read_data('sample_data/question.csv')
+        stories = data_handler.get_questions()
         return render_template('questions.html', stories=stories)
 
 

@@ -2,22 +2,16 @@ from flask import Flask, render_template, request, redirect
 import csv
 from datetime import datetime
 import time
+import database_common
 
 
-def read_data(file_name):
-    stories = []
-
-    with open(file_name) as file:
-        lines = csv.DictReader(file)
-
-        for line in lines:
-            for key in line.keys():
-                if key == "submission_time":
-                    line[key] = datetime.fromtimestamp(int(line[key])).strftime('%Y-%m-%d %H:%M')
-            story = dict(line)
-            stories.append(story)
-
-        return stories
+@database_common.connection_handler
+def get_questions(cursor):
+    cursor.execute("""
+                    SELECT * FROM question;
+                   """)
+    questions = cursor.fetchall()
+    return questions
 
 
 def write_data(file_name, story):
