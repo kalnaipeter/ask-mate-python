@@ -1,14 +1,25 @@
+from flask import Flask, render_template, request, redirect
+import csv
+from datetime import datetime
+import time
 import database_common
+
+# @database_common.connection_handler
+# def get_question_id(cursor):
+#     cursor.execute("""
+#                     SELECT question_id FROM answer;
+#                     """)
+#     question_id = cursor.fetchall()
+#     return question_id
+
 
 @database_common.connection_handler
 def read_questions(cursor):
     cursor.execute("""
-                        SELECT * FROM question;
-                       """
-                   )
-    stories= cursor.fetchall()
-
-    return stories
+                    SELECT * FROM question;
+                   """)
+    questions = cursor.fetchall()
+    return questions
 
 @database_common.connection_handler
 def read_answers(cursor,question_id):
@@ -19,7 +30,6 @@ def read_answers(cursor,question_id):
                    {"question_id":question_id}
                    )
     stories= cursor.fetchall()
-
     return stories
 
 
@@ -39,34 +49,41 @@ def write_question(cursor,submission_time,view_number,vote_number,title,message)
 
 
 
-def get_question_id(answer_file,question_file,answer_id,target_file):
-    answers = read_data(answer_file)
-    question_id = None
-    for answer in answers:
-        if answer["id"] == str(answer_id):
-            question_id = answer["question_id"]
-    return get_answers(question_file,answer_file,target_file,question_id)
 
 
+@database_common.connection_handler
+def write_answer(cursor,submission_time,vote_number,question_id,message):
+   cursor.execute("""
+                INSERT INTO answer (submission_time,vote_number,question_id,message)
+                VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s);
+                    """,
 
-def edit_question(question_file, target_file, question_id):
-    question_title = None
-    question_message = None
-    question_view_number = None
-    question_vote_number = None
-    question_image = None
-    stories = read_data(question_file)
-    for story in stories:
-        if str(question_id) == story["id"]:
-            question_title = story["title"]
-            question_message = story["message"]
-            question_view_number = story["view_number"]
-            question_vote_number = story["vote_number"]
-            question_image = story["image"]
+                   {"submission_time": submission_time,
+                    "vote_number": vote_number,
+                    "message": message,
+                    "question_id":question_id})
 
-    return render_template(target_file, question_image=question_image,question_vote_number=question_vote_number,
-                           question_view_number=question_view_number,question_id=question_id, question_message=question_message,
-                           question_title=question_title)
+@database_common.connection_handler
+def get_question_data(cursor,question_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id = %(question_id)s
+                    """,
+                   {"question_id":question_id})
+    data = cursor.fetchall()
+    print(data)
+    return data
+@database_common.connection_handler
+def edit_question(cursor,question_id,title,message):
+    cursor.execute("""
+                    UPDATE question
+                    SET title=%(title)s,message=%(message)s
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"title":title,
+                    "message":message,
+                    "question_id": question_id
+                    })
 
 
 def delete_question(question_file,question_id):
