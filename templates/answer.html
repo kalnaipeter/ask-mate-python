@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for story in stories %}
+    {% for story in answers %}
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
@@ -36,7 +36,7 @@
     {% endfor %}
     </tbody>
 </table>
-    <a href="/question/{{question_id}}/add-new-answer">Add new answer</a>
+    <a href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
 <br/>
 <a href="/list" >Back</a>
 </body>

@@ -13,14 +13,17 @@ def start():
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
     if request.method == "POST":
-        return data_handler.new_story('sample_data/question.csv', 'questions.html',
-                                      request.form.get("question_id"), request.form.get("title"),
-                                      request.form.get("message"),request.form.get("view_number"),
-                                      request.form.get("vote_number"),request.form.get("image"))
-    if request.method == "GET":
-        stories = data_handler.get_questions()
+
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M")
+        data_handler.write_question(dt_string,0,0, request.form.get("title"), request.form.get("message"))
+        stories = data_handler.read_questions()
+
         return render_template('questions.html', stories=stories)
 
+    if request.method == "GET":
+        stories = data_handler.read_questions()
+        return render_template('questions.html', stories=stories)
 
 @app.route('/question/<int:question_id>/edit')
 def route_edit_question(question_id):
@@ -35,22 +38,25 @@ def route_delete_question(question_id):
 
 @app.route('/add-question')
 def route_add_new_question():
+
     return render_template("add-question.html")
 
 
-@app.route('/question/<int:question_id>', methods=["GET", "POST"])
+@app.route('/answers/<int:question_id>', methods=["GET", "POST"])
 def route_list_answers(question_id=None):
     if request.method == "GET":
-        data_handler.increase_view_number('sample_data/question.csv',question_id)
-        return data_handler.get_answers('sample_data/question.csv', 'sample_data/answer.csv', "answer.html",
-                                        question_id)
+        #data_handler.increase_view_number('sample_data/question.csv',question_id)
+        answers = data_handler.read_answers(question_id)
+        return render_template("answer.html",question_id=question_id,answers=answers)
 
     if request.method == "POST":
-        return data_handler.new_answer('sample_data/answer.csv', 'sample_data/question.csv',
-                                       "answer.html", question_id, request.form.get("message"))
+        now = datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M")
+        data_handler.write_answer(dt_string,0,question_id,request.form.get("message"))
+        answers = data_handler.read_answers(question_id)
+        return render_template("answer.html",answers=answers)
 
-
-@app.route('/question/<int:question_id>/add-new-answer')
+@app.route('/answers/<int:question_id>/add-new-answer')
 def route_add_new_answer(question_id=None):
     return render_template("add-new-answer.html", question_id=question_id)
 

@@ -1,17 +1,14 @@
-# Creates a decorator to handle the database connection/cursor opening/closing.
-# Creates the cursor with RealDictCursor, thus it returns real dictionaries, where the column names are the keys.
 import os
 import psycopg2
 import psycopg2.extras
 
 
 def get_connection_string():
-    # setup connection string
-    # to do this, please define these environment variables first
     user_name = os.environ.get('user_name')
     password = os.environ.get('password')
     host = os.environ.get('host')
     database_name = os.environ.get('db_name')
+
 
     env_variables_defined = user_name and password and host and database_name
 
@@ -49,3 +46,5 @@ def connection_handler(function):
         return ret_value
 
     return wrapper
+
+
