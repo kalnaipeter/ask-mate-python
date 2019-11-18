@@ -20,7 +20,7 @@ def sorting_time():
 
 
 
-@app.route('/list')
+ @app.route('/list')
 @app.route('/list', methods=["GET", "POST"])
 def route_main():
     now = datetime.now()
@@ -47,13 +47,18 @@ def route_main():
 @app.route('/question/<int:question_id>', methods=["GET", "POST"])
 def route_question(question_id=None):
     if request.method == "GET":
+        questions = data_handler.read_data('sample_data/question.csv')
+        question_title = None
+        for item in questions:
+            if item["id"] == str(question_id):
+                question_title = item["title"]
         result = []
         stories = data_handler.read_data('sample_data/answer.csv')
         for item in stories:
             if item["question_id"] == str(question_id):
                 result.append(item)
 
-        return render_template("answer.html", stories=result, question_id=question_id)
+        return render_template("answer.html", stories=result, question_id=question_id,question_title=question_title)
 
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d %H:%M")
@@ -66,9 +71,22 @@ def route_question(question_id=None):
                  "message": request.form.get("message"),
                  "image": ""
                  }
+
+        questions = data_handler.read_data('sample_data/question.csv')
+        question_title = None
+        for item in questions:
+            if item["id"] == str(question_id):
+                question_title = item["title"]
         data_handler.write_data('sample_data/answer.csv', story)
+        result = []
         stories = data_handler.read_data('sample_data/answer.csv')
-        return render_template('answer.html', stories=stories,question_id=question_id)
+        for item in stories:
+            if item["question_id"] == str(question_id):
+                result.append(item)
+
+        return render_template("answer.html", stories=result, question_id=question_id,question_title=question_title)
+        # stories = data_handler.read_data('sample_data/answer.csv')
+        # return render_template('answer.html', stories=stories,question_id=question_id)
 
 
 @app.route('/question/<int:question_id>/add-new-answer')
@@ -76,7 +94,7 @@ def route_add_new_answer(question_id=None):
     return render_template("add-new-answer.html", question_id=question_id)
 
 
-@app.route('/question/<int:question_id>/<question_title>/<question_message>/edit')
+@app.route('/question/<int:question_id>/edit', methods=["GET","POST"])
 @app.route('/add-question')
 def route_add_question(question_id=None,question_title=None,question_message=None):
     if question_id is not None:
@@ -180,3 +198,18 @@ def answerdownvoting(question_id=None):
     data_handler.write_data('sample_data/answer.csv', story)
     stories = data_handler.read_data('sample_data/answer.csv')
     return render_template('answer.html', stories=stories)
+
+def route_add_question(question_id=None):
+    if request.method == "GET":
+        if question_id is not None:
+            question_title = None
+            question_message = None
+            stories = data_handler.read_data("sample_data/question.csv")
+            for story in stories:
+                if str(question_id) == story["id"]:
+                    question_title = story["title"]
+                    question_message= story["message"]
+
+            return render_template("add-question.html", question_id=question_id,question_message=question_message,question_title=question_title)
+        else:
+            return render_template("add-question.html")
