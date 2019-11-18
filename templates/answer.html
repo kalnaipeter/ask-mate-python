@@ -22,16 +22,14 @@
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
         <td>{{story.vote_number}}
-{#            <form action="/answer_upvoting/{{story.id}}",method="POST">#}
-{#                <input type="hidden" name="the_question" id="the_question" value="{{ the_question }}">#}
-{#                <input type="hidden" name="question_id" id="question_id" value="{{ question_id }}">#}
-{#            <button name="up_vote" type="submit">&#8679;</button>#}
-{#            </form>#}
-{#            <form action="/answer_downvoting/{{story.id}}",method="POST">#}
-{#                <input type="hidden" name="the_question" id="the_question" value="{{ the_question }}">#}
-{#                <input type="hidden" name="question_id" id="question_id" value="{{ question_id }}">#}
-{#                <button name="down_vote" type="submit">&#8681;</button>#}
-{#            </form></td>#}
+            <br/>
+            <form action="/answer/{{story.id}}/vote_up" method="POST">
+                <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
+            </form>
+            <form action="/answer/{{story.id}}/vote_down" method="POST">
+                <button name="vote_down" id="vote_down" type="submit">&#8681;</button>
+            </form>
+        </td>
         <td>{{story.message}}</td>
         <td>{{story.image}}</td>
     </tr>
