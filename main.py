@@ -9,6 +9,13 @@ app = Flask(__name__)
 def start():
     return redirect('/list')
 
+@app.route("/question/search",methods=["POST"])
+def search():
+    search_result = request.form.get("search")
+    print(search_result)
+    story = data_handler.get_search_result(search_result)
+    print(story)
+    return render_template('search_resoult.html', stories=story)
 
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():

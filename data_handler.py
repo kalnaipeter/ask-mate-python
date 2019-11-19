@@ -1,8 +1,5 @@
-from flask import Flask, render_template, request, redirect
-import csv
-from datetime import datetime
-import time
 import database_common
+from psycopg2 import sql
 
 @database_common.connection_handler
 def get_question_title(cursor,question_id):
@@ -84,10 +81,15 @@ def get_question_data(cursor,question_id):
                     """,
                    {"question_id":question_id})
     data = cursor.fetchall()
-    print(data)
     return data
 
+@database_common.connection_handler
+def get_search_result(cursor,item):
+    cursor.execute(sql.SQL("SELECT * FROM question WHERE title LIKE {0} OR message LIKE {0}").format(sql.Identifier(str(item))))
 
+    resoult = cursor.fetchall()
+    print(resoult)
+    return resoult
 @database_common.connection_handler
 def edit_question(cursor,question_id,title,message):
     cursor.execute("""
