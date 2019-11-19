@@ -8,10 +8,10 @@
     <h2>Edit Question</h2>
     <form action="/question/{{ question_id }}/edit" method="POST">
         <label for="title">Story Title:</label>
-        <input id="title" type="text" name="title" >
+        <input id="title" type="text" name="title" value="{{ question_title }}">
         <br>
         <br>
-        <textarea rows="5" cols="30" name="message" id="message" ></textarea>
+        <textarea rows="5" cols="30" name="message" id="message"  >{{ question_message }}</textarea>
         <br>
         <button type="submit">Save edit</button>
     </form>

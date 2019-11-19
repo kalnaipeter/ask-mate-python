@@ -6,6 +6,25 @@
 </head>
 <body>
 <h2>{{ question_title }}</h2>
+<table>
+    <h4>Comments</h4>
+    <thead>
+    <tr>
+        <th>Message</th>
+        <th>Submission Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for comment in question_comments %}
+    <tr>
+        <td>{{ comment.message }}</td>
+        <td>{{ comment.submission_time }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <a href="/question/{{question_id}}/new-comment" >Add comment</a>
+<br/>
 <table border="1|0">
     <thead>
     <tr>
@@ -30,8 +49,16 @@
                 <button name="vote_down" id="vote_down" type="submit">&#8681;</button>
             </form>
         </td>
-        <td>{{story.message}}</td>
+        <td><details>
+            <summary>{{ story.message }}</summary>
+            {% for comment in answer_comments %}
+                {% if comment.answer_id == story.id %}
+                    <p>{{ comment.message }},{{ comment.submission_time }}</p>
+                {% endif %}
+            {% endfor %}
+            </details></td>
         <td>{{story.image}}</td>
+        <td><a href="/answer/{{ story.id }}/new-comment">Add comment</td>
     </tr>
     {% endfor %}
     </tbody>
