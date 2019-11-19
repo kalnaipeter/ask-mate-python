@@ -4,28 +4,45 @@ from datetime import datetime
 import time
 import database_common
 
-# @database_common.connection_handler
-# def get_question_id(cursor):
-#     cursor.execute("""
-#                     SELECT question_id FROM answer;
-#                     """)
-#     question_id = cursor.fetchall()
-#     return question_id
+@database_common.connection_handler
+def get_question_title(cursor,question_id):
+    cursor.execute("""
+                    SELECT title FROM question
+                    WHERE id= %(question_id)s
+                    """,
+                   {"question_id":question_id})
+    question_title_dictionary = cursor.fetchone()
+    return question_title_dictionary["title"]
+
+
+@database_common.connection_handler
+def get_question_id(cursor,answer_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"answer_id":answer_id})
+
+    question_dictionary = cursor.fetchone()
+    return question_dictionary["question_id"]
 
 
 @database_common.connection_handler
 def read_questions(cursor):
     cursor.execute("""
-                    SELECT * FROM question;
+                    SELECT * FROM question
+                    ORDER BY id;
                    """)
     questions = cursor.fetchall()
     return questions
+
 
 @database_common.connection_handler
 def read_answers(cursor,question_id):
     cursor.execute("""
                         SELECT * FROM answer
-                        WHERE question_id = %(question_id)s;
+                        WHERE question_id = %(question_id)s
+                        ORDER BY id;
                        """,
                    {"question_id":question_id}
                    )
@@ -43,12 +60,7 @@ def write_question(cursor,submission_time,view_number,vote_number,title,message)
                     "view_number": view_number,
                     "vote_number": vote_number,
                     "title": title,
-                    "message": message}
-                  )
-
-
-
-
+                    "message": message})
 
 
 @database_common.connection_handler
@@ -63,6 +75,7 @@ def write_answer(cursor,submission_time,vote_number,question_id,message):
                     "message": message,
                     "question_id":question_id})
 
+
 @database_common.connection_handler
 def get_question_data(cursor,question_id):
     cursor.execute("""
@@ -73,6 +86,8 @@ def get_question_data(cursor,question_id):
     data = cursor.fetchall()
     print(data)
     return data
+
+
 @database_common.connection_handler
 def edit_question(cursor,question_id,title,message):
     cursor.execute("""
@@ -82,48 +97,63 @@ def edit_question(cursor,question_id,title,message):
                     """,
                    {"title":title,
                     "message":message,
-                    "question_id": question_id
-                    })
+                    "question_id": question_id})
 
 
-def delete_question(question_file,question_id):
-    stories = read_data(question_file)
-
-    with open(question_file, "w") as file:
-        writer = csv.DictWriter(file, fieldnames=['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
-        writer.writeheader()
-
-        for item in stories:
-            if item["id"] != str(question_id):
-                item["submission_time"] = \
-                    str(int(time.mktime(datetime.strptime(item["submission_time"], '%Y-%m-%d %H:%M').timetuple())))
-                writer.writerow(item)
+@database_common.connection_handler
+def delete_question(cursor,question_id):
+    cursor.execute("""
+                        DELETE FROM answer
+                        WHERE question_id = %(question_id)s;
+                        DELETE FROM question
+                        WHERE id = %(question_id)s;
+                        """,
+                   {"question_id": question_id})
 
 
-def increase_view_number(question_file,question_id):
-    questions = read_data(question_file)
-    for question in questions:
-        if question["id"] == str(question_id):
-            story = question
-            story["view_number"] = str(int(story["view_number"]) + 1)
-    write_data(question_file, story)
+@database_common.connection_handler
+def increase_view_number(cursor,question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id":question_id})
+
+@database_common.connection_handler
+def question_vote_up(cursor,question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number +1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id":question_id})
+
+@database_common.connection_handler
+def question_vote_down(cursor,question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = vote_number -1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id":question_id})
+
+@database_common.connection_handler
+def answer_vote_up(cursor,answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number +1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"answer_id":answer_id})
 
 
-def vote(start_file, target_file, question_id, vote_up,question):
-    story = None
-
-    stories = read_data(start_file)
-    for item in stories:
-        if item["id"] == str(question_id):
-            story = item
-            if not vote_up:
-                story["vote_number"] = str(int(story["vote_number"]) - 1)
-            else:
-                story["vote_number"] = str(int(story["vote_number"]) + 1)
-
-    write_data(start_file, story)
-    stories = read_data(start_file)
-    if not question:
-        return get_question_id(start_file,"sample_data/question.csv",question_id,target_file)
-    else:
-        return render_template(target_file, stories=stories)
+@database_common.connection_handler
+def answer_vote_down(cursor,answer_id):
+    print(answer_id)
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = vote_number -1
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"answer_id":answer_id})
