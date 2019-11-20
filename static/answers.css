@@ -1,9 +1,9 @@
-body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
+body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 
 h2  {border-style: groove;
-    background:  #4CAF50;
+    background:darkred;
     margin-top: 10px;
     margin-right: 500px;
     margin-left: 500px;
@@ -12,7 +12,7 @@ h2  {border-style: groove;
     border-radius: 12px;}
 
 h4 {border-style: groove;
-    background:  #4CAF50;
+    background:darkred;
     margin-top: 10px;
     margin-right: 500px;
     margin-left: 500px;
@@ -22,7 +22,7 @@ h4 {border-style: groove;
 
 th {border-style: groove;
     background:  honeydew;
-    border-color: burlywood;
+    border-color: darkgrey;
     background-position: inherit;
     margin-top: 10px;
             margin-right: 500px;
@@ -31,7 +31,7 @@ th {border-style: groove;
     border-radius: 12px;}
 
 td {border-style: groove;
-    border-color: burlywood;
+    border-color:darkgrey;
     background: honeydew;
     margin-top: 10px;
             margin-right: 500px;
@@ -46,7 +46,7 @@ a:-webkit-any-link {
     text-decoration: #9C1A1C;}
 
 table {border-style: solid;
-      background:  #4CAF50;
+      background:  darkred;
       margin-top: 10px;
             margin-right: 500px;
             margin-left: 500px;
@@ -54,9 +54,9 @@ table {border-style: solid;
       border-radius: 12px;}
 
 #new_answer {border-style: groove;
-             background:  #4CAF50;
+             background:  honeydew;
              border-radius: 12px;
-             border-color: burlywood;
+             border-color: darkgrey;
             margin-top: 10px;
             margin-right: 500px;
             margin-left: 500px;
@@ -64,19 +64,33 @@ table {border-style: solid;
             text-align: center;}
 
 #add_comment {border-style: groove;
-             background:  #4CAF50;
+             background:  honeydew;
              border-radius: 12px;
-             border-color: burlywood;
+             border-color: darkgrey;
             margin-top: 10px;
             margin-right: 500px;
             margin-left: 500px;
             margin-bottom: 20px;}
 
-#back        {border-style: groove;
-             background:  #4CAF50;
-             border-radius: 12px;
-             border-color: burlywood;
-            margin-top: 20px;
-            margin-right: 500px;
-            margin-left: 500px;
-            margin-bottom: 0px;}
+.button
+  {
+  background-color: darkred; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 12px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 600px;
+    margin-bottom:0px;
+    border-radius: 12px;}
+
+.button1:hover {
+  background-color: white;
+}

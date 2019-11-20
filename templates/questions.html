@@ -46,7 +46,11 @@
            </td>
         <td><a href="/answers/{{story.id}}" >{{ highlight_phrase(story.title,fancy_word) | safe}}</a></td>
         <td>{{ highlight_phrase(story.message,fancy_word) | safe }}</td>
+        {% if story.image %}
         <td>{{story.image}}</td>
+            {% else %}
+            <td></td>
+        {% endif %}
         <td><a href="/question/{{ story.id }}/edit">Edit</a>
         <a href="/question/{{story.id}}/delete">Delete</a>
         </td>
@@ -54,6 +58,6 @@
     {% endfor %}
     </tbody>
 </table>
-    <p><a id="new_answer" href="/add-question">Add a question</a></p>
+    <p  id="new_answer"><a href="/add-question">Add a question</a></p>
 </body>
 </html>

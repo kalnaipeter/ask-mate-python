@@ -7,11 +7,16 @@
 </head>
 <body>
 <h2>{{ question_title }}</h2>
+<h3>
+    <form action="/" >
+            <button id="button" class="button button1" ><i class="fa fa-bars"></i> Home</button>
+    </form>
+</h3>
+{% if question_comments %}
 <table>
-    <h4>Comments</h4>
     <thead>
     <tr>
-        <th>Message</th>
+        <th>Comment</th>
         <th>Submission Time</th>
     </tr>
     </thead>
@@ -23,9 +28,14 @@
         <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
         <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
+{#        {% else %}#}
+{#        <p>asd</p>#}
     {% endfor %}
     </tbody>
 </table>
+    {% else %}
+<h4>There is no comments</h4>
+{% endif %}
     <a id="add_comment" href="/question/{{question_id}}/new-comment" >Add comment</a>
 <br/>
 <table border="1|0">
@@ -43,16 +53,18 @@
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
-        <td>{{story.vote_number}}
+        <td>
             <br/>
             <form action="/answer/{{story.id}}/vote_up" method="POST">
                 <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
             </form>
+            <a id="vote_number">{{story.vote_number}}</a>
             <form action="/answer/{{story.id}}/vote_down" method="POST">
                 <button name="vote_down" id="vote_down" type="submit">&#8681;</button>
             </form>
         </td>
-        <td><details>
+        <td>
+            <details>
             <summary>{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
@@ -60,15 +72,18 @@
                     <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
-            </details></td>
+            </details>
+        </td>
+        {% if story.image %}
         <td>{{story.image}}</td>
-        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</td>
+        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a></td>
+        {% endif %}
+        <td><a href="/answer/{{ story.id }}/new-comment">Add comment</a></td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
     <a id="new_answer" href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
 <br/>
-<a id="back" href="/list" >Back</a>
 </body>
 </html>

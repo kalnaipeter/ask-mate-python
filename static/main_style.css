@@ -1,16 +1,15 @@
 table{border-style: solid;
-      background:  #4CAF50;
+      background:  darkred;
       margin: 50px;
       border-radius: 12px;
         }
 
-body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
+body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: darkred; /* Green */
   border: none;
-  color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -25,11 +24,7 @@ body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
     margin-bottom:0px;
     border-radius: 12px;
         }
-.button1:hover {
-  background-color: white;
-  color: #4CAF50;
-}
-h3 { }
+.button1:hover {background-color: white;}
 
 h2 { margin-top: 0px;
       margin-right: 500px;
@@ -50,8 +45,7 @@ h2 { margin-top: 0px;
       margin-bottom:0px;;
             border-radius: 12px;}
 p {   border-style: solid;
-      background: #4CAF50;
-      color:burlywood;
+      background: darkred;
       cursor: pointer;
       margin-top: 0px;
       margin-right: 500px;
@@ -72,7 +66,8 @@ a:-webkit-any-link {
     text-decoration: #9C1A1C;}
 
 h1 {border-style: groove;
-    background:  #4CAF50;
+    background:  darkred;
+    border-color: darkgrey;
     margin-top: 10px;
     margin-right: 500px;
     margin-left: 500px;
@@ -81,16 +76,25 @@ h1 {border-style: groove;
     border-radius: 12px;}
 
 th {border-style: groove;
+    border-color: darkgrey;
     background:  honeydew;
-    border-color: burlywood;
     background-position: inherit;
     margin: 50px;
     border-radius: 12px;}
 
 td {border-style: groove;
-    border-color: burlywood;
+    border-color: darkgrey;
     background: honeydew;
     margin: 50px;
     text-align: center;
     border-radius: 12px;
     }
+#new_answer {border-style: groove;
+    background: honeydew;
+    border-color: darkgrey;
+    margin-top: 10px;
+    margin-right: 500px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 12px;}
