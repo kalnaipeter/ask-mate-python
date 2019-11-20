@@ -69,12 +69,12 @@
             </details></td>
         {% if story.image %}
         <td>{{story.image}}</td>
-{#            {% else %}#}
-{#            <td><form action="upload.php" method="post" enctype="multipart/form-data">#}
-{#    Select image to upload:#}
-{#    <input type="file" name="fileToUpload" id="fileToUpload">#}
-{#    <input type="submit" value="Upload Image" name="submit">#}
-{#</form></td>#}
+            {% else %}
+            <td><form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form></td>
         {% endif %}
         <td><a href="/answer/{{ story.id }}/new-comment">Add comment</td>
     </tr>

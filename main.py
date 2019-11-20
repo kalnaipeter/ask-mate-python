@@ -189,30 +189,9 @@ def answer_vote_down(answer_id=None):
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
     return redirect(url_for("route_list_answers",question_id=question_id))
 
-
-@app.route('/upload_image', methods=["POST"])
-def upload_file(form_request, item, send_from_directory, app):
-    if form_request.method != 'POST':
-        item['image'] = ''
-        return None
-
-    if 'image' not in form_request.files:
-        item['image'] = ''
-        return None
-
-    image = form_request.files['image']
-
-    if image.filename == '':
-        item['image'] = ''
-        return None
-
-    if image and __allowed_file(image.filename):
-        file_extension = os.path.splitext(image.filename)[1]
-        filename = str(uuid.uuid1()) + file_extension
-        item['image'] = filename
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-    item['image'] = ''
+#
+# @app.route('/upload_image', methods=["POST"])
+# def upload_file()
 
 
 
