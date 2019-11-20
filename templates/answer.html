@@ -20,13 +20,13 @@
     <tr>
         <td>{{ comment.message }}</td>
         <td>{{ comment.submission_time }}</td>
-        <td><a id="edit_answer" href="/comment/{{ comment.id }}/edit">Edit</a></td>
+        <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
         <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-    <a href="/question/{{question_id}}/new-comment" >Add comment</a>
+    <a id="add_comment" href="/question/{{question_id}}/new-comment" >Add comment</a>
 <br/>
 <table border="1|0">
     <thead>
@@ -62,13 +62,13 @@
             {% endfor %}
             </details></td>
         <td>{{story.image}}</td>
-        <td><a href="/answer/{{ story.id }}/new-comment">Add comment</td>
+        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-    <a href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
+    <a id="new_answer" href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
 <br/>
-<a href="/list" >Back</a>
+<a id="back" href="/list" >Back</a>
 </body>
 </html>

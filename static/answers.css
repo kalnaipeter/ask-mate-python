@@ -24,29 +24,59 @@ th {border-style: groove;
     background:  honeydew;
     border-color: burlywood;
     background-position: inherit;
-    margin: 50px;
+    margin-top: 10px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 20px;
     border-radius: 12px;}
 
 td {border-style: groove;
     border-color: burlywood;
     background: honeydew;
-    margin: 50px;
+    margin-top: 10px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 20px;
     text-align: center;
     border-radius: 12px;
     }
-a { border-style: solid;
-      background: #4CAF50;
-      color:burlywood;
-        text-align: center;
+a:-webkit-any-link {
+    color: #9C1A1C;
+    cursor: pointer;
+    text-decoration: #9C1A1C;}
+
+table {border-style: solid;
+      background:  #4CAF50;
+      margin-top: 10px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 20px;
       border-radius: 12px;}
-.a {   border-style: solid;
-      background: #4CAF50;
-      color:burlywood;
-      cursor: pointer;
-      margin-top: 0px;
-      margin-right: 500px;
-      margin-left: 500px;
-      margin-bottom:0px;
-      text-align: center;
-      border-radius: 12px;
-}
+
+#new_answer {border-style: groove;
+             background:  #4CAF50;
+             border-radius: 12px;
+             border-color: burlywood;
+            margin-top: 10px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 20px;
+            text-align: center;}
+
+#add_comment {border-style: groove;
+             background:  #4CAF50;
+             border-radius: 12px;
+             border-color: burlywood;
+            margin-top: 10px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 20px;}
+
+#back        {border-style: groove;
+             background:  #4CAF50;
+             border-radius: 12px;
+             border-color: burlywood;
+            margin-top: 20px;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-bottom: 0px;}
