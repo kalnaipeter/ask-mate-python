@@ -32,6 +32,31 @@ def my_highlight_phrase():
     return dict(highlight_phrase=_highlight_phrase)
 
 
+@app.route('/question/order_by_time')
+def latest_time():
+    story = data_handler.display_latest()
+    return render_template('questions.html', stories=story, fancy_word=None)
+
+@app.route('/question/order_by_view')
+def sort_by_view():
+    story = data_handler.sort_by_view()
+    return render_template('questions.html', stories=story, fancy_word=None)
+
+@app.route('/question/order_by_vote')
+def sort_by_vote():
+    story = data_handler.sort_by_vote()
+    return render_template('questions.html', stories=story, fancy_word=None)
+
+@app.route('/question/order_by_title')
+def sort_by_title():
+    story = data_handler.sort_by_title()
+    return render_template('questions.html', stories=story, fancy_word=None)
+
+@app.route('/question/order_by_message')
+def sort_by_message():
+    story = data_handler.sort_by_message()
+    return render_template('questions.html', stories=story, fancy_word=None)
+
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
     if request.method == "POST":
