@@ -1,28 +1,70 @@
 table{border-style: solid;
-      background: purple;
-      margin: 50px}
+      background:  #4CAF50;
+      margin: 50px;
+      border-radius: 12px;
+        }
 
 body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
       background-repeat: no-repeat;
         background-size: cover}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 12px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 600px;
+    margin-bottom:0px;
+    border-radius: 12px;
+        }
+.button1:hover {
+  background-color: white;
+  color: #4CAF50;
+}
+h3 { }
+
+h2 { margin-top: 0px;
+      margin-right: 500px;
+      margin-left: 500px;
+      margin-bottom:0px;
+      border-radius: 12px;}
 
 .highlight {background: yellow}
 
-#vote_up {margin-right: 30px;}
-#vote_down {margin-right:30px;}
+#vote_up {margin-top: 0px;
+      margin-right: 5px;
+      margin-left: 5px;
+      margin-bottom:0px;
+          border-radius: 12px;}
+#vote_down{ margin-top: 0px;
+      margin-right: 5px;
+      margin-left: 5px;
+      margin-bottom:0px;;
+            border-radius: 12px;}
 p {   border-style: solid;
-      background: purple;
+      background: #4CAF50;
       color:burlywood;
       cursor: pointer;
-      background: darkgrey;
       margin-top: 0px;
       margin-right: 500px;
       margin-left: 500px;
       margin-bottom:0px;
       text-align: center;
+      border-radius: 12px;
 }
-#vote_number {margin-right:40px;
-              margin-bottom: 40px}
+#vote_number {margin-top: 0px;
+             margin-right: 5px;
+             margin-left: 5px;
+             margin-bottom:0px;
+             border-radius: 12px;}
 
 a:-webkit-any-link {
     color: #9C1A1C;
@@ -30,22 +72,25 @@ a:-webkit-any-link {
     text-decoration: #9C1A1C;}
 
 h1 {border-style: groove;
-    background: darkgrey;
+    background:  #4CAF50;
     margin-top: 10px;
     margin-right: 500px;
     margin-left: 500px;
     margin-bottom: 20px;
-    text-align: center;}
+    text-align: center;
+    border-radius: 12px;}
 
 th {border-style: groove;
-    background: darkgrey;
+    background:  honeydew;
+    border-color: burlywood;
     background-position: inherit;
-    margin: 50px}
+    margin: 50px;
+    border-radius: 12px;}
 
 td {border-style: groove;
     border-color: burlywood;
-    background: lightgrey;
+    background: honeydew;
     margin: 50px;
     text-align: center;
+    border-radius: 12px;
     }
- {}

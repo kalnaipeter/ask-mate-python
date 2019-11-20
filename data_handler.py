@@ -7,6 +7,41 @@ def get_the_current_date():
     dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
     return dt_string
 
+@database_common.connection_handler
+def sort_by_view(cursor):
+    cursor.execute("""
+                        SELECT * FROM question 
+                        ORDER BY view_number DESC 
+                        """)
+    number = cursor.fetchall()
+    return number
+
+@database_common.connection_handler
+def sort_by_vote(cursor):
+    cursor.execute("""
+                        SELECT * FROM question 
+                        ORDER BY vote_number DESC 
+                        """)
+    voted = cursor.fetchall()
+    return voted
+
+@database_common.connection_handler
+def sort_by_title(cursor):
+    cursor.execute("""
+                        SELECT * FROM question 
+                        ORDER BY title ASC 
+                        """)
+    title = cursor.fetchall()
+    return title
+
+@database_common.connection_handler
+def sort_by_message(cursor):
+    cursor.execute("""
+                        SELECT * FROM question 
+                        ORDER BY message ASC 
+                        """)
+    message = cursor.fetchall()
+    return message
 
 def my_highlight_phrase():
     def _highlight_phrase(text_content, phrase):
@@ -38,7 +73,15 @@ def get_comment_message(cursor, comment_id):
     comment_message_dictionary = cursor.fetchone()
     return comment_message_dictionary["message"]
 
-
+@database_common.connection_handler
+def display_latest(cursor):
+    cursor.execute("""
+                    SELECT * FROM question 
+                    ORDER BY submission_time DESC 
+                    LIMIT 5
+                    """)
+    time = cursor.fetchall()
+    return time
 @database_common.connection_handler
 def get_question_title(cursor, question_id):
     cursor.execute("""

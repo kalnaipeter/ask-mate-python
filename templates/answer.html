@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Answers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='answers.css') }}">
 </head>
 <body>
 <h2>{{ question_title }}</h2>
@@ -19,7 +20,7 @@
     <tr>
         <td>{{ comment.message }}</td>
         <td>{{ comment.submission_time }}</td>
-        <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
+        <td><a id="edit_answer" href="/comment/{{ comment.id }}/edit">Edit</a></td>
         <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
 {#        {% else %}#}

@@ -1,0 +1,52 @@
+body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
+      background-repeat: no-repeat;
+        background-size: cover}
+
+h2  {border-style: groove;
+    background:  #4CAF50;
+    margin-top: 10px;
+    margin-right: 500px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 12px;}
+
+h4 {border-style: groove;
+    background:  #4CAF50;
+    margin-top: 10px;
+    margin-right: 500px;
+    margin-left: 500px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 12px;}
+
+th {border-style: groove;
+    background:  honeydew;
+    border-color: burlywood;
+    background-position: inherit;
+    margin: 50px;
+    border-radius: 12px;}
+
+td {border-style: groove;
+    border-color: burlywood;
+    background: honeydew;
+    margin: 50px;
+    text-align: center;
+    border-radius: 12px;
+    }
+a { border-style: solid;
+      background: #4CAF50;
+      color:burlywood;
+        text-align: center;
+      border-radius: 12px;}
+.a {   border-style: solid;
+      background: #4CAF50;
+      color:burlywood;
+      cursor: pointer;
+      margin-top: 0px;
+      margin-right: 500px;
+      margin-left: 500px;
+      margin-bottom:0px;
+      text-align: center;
+      border-radius: 12px;
+}
