@@ -19,6 +19,17 @@ def get_question_message(cursor, question_id):
 
 
 @database_common.connection_handler
+def get_comment_message(cursor, comment_id):
+    cursor.execute("""
+                    SELECT message FROM comment
+                    WHERE id = %(comment_id)s
+                    """,
+                   {"comment_id": comment_id})
+    comment_message_dictionary = cursor.fetchone()
+    return comment_message_dictionary["message"]
+
+
+@database_common.connection_handler
 def get_question_title(cursor, question_id):
     cursor.execute("""
                     SELECT title FROM question
@@ -30,7 +41,7 @@ def get_question_title(cursor, question_id):
 
 
 @database_common.connection_handler
-def get_question_id(cursor, answer_id):
+def get_question_id_from_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id FROM answer
                     WHERE id = %(answer_id)s;
@@ -39,6 +50,30 @@ def get_question_id(cursor, answer_id):
 
     question_dictionary = cursor.fetchone()
     return question_dictionary["question_id"]
+
+
+@database_common.connection_handler
+def get_question_id_from_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT question_id FROM comment
+                    WHERE id = %(comment_id)s;
+                    """,
+                   {"comment_id": comment_id})
+
+    question_dictionary = cursor.fetchone()
+    return question_dictionary["question_id"]
+
+
+@database_common.connection_handler
+def get_answer_id_from_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT answer_id FROM comment
+                    WHERE id = %(comment_id)s;
+                    """,
+                   {"comment_id": comment_id})
+
+    answer_dictionary = cursor.fetchone()
+    return answer_dictionary["answer_id"]
 
 
 @database_common.connection_handler
@@ -107,6 +142,17 @@ def write_answer_comments(cursor, answer_id, message, submission_time):
 
 
 @database_common.connection_handler
+def edit_comment(cursor, comment_id, message):
+    cursor.execute("""
+                    UPDATE comment
+                    SET message=%(message)s
+                    WHERE id = %(comment_id)s;
+                    """,
+                   {"message": message,
+                    "comment_id": comment_id})
+
+
+@database_common.connection_handler
 def write_question(cursor, submission_time, view_number, vote_number, title, message):
     cursor.execute("""
                     INSERT INTO question (submission_time,view_number,vote_number,title,message)
@@ -142,6 +188,7 @@ def get_question_data(cursor, question_id):
     data = cursor.fetchall()
     return data
 
+
 @database_common.connection_handler
 def get_search_result(cursor,item):
     cursor.execute("""
@@ -151,6 +198,8 @@ def get_search_result(cursor,item):
                    {"item":'%'+item+'%'} )
     resoult = cursor.fetchall()
     return resoult
+
+
 @database_common.connection_handler
 def edit_question(cursor, question_id, title, message):
     cursor.execute("""

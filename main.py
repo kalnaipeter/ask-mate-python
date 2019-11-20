@@ -10,6 +10,7 @@ app = Flask(__name__)
 def start():
     return redirect('/list')
 
+
 @app.route("/question/search",methods=["POST"])
 def search():
     search_result = request.form.get("search")
@@ -29,6 +30,7 @@ def my_highlight_phrase():
         pattern = re.compile(phrase, re.IGNORECASE)
         return pattern.sub(f'<span class="highlight">{phrase}</span>', text_content)
     return dict(highlight_phrase=_highlight_phrase)
+
 
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
@@ -55,6 +57,20 @@ def route_edit_question(question_id):
         return render_template('questions.html', stories=stories)
 
 
+@app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
+def route_edit_comment(comment_id=None):
+    if request.method == "GET":
+        comment_message = data_handler.get_comment_message(comment_id)
+        return render_template("edit-comment.html", comment_id=comment_id,comment_message=comment_message)
+    if request.method == "POST":
+        data_handler.edit_comment(comment_id,request.form.get("message"))
+        question_id = data_handler.get_question_id_from_comment_id(comment_id)
+        if question_id is None:
+            answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
+            question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        return redirect(url_for("route_list_answers", question_id=question_id))
+
+
 @app.route('/question/<int:question_id>/new-comment',methods=["GET","POST"])
 def route_new_question_comment(question_id):
     if request.method == "GET":
@@ -68,14 +84,11 @@ def route_new_question_comment(question_id):
 @app.route('/answer/<int:answer_id>/new-comment',methods=["GET","POST"])
 def route_new_answer_comment(answer_id):
     if request.method == "GET":
-        print("jeje")
         return render_template("add_new_answer_comment.html", id=answer_id)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
-        print(time)
         data_handler.write_answer_comments(answer_id, request.form.get("message"), time)
-        question_id = data_handler.get_question_id(answer_id)
-        print(question_id)
+        question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return redirect(url_for("route_list_answers",question_id=question_id))
 
 
@@ -129,14 +142,14 @@ def question_vote_down(question_id=None):
 @app.route("/answer/<int:answer_id>/vote_up", methods=["POST"])
 def answer_vote_up(answer_id=None):
     data_handler.answer_vote_up(answer_id)
-    question_id = data_handler.get_question_id(answer_id)
+    question_id = data_handler.get_question_id_from_answer_id(answer_id)
     return redirect(url_for("route_list_answers",question_id=question_id))
 
 
 @app.route("/answer/<int:answer_id>/vote_down", methods=["POST"])
 def answer_vote_down(answer_id=None):
     data_handler.answer_vote_down(answer_id)
-    question_id = data_handler.get_question_id(answer_id)
+    question_id = data_handler.get_question_id_from_answer_id(answer_id)
     return redirect(url_for("route_list_answers",question_id=question_id))
 
 

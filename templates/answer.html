@@ -19,6 +19,8 @@
     <tr>
         <td>{{ comment.message }}</td>
         <td>{{ comment.submission_time }}</td>
+        <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
+        <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
     {% endfor %}
     </tbody>
@@ -53,7 +55,8 @@
             <summary>{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
-                    <p>{{ comment.message }},{{ comment.submission_time }}</p>
+                    <p>{{ comment.message }},   {{ comment.submission_time }}</p>
+                    <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
             </details></td>
