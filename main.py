@@ -3,7 +3,18 @@ from datetime import datetime
 import data_handler
 import re
 
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/path/to/the/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
 
 
 @app.route('/')
@@ -21,15 +32,7 @@ def search():
 
 @app.context_processor
 def highlight_phrase():
-    return my_highlight_phrase()
-
-def my_highlight_phrase():
-    def _highlight_phrase(text_content, phrase):
-        if phrase == None:
-            return text_content
-        pattern = re.compile(phrase, re.IGNORECASE)
-        return pattern.sub(f'<span class="highlight">{phrase}</span>', text_content)
-    return dict(highlight_phrase=_highlight_phrase)
+    return data_handler.my_highlight_phrase()
 
 
 @app.route('/list', methods=["GET", "POST"])
@@ -69,6 +72,16 @@ def route_edit_comment(comment_id=None):
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
             question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
+
+
+@app.route('/comment/<int:comment_id>/delete')
+def route_delete_comment(comment_id):
+    question_id = data_handler.get_question_id_from_comment_id(comment_id)
+    if question_id is None:
+        answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
+        question_id = data_handler.get_question_id_from_answer_id(answer_id)
+    data_handler.delete_comment(comment_id)
+    return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route('/question/<int:question_id>/new-comment',methods=["GET","POST"])
@@ -113,7 +126,6 @@ def route_list_answers(question_id=None):
         question_title = data_handler.get_question_title(question_id)
         return render_template("answer.html",question_title=question_title,question_id=question_id,answers=answers,
                                question_comments=question_comments,answer_comments=answer_comments)
-
     if request.method == "POST":
         time = data_handler.get_the_current_date()
         data_handler.write_answer(time,0,question_id,request.form.get("message"))
@@ -153,3 +165,32 @@ def answer_vote_down(answer_id=None):
     return redirect(url_for("route_list_answers",question_id=question_id))
 
 
+@app.route('/upload_image', methods=["POST"])
+def upload_file(form_request, item, send_from_directory, app):
+    if form_request.method != 'POST':
+        item['image'] = ''
+        return None
+
+    if 'image' not in form_request.files:
+        item['image'] = ''
+        return None
+
+    image = form_request.files['image']
+
+    if image.filename == '':
+        item['image'] = ''
+        return None
+
+    if image and __allowed_file(image.filename):
+        file_extension = os.path.splitext(image.filename)[1]
+        filename = str(uuid.uuid1()) + file_extension
+        item['image'] = filename
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    item['image'] = ''
+
+
+
+def __allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in __ALLOWED_EXTENSIONS

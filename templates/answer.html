@@ -6,11 +6,11 @@
 </head>
 <body>
 <h2>{{ question_title }}</h2>
+{% if question_comments %}
 <table>
-    <h4>Comments</h4>
     <thead>
     <tr>
-        <th>Message</th>
+        <th>Comment</th>
         <th>Submission Time</th>
     </tr>
     </thead>
@@ -22,9 +22,15 @@
         <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
         <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
+{#        {% else %}#}
+{#        <p>asd</p>#}
     {% endfor %}
     </tbody>
 </table>
+    {% else %}
+<h4>There is no comments</h4>
+{% endif %}
+
     <a href="/question/{{question_id}}/new-comment" >Add comment</a>
 <br/>
 <table border="1|0">
@@ -60,7 +66,15 @@
                 {% endif %}
             {% endfor %}
             </details></td>
+        {% if story.image %}
         <td>{{story.image}}</td>
+{#            {% else %}#}
+{#            <td><form action="upload.php" method="post" enctype="multipart/form-data">#}
+{#    Select image to upload:#}
+{#    <input type="file" name="fileToUpload" id="fileToUpload">#}
+{#    <input type="submit" value="Upload Image" name="submit">#}
+{#</form></td>#}
+        {% endif %}
         <td><a href="/answer/{{ story.id }}/new-comment">Add comment</td>
     </tr>
     {% endfor %}

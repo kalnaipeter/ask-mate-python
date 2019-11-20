@@ -1,10 +1,20 @@
 import database_common
 from datetime import datetime
 
+
 def get_the_current_date():
     now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d %H:%M")
+    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
     return dt_string
+
+
+def my_highlight_phrase():
+    def _highlight_phrase(text_content, phrase):
+        if phrase == None:
+            return text_content
+        pattern = re.compile(phrase, re.IGNORECASE)
+        return pattern.sub(f'<span class="highlight">{phrase}</span>', text_content)
+    return dict(highlight_phrase=_highlight_phrase)
 
 
 @database_common.connection_handler
@@ -120,6 +130,17 @@ def read_comments(cursor):
 
 
 @database_common.connection_handler
+def edit_comment(cursor, comment_id, message):
+    cursor.execute("""
+                    UPDATE comment
+                    SET message=%(message)s
+                    WHERE id = %(comment_id)s;
+                    """,
+                   {"message": message,
+                    "comment_id": comment_id})
+
+
+@database_common.connection_handler
 def write_question_comments(cursor, question_id, message, submission_time):
     cursor.execute("""
                     INSERT INTO comment (question_id,message,submission_time)
@@ -139,17 +160,6 @@ def write_answer_comments(cursor, answer_id, message, submission_time):
                    {"answer_id": answer_id,
                     "message": message,
                     "submission_time": submission_time})
-
-
-@database_common.connection_handler
-def edit_comment(cursor, comment_id, message):
-    cursor.execute("""
-                    UPDATE comment
-                    SET message=%(message)s
-                    WHERE id = %(comment_id)s;
-                    """,
-                   {"message": message,
-                    "comment_id": comment_id})
 
 
 @database_common.connection_handler
@@ -221,6 +231,15 @@ def delete_question(cursor, question_id):
                         WHERE id = %(question_id)s;
                         """,
                    {"question_id": question_id})
+
+
+@database_common.connection_handler
+def delete_comment(cursor,comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(comment_id)s;
+                    """,
+                   {"comment_id":comment_id})
 
 
 @database_common.connection_handler
