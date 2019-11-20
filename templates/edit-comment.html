@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit comment</title>
+</head>
+<body>
+    <h2>Edit Comment</h2>
+    <form action="/comment/{{ comment_id }}/edit" method="POST">
+        <textarea rows="5" cols="30" name="message" id="message" >{{ comment_message }}</textarea>
+        <br>
+        <button type="submit">Save edit</button>
+    </form>
+</body>
+</html>
