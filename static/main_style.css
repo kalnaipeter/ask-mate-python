@@ -6,6 +6,8 @@ body {background-image:url("nature-wallpapers-hd-For-Desktop-Wallpaper.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 
+.highlight {background: yellow}
+
 #vote_up {margin-right: 30px;}
 #vote_down {margin-right:30px;}
 p {   border-style: solid;

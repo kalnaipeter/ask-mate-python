@@ -11,8 +11,8 @@
     <thead>
     <tr>
         <form action="/question/search" method="POST">
-            <input id="search" type="text" placeholder="Search.." name="search">
-            <button id="search" type="submit">&#x1F50D;</button>
+            <input  id="search" type="text" placeholder="Search.." name="search">
+            <button  id="search" type="submit">&#x1F50D;</button>
         </form>
     </tr>
     <tr>
@@ -26,7 +26,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for story in stories %}
+    {% for story in stories%}
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
@@ -41,8 +41,8 @@
                 <button name="vote_down" id="vote_down" type="submit">&#8681;</button>
             </form>
            </td>
-        <td><a href="/answers/{{story.id}}" >{{story.title}}</a></td>
-        <td>{{story.message}}</td>
+        <td><a href="/answers/{{story.id}}" >{{ highlight_phrase(story.title,fancy_word) | safe}}</a></td>
+        <td>{{ highlight_phrase(story.message,fancy_word) | safe }}</td>
         <td>{{story.image}}</td>
         <td><a href="/question/{{ story.id }}/edit">Edit</a>
         <a href="/question/{{story.id}}/delete">Delete</a>

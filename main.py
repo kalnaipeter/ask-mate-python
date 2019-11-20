@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect,url_for
 from datetime import datetime
 import data_handler
+import re
 
 app = Flask(__name__)
 
@@ -12,10 +13,22 @@ def start():
 @app.route("/question/search",methods=["POST"])
 def search():
     search_result = request.form.get("search")
-    print(search_result)
+    fancy_word = request.form.get("search")
     story = data_handler.get_search_result(search_result)
-    print(story)
-    return render_template('search_resoult.html', stories=story)
+
+    return render_template('questions.html', stories=story, fancy_word=fancy_word)
+
+@app.context_processor
+def highlight_phrase():
+    return my_highlight_phrase()
+
+def my_highlight_phrase():
+    def _highlight_phrase(text_content, phrase):
+        if phrase == None:
+            return text_content
+        pattern = re.compile(phrase, re.IGNORECASE)
+        return pattern.sub(f'<span class="highlight">{phrase}</span>', text_content)
+    return dict(highlight_phrase=_highlight_phrase)
 
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
@@ -23,11 +36,11 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"))
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories)
+        return render_template('questions.html', stories=stories, fancy_word=None)
 
     if request.method == "GET":
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories)
+        return render_template('questions.html', stories=stories,fancy_word=None)
 
 
 @app.route('/question/<int:question_id>/edit',methods=["GET","POST"])

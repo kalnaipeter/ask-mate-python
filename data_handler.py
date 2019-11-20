@@ -1,10 +1,9 @@
 import database_common
-from psycopg2 import sql
-
+from datetime import datetime
 
 def get_the_current_date():
     now = datetime.now()
-    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+    dt_string = now.strftime("%Y-%m-%d %H:%M")
     return dt_string
 
 
@@ -145,10 +144,12 @@ def get_question_data(cursor, question_id):
 
 @database_common.connection_handler
 def get_search_result(cursor,item):
-    cursor.execute(sql.SQL("SELECT * FROM question WHERE title LIKE {0} OR message LIKE {0}").format(sql.Identifier(str(item))))
-
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title LIKE %(item)s OR message LIKE %(item)s;
+                    """,
+                   {"item":'%'+item+'%'} )
     resoult = cursor.fetchall()
-    print(resoult)
     return resoult
 @database_common.connection_handler
 def edit_question(cursor, question_id, title, message):
