@@ -1,6 +1,6 @@
 import database_common
 from datetime import datetime
-
+import re
 
 def get_the_current_date():
     now = datetime.now()
