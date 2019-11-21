@@ -28,10 +28,6 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"))
         stories = data_handler.read_questions()
-        # file = request.files['upload_image']
-        # print(file)
-        # file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images" + file.filename)
-        # print("asd")
         return render_template('questions.html', stories=stories, fancy_word=None)
 
     if request.method == "GET":

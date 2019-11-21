@@ -13,11 +13,11 @@
     </form>
 </h3>
 {% if question_comments %}
-<table>
+<table id="comments" class="comments">
     <thead>
-    <tr>
-        <th>Comment</th>
-        <th>Submission Time</th>
+    <tr class="headline">
+        <th class="headline">Comment</th>
+        <th class="headline">Submission Time</th>
     </tr>
     </thead>
     <tbody>
@@ -25,11 +25,9 @@
     <tr>
         <td>{{ comment.message }}</td>
         <td>{{ comment.submission_time }}</td>
-        <td><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
-        <td><a href="/comment/{{comment.id}}/delete">Delete</a></td>
+        <td><a class="edit_delete" href="/comment/{{ comment.id }}/edit">Edit</a></td>
+        <td><a class="edit_delete" href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
-{#        {% else %}#}
-{#        <p>asd</p>#}
     {% endfor %}
     </tbody>
 </table>
@@ -38,7 +36,7 @@
 {% endif %}
     <a id="add_comment" href="/question/{{question_id}}/new-comment" >Add comment</a>
 <br/>
-<table border="1|0">
+<table class="info">
     <thead>
     <tr>
         <th>ID</th>
@@ -68,7 +66,7 @@
             <summary>{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
-                    <p>{{ comment.message }},   {{ comment.submission_time }}</p>
+                    <p class="answer_comment" >{{ comment.message }},   {{ comment.submission_time }}</p>
                     <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
