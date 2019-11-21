@@ -15,10 +15,10 @@
     <h3>
     <form action="/question/{{ question_id }}/edit" method="POST">
         <label for="title">Story Title:</label>
-        <input id="title" type="text" name="title" value="{{ question_title }}">
+        <input size="39" id="title" type="text" name="title" value="{{ question_title }}">
         <br>
         <br>
-        <textarea rows="5" cols="30" name="message" id="message" >{{ question_message }}</textarea>
+        <textarea rows="8" cols="100" name="message" id="message" >{{ question_message }}</textarea>
         <br>
         <button type="submit">Save edit</button>
     </form>
