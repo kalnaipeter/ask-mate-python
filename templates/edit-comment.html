@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>edit comment</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <title>Edit comment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_add_comment.css') }}">
 </head>
 <body>
-    <h2>Edit Comment</h2>
-    <form action="/comment/{{ comment_id }}/edit" method="POST">
-        <textarea rows="5" cols="30" name="message" id="message" >{{ comment_message }}</textarea>
-        <br>
-        <button type="submit">Save edit</button>
-    </form>
+    <h1>Edit Comment</h1>
+    <h2>
+        <form action="/comment/{{ comment_id }}/edit" method="POST">
+            <textarea rows="5" cols="30" name="message" id="message" >{{ comment_message }}</textarea>
+            <br>
+            <button type="submit">Save edit</button>
+        </form>
+    </h2>
 </body>
-<a href="/answers/{{ question_id }}">Back</a>
+    <h3>
+        <form action="/answers/{{ question_id }}">
+            <button id="button" class="button button1">Back</button>
+        </form>
+    </h3>
 </html>

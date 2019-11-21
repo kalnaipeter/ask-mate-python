@@ -3,8 +3,8 @@ body {background-image:url("red_black_abstract.jpg");
         background-size: cover}
 #title {margin-top:2px}
 
-h4 {margin: auto;
-    margin-left: 20px;}
+h4 {margin-block: auto;
+    margin-left: 20%;}
 
 h2 {
     background: darkred;
@@ -22,10 +22,8 @@ h3{display: inline-block;
     font-size: 40px;
     border-style: groove;
     border-color: whitesmoke;
-    margin: auto;
+    margin-block: auto;
     width: 70%;
-    margin-left: 200px;
-    margin-top: 40px;
      border-radius: 10px;
     text-align: center;
     }
