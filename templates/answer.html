@@ -77,7 +77,10 @@
             <td></td>
         {% endif %}
         <td class="edit_delete">
+            <a href="/answer/{{ story.id }}/edit">Edit</a>
+            <br/>
             <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
+            <br/>
             <a href="/answer/{{ story.id }}/delete">Delete</a>
         </td>
     </tr>

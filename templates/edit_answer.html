@@ -13,12 +13,9 @@
         </form>
      </h4>
     <h3>
-    <form action="/answer/{{ question_id }}/edit" method="POST" enctype="multipart/form-data">
-        <label for="title">Story Title:</label>
-        <input size="39" id="title" type="text" name="title" value="{{ question_title }}">
-        <br>
-        <br>
-        <textarea rows="8" cols="100" name="message" id="message" >{{ question_message }}</textarea>
+    <form action="/answer/{{ answer_id }}/edit" method="POST" enctype="multipart/form-data">
+        <label for="message">Answer Message:</label>
+        <textarea rows="8" cols="100" name="message" id="message" >{{ answer_message }}</textarea>
         <br>
         <input type="file" name="file" id="file">
         <button type="submit">Save edit</button>

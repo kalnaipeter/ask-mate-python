@@ -6,10 +6,6 @@ import re
 app = Flask(__name__)
 
 
-
-
-
-
 @app.route('/')
 def start():
     return redirect('/list')
@@ -21,7 +17,7 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
             data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
@@ -41,7 +37,7 @@ def route_edit_question(question_id):
     if request.method == "POST":
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
             data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
@@ -77,28 +73,28 @@ def route_list_answers(question_id=None):
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
             data_handler.write_answer(time,0,question_id,request.form.get("message"),file.filename)
         else:
             data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)
-        print(answers)
-        return render_template("answer.html",question_title=question_title,answers=answers,question_id=question_id)
+        return redirect(url_for("route_list_answers",question_id=question_id))
 
-#
-# @app.route('/answer/<int:question_id>/edit',methods=["GET","POST"])
-# def route_edit_question(answer_id):
-#     if request.method == "GET":
-#         question_title = data_handler.get_question_title(question_id)
-#         question_message = data_handler.get_question_message(question_id)
-#         return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
-#     if request.method == "POST":
-#         if request.files['file']:
-#             file = request.files['file']
-#             file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
-#             data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
-#         else:
-#             data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
-#         return redirect('/list')
+
+@app.route('/answer/<int:answer_id>/edit',methods=["GET","POST"])
+def route_edit_answer(answer_id):
+    if request.method == "GET":
+        answer_message = data_handler.get_answer_message(answer_id)
+        print(answer_message)
+        return render_template("edit_answer.html",answer_message=answer_message,answer_id=answer_id)
+    if request.method == "POST":
+        question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        if request.files['file']:
+            file = request.files['file']
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            data_handler.edit_answer(answer_id, request.form.get("message"),file.filename)
+        else:
+            data_handler.edit_answer(answer_id, request.form.get("message"),data_handler.get_answer_image(answer_id))
+        return redirect(url_for("route_list_answers",question_id=question_id))
 
 
 @app.route('/answers/<int:question_id>/add-new-answer')

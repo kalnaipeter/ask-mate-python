@@ -96,6 +96,17 @@ def get_question_title(cursor, question_id):
 
 
 @database_common.connection_handler
+def get_answer_message(cursor,answer_id):
+    cursor.execute("""
+                    SELECT message FROM answer
+                    WHERE id= %(answer_id)s
+                    """,
+                   {"answer_id":answer_id})
+    answer_message_dictionary = cursor.fetchone()
+    return answer_message_dictionary["message"]
+
+
+@database_common.connection_handler
 def get_question_id_from_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id FROM answer
@@ -257,6 +268,17 @@ def get_image(cursor,question_id):
 
 
 @database_common.connection_handler
+def get_answer_image(cursor,answer_id):
+    cursor.execute("""
+                    SELECT image FROM answer
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"answer_id":answer_id})
+    answer_image = cursor.fetchone()
+    return answer_image["image"]
+
+
+@database_common.connection_handler
 def get_question_data(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM question
@@ -288,6 +310,18 @@ def edit_question(cursor, question_id, title, message,image):
                    {"title": title,
                     "message": message,
                     "question_id": question_id,
+                    "image":image})
+
+
+@database_common.connection_handler
+def edit_answer(cursor, answer_id, message,image):
+    cursor.execute("""
+                    UPDATE answer
+                    SET message=%(message)s,image=%(image)s
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"message": message,
+                    "answer_id": answer_id,
                     "image":image})
 
 
