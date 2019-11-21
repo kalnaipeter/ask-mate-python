@@ -5,6 +5,11 @@
     <title>Add a new answer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
 </head>
+<h3>
+    <form action="/" >
+            <button id="button" class="button button1" ><i class="fa fa-bars"></i> Home</button>
+    </form>
+</h3>
 <body>
     <h1>Make a new Answer</h1>
     <form action="/answers/{{question_id}}" method="post">
@@ -12,5 +17,6 @@
         <br>
         <button type="submit"> Add new Answer</button>
     </form>
+<a href="/answers/{{ question_id }}">Back</a>
 </body>
 </html>
