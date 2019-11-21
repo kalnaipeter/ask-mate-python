@@ -219,16 +219,17 @@ def write_answer_comments(cursor, answer_id, message, submission_time):
 
 
 @database_common.connection_handler
-def write_question(cursor, submission_time, view_number, vote_number, title, message):
+def write_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
-                    INSERT INTO question (submission_time,view_number,vote_number,title,message)
-                    VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s);
+                    INSERT INTO question (submission_time,view_number,vote_number,title,message,image)
+                    VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s);
                     """,
                    {"submission_time": submission_time,
                     "view_number": view_number,
                     "vote_number": vote_number,
                     "title": title,
-                    "message": message})
+                    "message": message,
+                    "image":image})
 
 
 @database_common.connection_handler

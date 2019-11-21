@@ -5,11 +5,6 @@
     <title>Add a question</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='add_question.css') }}">
 </head>
-<h3>
-    <form action="/" >
-            <button id="button" class="button button1" ><i class="fa fa-bars"></i> Home</button>
-    </form>
-</h3>
 <body>
     <h2>Add Question</h2>
      <h4>
@@ -18,12 +13,12 @@
         </form>
      </h4>
     <h3>
-        <form action="/list" method="POST">
+        <form action="/list" method="POST" enctype="multipart/form-data">
             <label for="title">Story Title:</label>
-            <input id="title" type="text" name="title" placeholder="{{ question_title }}">
+            <input id="title" type="text" name="title">
             <br>
             <br>
-            <textarea rows="8" cols="100" id="message" name="message" placeholder="{{question_message}}"></textarea>
+            <textarea rows="8" cols="100" id="message" name="message"></textarea>
             <br>
             <input type="file" name="file" id="file">
             <button type="submit">Add new Question</button>
