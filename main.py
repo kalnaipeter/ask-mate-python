@@ -28,7 +28,7 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
             data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
