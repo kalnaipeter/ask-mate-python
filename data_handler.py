@@ -82,6 +82,8 @@ def display_latest(cursor):
                     """)
     time = cursor.fetchall()
     return time
+
+
 @database_common.connection_handler
 def get_question_title(cursor, question_id):
     cursor.execute("""
@@ -127,6 +129,17 @@ def get_answer_id_from_comment_id(cursor, comment_id):
 
     answer_dictionary = cursor.fetchone()
     return answer_dictionary["answer_id"]
+
+
+@database_common.connection_handler
+def get_answer_ids_with_question_id(cursor,question_id):
+    cursor.execute("""
+                    SELECT id FROM answer
+                    WHERE question_id = %(question_id)s;
+                    """,
+                   {"question_id":question_id})
+    answer_ids_dictionary = cursor.fetchall()
+    return [item["id"] for item in answer_ids_dictionary]
 
 
 @database_common.connection_handler
@@ -268,6 +281,8 @@ def edit_question(cursor, question_id, title, message):
 @database_common.connection_handler
 def delete_question(cursor, question_id):
     cursor.execute("""
+                        DELETE FROM comment
+                        WHERE question_id = %(question_id)s;
                         DELETE FROM answer
                         WHERE question_id = %(question_id)s;
                         DELETE FROM question
@@ -275,6 +290,16 @@ def delete_question(cursor, question_id):
                         """,
                    {"question_id": question_id})
 
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE answer_id = %(answer_id)s;
+                    DELETE FROM answer
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {"answer_id":answer_id})
 
 @database_common.connection_handler
 def delete_comment(cursor,comment_id):
