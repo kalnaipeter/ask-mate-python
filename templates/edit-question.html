@@ -5,6 +5,11 @@
     <title>Add a question</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
 </head>
+{#<h3>#}
+{#    <form action="/" >#}
+{#            <button id="button" class="button button1" ><i class="fa fa-bars"></i> Home</button>#}
+{#    </form>#}
+{#</h3>#}
 <body>
     <h2>Edit Question</h2>
     <form action="/question/{{ question_id }}/edit" method="POST">

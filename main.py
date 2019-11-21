@@ -28,9 +28,9 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"))
         stories = data_handler.read_questions()
-        # file = request.files['file']
+        # file = request.files['upload_image']
         # print(file)
-        # file.save("/kalnpeter/askmate/" + file.filename)
+        # file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images" + file.filename)
         # print("asd")
         return render_template('questions.html', stories=stories, fancy_word=None)
 
@@ -46,7 +46,9 @@ def route_edit_question(question_id):
         question_message = data_handler.get_question_message(question_id)
         return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
     if request.method == "POST":
+        print("belép")
         data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"))
+        print("mindenjó")
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories)
 
@@ -117,7 +119,8 @@ def route_new_question_comment(question_id):
 @app.route('/answer/<int:answer_id>/new-comment',methods=["GET","POST"])
 def route_new_answer_comment(answer_id):
     if request.method == "GET":
-        return render_template("add_new_answer_comment.html", id=answer_id)
+        question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        return render_template("add_new_answer_comment.html", id=answer_id,question_id=question_id)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
         data_handler.write_answer_comments(answer_id, request.form.get("message"), time)
@@ -129,7 +132,11 @@ def route_new_answer_comment(answer_id):
 def route_edit_comment(comment_id=None):
     if request.method == "GET":
         comment_message = data_handler.get_comment_message(comment_id)
-        return render_template("edit-comment.html", comment_id=comment_id,comment_message=comment_message)
+        question_id = data_handler.get_question_id_from_comment_id(comment_id)
+        if question_id is None:
+            answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
+            question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        return render_template("edit-comment.html", comment_id=comment_id,comment_message=comment_message,question_id=question_id)
     if request.method == "POST":
         data_handler.edit_comment(comment_id,request.form.get("message"))
         question_id = data_handler.get_question_id_from_comment_id(comment_id)
