@@ -62,15 +62,16 @@ table {border-style: solid;
             margin-left: 500px;
             margin-bottom: 20px;
             text-align: center;}
-
+.fa fa-bars {display: inline-block}
 #add_comment {border-style: groove;
              background:  honeydew;
+             background-size: 20px;
              border-radius: 12px;
              border-color: darkgrey;
-            margin-top: 10px;
-            margin-right: 500px;
-            margin-left: 500px;
-            margin-bottom: 20px;}
+             margin-top: 10px;
+             margin-right: 500px;
+             margin-left: 500px;
+             margin-bottom: 20px;}
 
 .button
   {

@@ -8,17 +8,20 @@
 <body>
 <h1>Ask Mate Python</h1>
 <h2>
-     <form action="/question/search" method="POST">
+     <form id="search" action="/question/search" method="POST">
             <input  id="search" type="text" placeholder="Search.." name="search"  size="39.5" >
      </form>
 </h2>
-<h3>
+<div class="fa-bars" >
     <form action="/" >
-            <button id="button" class="button button1""><i class="fa fa-bars"></i> Home</button>
+            <button id="button" class="button button1"> Home</button>
     </form>
-</h3>
+    <form action="/add-question">
+            <button  id="button" class="button button2">Add a question</button>
+    </form>
+</div>
 <table>
-    <thead>
+    <thead id="my_head">
         <th>ID</th>
         <th><a href="/question/order_by_time" >Submission Time</a></th>
         <th><a href="/question/order_by_view" >View Number</a></th>
@@ -26,7 +29,6 @@
         <th><a href="/question/order_by_title" >Title</a></th>
         <th><a href="/question/order_by_message" >Message</a></th>
         <th>Image</th>
-    </tr>
     </thead>
     <tbody>
     {% for story in stories %}
@@ -58,6 +60,5 @@
     {% endfor %}
     </tbody>
 </table>
-    <p  id="new_answer"><a href="/add-question">Add a question</a></p>
 </body>
 </html>

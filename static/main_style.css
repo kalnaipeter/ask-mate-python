@@ -4,10 +4,14 @@ table{border-style: solid;
       border-radius: 12px;
         }
 
+#my_head {background: purple}
+
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
-.button {
+
+#my_head {background-color: purple}
+.button {margin:auto;
   background-color: darkred; /* Green */
   border: none;
   padding: 15px 32px;
@@ -18,46 +22,37 @@ body {background-image:url("red_black_abstract.jpg");
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     border-radius: 12px;
-    margin-top: 0px;
-    margin-right: 0px;
-    margin-left: 600px;
-    margin-bottom:0px;
-    border-radius: 12px;
         }
-.button1:hover {background-color: white;}
 
-h2 { margin-top: 0px;
-      margin-right: 500px;
-      margin-left: 500px;
-      margin-bottom:0px;
-      border-radius: 12px;}
+.button1:hover {background-color: white;}
+.button2:hover {background-color: white;}
+
+div{margin: auto;
+    width: 15%;}
+input{margin: auto}
+.button2 {margin-left: 20px
+    border-radius: 12px;}
+.button1 {margin-left: 30px}
+h2{margin-left: 500px;
+    margin-right: 500px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border-radius: 12px;}
 
 .highlight {background: red}
 
-#vote_up {margin-top: 0px;
-      margin-right: 5px;
-      margin-left: 5px;
-      margin-bottom:0px;
+#vote_up {margin: auto;
           border-radius: 12px;}
-#vote_down{ margin-top: 0px;
-      margin-right: 5px;
-      margin-left: 5px;
-      margin-bottom:0px;;
+#vote_down{margin: auto;
             border-radius: 12px;}
 p {   border-style: solid;
       background: darkred;
       cursor: pointer;
-      margin-top: 0px;
-      margin-right: 500px;
-      margin-left: 500px;
-      margin-bottom:0px;
+      margin: auto;
       text-align: center;
       border-radius: 12px;
 }
-#vote_number {margin-top: 0px;
-             margin-right: 5px;
-             margin-left: 5px;
-             margin-bottom:0px;
+#vote_number {margin: auto;
              border-radius: 12px;}
 
 a:-webkit-any-link {
@@ -68,10 +63,8 @@ a:-webkit-any-link {
 h1 {border-style: groove;
     background:  darkred;
     border-color: darkgrey;
-    margin-top: 10px;
-    margin-right: 500px;
-    margin-left: 500px;
-    margin-bottom: 20px;
+    margin: auto;
+    width: 30%;
     text-align: center;
     border-radius: 12px;}
 
@@ -79,7 +72,7 @@ th {border-style: groove;
     border-color: darkgrey;
     background:  honeydew;
     background-position: inherit;
-    margin: 50px;
+    margin: auto;
     border-radius: 12px;}
 
 td {border-style: groove;
@@ -89,12 +82,3 @@ td {border-style: groove;
     text-align: center;
     border-radius: 12px;
     }
-#new_answer {border-style: groove;
-    background: honeydew;
-    border-color: darkgrey;
-    margin-top: 10px;
-    margin-right: 500px;
-    margin-left: 500px;
-    margin-bottom: 20px;
-    text-align: center;
-    border-radius: 12px;}
