@@ -74,11 +74,9 @@
             {% endfor %}
             </details>
         </td>
-        {% if story.image %}
         <td>{{story.image}}</td>
-        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a></td>
-        {% endif %}
-        <td><a href="/answer/{{ story.id }}/new-comment">Add comment</a></td>
+        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
+            <a href="/answer/{{ story.id }}/delete">Delete</a></td>
     </tr>
     {% endfor %}
     </tbody>
