@@ -8,7 +8,7 @@ table{border-style: solid;
       border-radius: 12px;
         }
 
-#my_head {background: purple}
+#edit_delete{background: black}
 
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
@@ -59,7 +59,7 @@ p {   border-style: solid;
              border-radius: 12px;}
 
 a:-webkit-any-link {
-    color: #9C1A1C;
+    color: red;
     cursor: pointer;
     text-decoration: #9C1A1C;}
 
@@ -71,12 +71,12 @@ h1 {border-style: groove;
     text-align: center;
     border-radius: 12px;}
 
-th {border-style: groove;
-    border-color: darkgrey;
-    background:  honeydew;
-    background-position: inherit;
-    margin: auto;
-    border-radius: 12px;}
+th.headline {
+    position: relative;
+    color: white;
+            background: black;
+            border-style: groove;
+            border-radius: 12px}
 
 td {border-style: groove;
     border-color: darkgrey;

@@ -22,28 +22,15 @@ h4 {border-style: groove;
     text-align: center;
     border-radius: 12px;}
 
-th {border-style: groove;
-    background:  honeydew;
-    border-color: darkgrey;
-    background-position: inherit;
-    margin-top: 10px;
-            margin-right: 500px;
-            margin-left: 500px;
-            margin-bottom: 20px;
-    border-radius: 12px;}
-
 td {border-style: groove;
-    border-color:darkgrey;
+    border-color: darkgrey;
     background: honeydew;
-    margin-top: 10px;
-            margin-right: 500px;
-            margin-left: 500px;
-            margin-bottom: 20px;
+    margin: 50px;
     text-align: center;
     border-radius: 12px;
     }
 a:-webkit-any-link {
-    color: #9C1A1C;
+    color:red;
     cursor: pointer;
     text-decoration: #9C1A1C;}
 
@@ -72,7 +59,7 @@ a:-webkit-any-link {
             margin-left: 25%;
             margin-bottom: 30%;
             padding: 0.5%}
-
+#edit_delete {background: black}
 
 .button
   {
@@ -99,22 +86,29 @@ table.comments {border-style: groove;
             margin-left: 25%;
             margin-bottom: 0.5%;
             width: 50%;}
-a.edit_delete{background:black;
-        size: inherit;
-        color: white;
+td.edit_delete{background:black;
         border-style: groove;
     margin-block: auto;
-        margin-right: 20%;
-        padding-left: 20%;
-        padding-right: 20%;
+        width: 10%;
         border-radius: 12px}
-p.answer_comment {background: darkgrey;}
+
+#answer_comment {background: darkgrey;
+                    width: 80%;
+                    margin-block: auto;
+                    margin-left: 10%;
+                    border-radius: 12px}
 
 th.headline {
     position: relative;
     color: white;
             background: black;
             border-style: groove;
+            border-radius: 12px}
+tr.headline2{
+            background: black;
+            color: white;
+            border-style: groove;
+            border-color: darkgrey;
             border-radius: 12px}
 
 table.info {border-style: groove;
@@ -126,3 +120,12 @@ table.info {border-style: groove;
             margin-bottom: 0.7%;
             width: 80%;
             padding: 0.5%;}
+
+#vote_up {margin-block: auto;
+          border-radius: 12px;}
+
+#vote_down{
+            border-radius: 12px;}
+
+#vote_number {
+             border-radius: 12px;}

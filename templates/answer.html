@@ -25,8 +25,8 @@
     <tr>
         <td>{{ comment.message }}</td>
         <td>{{ comment.submission_time }}</td>
-        <td><a class="edit_delete" href="/comment/{{ comment.id }}/edit">Edit</a></td>
-        <td><a class="edit_delete" href="/comment/{{comment.id}}/delete">Delete</a></td>
+        <td id="edit_delete"><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
+        <td id="edit_delete"><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
     {% endfor %}
     </tbody>
@@ -38,12 +38,12 @@
 <br/>
 <table class="info">
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>Submission Time</th>
-        <th>Vote Number</th>
-        <th>Message</th>
-        <th>Image</th>
+    <tr class="headline2">
+        <th class="headline">ID</th>
+        <th class="headline">Submission Time</th>
+        <th class="headline">Vote Number</th>
+        <th class="headline">Message</th>
+        <th class="headline">Image</th>
     </tr>
     </thead>
     <tbody>
@@ -52,7 +52,6 @@
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
         <td>
-            <br/>
             <form action="/answer/{{story.id}}/vote_up" method="POST">
                 <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
             </form>
@@ -66,15 +65,17 @@
             <summary>{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
-                    <p class="answer_comment" >{{ comment.message }},   {{ comment.submission_time }}</p>
+                    <p>{{ comment.message }},   {{ comment.submission_time }}</p>
                     <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
             </details>
         </td>
         <td>{{story.image}}</td>
-        <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
-            <a href="/answer/{{ story.id }}/delete">Delete</a></td>
+        <td class="edit_delete">
+            <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
+            <a href="/answer/{{ story.id }}/delete">Delete comment</a>
+        </td>
     </tr>
     {% endfor %}
     </tbody>
