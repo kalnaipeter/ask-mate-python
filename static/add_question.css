@@ -19,7 +19,7 @@ h2 {
 
 h3{display: inline-block;
     background: darkred;
-    font-size: 35px;
+    font-size: 40px;
     border-style: groove;
     border-color: whitesmoke;
     margin: auto;
@@ -41,5 +41,4 @@ h3{display: inline-block;
     border-radius: 12px;
         }
 .button1:hover {background-color: white;}
-.button1 {margin-left: 600px;
-            margin-top: 10px}
+.button1 {margin-left: 600px}
