@@ -26,12 +26,18 @@ def start():
 def route_list_questions():
     if request.method == "POST":
         time = data_handler.get_the_current_date()
-        data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"))
+        if request.files['file']:
+            file = request.files['file']
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
+        else:
+            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories, fancy_word=None)
 
     if request.method == "GET":
         stories = data_handler.read_questions()
+        print(stories)
         return render_template('questions.html', stories=stories,fancy_word=None)
 
 
@@ -42,9 +48,7 @@ def route_edit_question(question_id):
         question_message = data_handler.get_question_message(question_id)
         return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
     if request.method == "POST":
-        print("belép")
         data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"))
-        print("mindenjó")
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories,fancy_word=None)
 
