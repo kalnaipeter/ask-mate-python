@@ -3,15 +3,8 @@ from datetime import datetime
 import data_handler
 import re
 
-import os
-from werkzeug.utils import secure_filename
-
-# UPLOAD_FOLDER = '/path/to/the/uploads'
-# ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
 app = Flask(__name__)
 
-# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
@@ -28,7 +21,7 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
             data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
@@ -48,7 +41,7 @@ def route_edit_question(question_id):
     if request.method == "POST":
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
             data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
@@ -84,7 +77,7 @@ def route_list_answers(question_id=None):
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
             data_handler.write_answer(time,0,question_id,request.form.get("message"),file.filename)
         else:
             data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)

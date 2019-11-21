@@ -8,13 +8,19 @@ table{border-style: solid;
       border-radius: 12px;
         }
 
-#my_head {background: purple}
+#edit_delete{background: black}
 
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 h5{margin-block: auto;
     margin-left: 44%;}
+
+
+
+
+
+
 .button {margin:auto;
   background-color: darkred; /* Green */
   border: none;
@@ -32,14 +38,12 @@ h5{margin-block: auto;
 
 div{margin: auto;
     width: 15%;}
-input{margin: auto}
-.button2 {margin-left: 20px
-    border-radius: 12px;}
+
+.button2 {margin-left: 20px;
+            border-radius: 12px;}
 .button1 {margin-left: 30px}
-h2{margin-left: 500px;
-    margin-right: 500px;
-    margin-bottom: 0px;
-    margin-top: 0px;
+
+h2{margin-left: 37%;
     border-radius: 12px;}
 
 .highlight {background: red}
@@ -59,7 +63,7 @@ p {   border-style: solid;
              border-radius: 12px;}
 
 a:-webkit-any-link {
-    color: #9C1A1C;
+    color: red;
     cursor: pointer;
     text-decoration: #9C1A1C;}
 
@@ -71,12 +75,12 @@ h1 {border-style: groove;
     text-align: center;
     border-radius: 12px;}
 
-th {border-style: groove;
-    border-color: darkgrey;
-    background:  honeydew;
-    background-position: inherit;
-    margin: auto;
-    border-radius: 12px;}
+th.headline {
+    position: relative;
+    color: white;
+            background: black;
+            border-style: groove;
+            border-radius: 12px}
 
 td {border-style: groove;
     border-color: darkgrey;

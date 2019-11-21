@@ -22,13 +22,13 @@
 </h5>
 <table>
     <thead id="my_head">
-        <th>ID</th>
-        <th><a href="/question/order_by_time" >Submission Time</a></th>
-        <th><a href="/question/order_by_view" >View Number</a></th>
-        <th><a href="/question/order_by_vote" >Vote Number</a></th>
-        <th><a href="/question/order_by_title" >Title</a></th>
-        <th><a href="/question/order_by_message" >Message</a></th>
-        <th>Image</th>
+        <th class="headline">ID</th>
+        <th class="headline"><a href="/question/order_by_time" >Submission Time</a></th>
+        <th class="headline"><a href="/question/order_by_view" >View Number</a></th>
+        <th class="headline"><a href="/question/order_by_vote" >Vote Number</a></th>
+        <th class="headline"><a href="/question/order_by_title" >Title</a></th>
+        <th class="headline"><a href="/question/order_by_message" >Message</a></th>
+        <th class="headline">Image</th>
     </thead>
     <tbody>
     {% for story in stories %}
@@ -53,7 +53,7 @@
             {% else %}
             <td></td>
         {% endif %}
-        <td><a href="/question/{{ story.id }}/edit">Edit</a>
+        <td id="edit_delete"><a href="/question/{{ story.id }}/edit">Edit</a>
         <a href="/question/{{story.id}}/delete">Delete</a>
         </td>
     </tr>

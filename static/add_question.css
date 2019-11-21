@@ -4,16 +4,16 @@ body {background-image:url("red_black_abstract.jpg");
 #title {margin-top:2px}
 
 h4 {margin-block: auto;
-    margin-left: 20%;}
+    margin-left: 43%;}
 
 h2 {
     background: darkred;
     font-size: 40px;
     border-style: groove;
     border-color: whitesmoke;
-    margin: auto;
-    margin-top: 50px;
-    width: 15%;
+    margin-block: auto;
+    margin-left: 40.5%;
+    width: 13.4%;
     text-align: center;
  border-radius: 10px}
 
@@ -23,6 +23,7 @@ h3{display: inline-block;
     border-style: groove;
     border-color: whitesmoke;
     margin-block: auto;
+    margin-left: 13%;
     width: 70%;
      border-radius: 10px;
     text-align: center;
@@ -39,4 +40,3 @@ h3{display: inline-block;
     border-radius: 12px;
         }
 .button1:hover {background-color: white;}
-.button1 {margin-left: 600px}
