@@ -1,0 +1,41 @@
+body {background-image:url("red_black_abstract.jpg");
+      background-repeat: no-repeat;
+        background-size: cover}
+h1 {border-style: groove;
+    background:darkred;
+    margin-block: auto;
+    margin-left: 39.5%;
+    width: 20%;
+    text-align: center;
+    border-radius: 12px;}
+
+h2{
+    background: darkred;
+    font-size: 40px;
+    border-style: groove;
+    border-color: whitesmoke;
+    margin-block: auto;
+    margin-left: 38%;
+    width: 20%;
+    padding: 20px;
+    text-align: center;
+ border-radius: 10px}
+.button {
+          background-color: darkred; /* Green */
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          -webkit-transition-duration: 0.4s; /* Safari */
+          transition-duration: 0.4s;
+          border-radius: 12px;}
+
+.button1:hover {
+  background-color: white;
+    color: black;
+}
+h3 {margin-block: auto;
+    margin-left: 45.5%;}

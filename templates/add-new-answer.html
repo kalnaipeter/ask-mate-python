@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Add a new answer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_add_comment.css') }}">
 </head>
-<h3>
-    <form action="/" >
-            <button id="button" class="button button1" ><i class="fa fa-bars"></i> Home</button>
-    </form>
-</h3>
+
 <body>
     <h1>Make a new Answer</h1>
     <form action="/answers/{{question_id}}" method="post" enctype="multipart/form-data">
@@ -19,5 +15,17 @@
         <button type="submit"> Add new Answer</button>
     </form>
 <a href="/answers/{{ question_id }}">Back</a>
+    <h2>
+        <form action="/answers/{{question_id}}" method="post">
+            <textarea rows="5" cols="30" id="message" name="message" placeholder="Answer"></textarea>
+            <br>
+            <button type="submit"> Add new Answer</button>
+        </form>
+    </h2>
 </body>
+ <h3>
+        <form action="/answers/{{ question_id }}">
+            <button id="button" class="button button1">Back</button>
+        </form>
+    </h3>
 </html>

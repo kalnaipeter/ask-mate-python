@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Add a new comment</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_add_comment.css') }}">
 </head>
 <body>
     <h1>Make a new Comment</h1>
-    <form action="/answer/{{ id }}/new-comment" method="post">
-        <textarea rows="5" cols="30" id="message" name="message" placeholder="Comment"></textarea>
-        <br>
-        <button type="submit"> Add new Comment</button>
-    </form>
+    <h2>
+        <form action="/answer/{{ id }}/new-comment" method="post">
+            <textarea rows="5" cols="30" id="message" name="message" placeholder="Comment"></textarea>
+            <br>
+            <button type="submit"> Add new Comment</button>
+        </form>
+    </h2>
 </body>
-<a href="/answers/{{ question_id }}">Back</a>
+ <h3>
+        <form action="/answers/{{ question_id }}">
+            <button id="button" class="button button1">Back</button>
+        </form>
+    </h3>
 </html>
