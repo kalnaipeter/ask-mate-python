@@ -6,12 +6,12 @@ import re
 import os
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/path/to/the/uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+# UPLOAD_FOLDER = '/path/to/the/uploads'
+# ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
@@ -28,13 +28,12 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/korsos/PycharmProjects/askme/ask-mate-python/static/images/" + file.filename)
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
             data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories, fancy_word=None)
-
     if request.method == "GET":
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories,fancy_word=None)
@@ -47,9 +46,13 @@ def route_edit_question(question_id):
         question_message = data_handler.get_question_message(question_id)
         return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
     if request.method == "POST":
-        data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"))
-        stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories,fancy_word=None)
+        if request.files['file']:
+            file = request.files['file']
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
+        else:
+            data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
+        return redirect('/list')
 
 
 @app.route('/question/<int:question_id>/delete')
@@ -76,10 +79,16 @@ def route_list_answers(question_id=None):
         return render_template("answer.html",question_title=question_title,question_id=question_id,answers=answers,
                                question_comments=question_comments,answer_comments=answer_comments)
     if request.method == "POST":
-        time = data_handler.get_the_current_date()
-        data_handler.write_answer(time,0,question_id,request.form.get("message"))
         answers = data_handler.read_answers(question_id)
         question_title = data_handler.get_question_title(question_id)
+        time = data_handler.get_the_current_date()
+        if request.files['file']:
+            file = request.files['file']
+            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            data_handler.write_answer(time,0,question_id,request.form.get("message"),file.filename)
+        else:
+            data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)
+        print(answers)
         return render_template("answer.html",question_title=question_title,answers=answers,question_id=question_id)
 
 

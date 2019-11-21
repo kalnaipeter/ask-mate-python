@@ -159,8 +159,7 @@ def read_answers(cursor, question_id):
                         WHERE question_id = %(question_id)s
                         ORDER BY id;
                        """,
-                   {"question_id": question_id}
-                   )
+                   {"question_id": question_id})
     stories = cursor.fetchall()
     return stories
 
@@ -233,16 +232,28 @@ def write_question(cursor, submission_time, view_number, vote_number, title, mes
 
 
 @database_common.connection_handler
-def write_answer(cursor, submission_time, vote_number, question_id, message):
+def write_answer(cursor, submission_time, vote_number, question_id, message,image):
     cursor.execute("""
-                INSERT INTO answer (submission_time,vote_number,question_id,message)
-                VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s);
+                INSERT INTO answer (submission_time,vote_number,question_id,message,image)
+                VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s);
                     """,
 
                    {"submission_time": submission_time,
                     "vote_number": vote_number,
                     "message": message,
-                    "question_id": question_id})
+                    "question_id": question_id,
+                    "image":image})
+
+
+@database_common.connection_handler
+def get_image(cursor,question_id):
+    cursor.execute("""
+                    SELECT image FROM question
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id":question_id})
+    image = cursor.fetchone()
+    return image["image"]
 
 
 @database_common.connection_handler
@@ -268,15 +279,16 @@ def get_search_result(cursor,item):
 
 
 @database_common.connection_handler
-def edit_question(cursor, question_id, title, message):
+def edit_question(cursor, question_id, title, message,image):
     cursor.execute("""
                     UPDATE question
-                    SET title=%(title)s,message=%(message)s
+                    SET title=%(title)s,message=%(message)s,image=%(image)s
                     WHERE id = %(question_id)s;
                     """,
                    {"title": title,
                     "message": message,
-                    "question_id": question_id})
+                    "question_id": question_id,
+                    "image":image})
 
 
 @database_common.connection_handler
@@ -353,7 +365,6 @@ def answer_vote_up(cursor, answer_id):
 
 @database_common.connection_handler
 def answer_vote_down(cursor, answer_id):
-    print(answer_id)
     cursor.execute("""
                     UPDATE answer
                     SET vote_number = vote_number -1

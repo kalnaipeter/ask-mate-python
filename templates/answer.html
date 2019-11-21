@@ -72,7 +72,11 @@
             {% endfor %}
             </details>
         </td>
-        <td>{{story.image}}</td>
+        {% if story.image %}
+            <td><img src="static/images/{{ story.image }}" width="100" height="100"></td>
+            {% else %}
+            <td></td>
+        {% endif %}
         <td><a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
             <a href="/answer/{{ story.id }}/delete">Delete</a></td>
     </tr>

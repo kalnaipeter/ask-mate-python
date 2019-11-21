@@ -12,9 +12,10 @@
 </h3>
 <body>
     <h1>Make a new Answer</h1>
-    <form action="/answers/{{question_id}}" method="post">
+    <form action="/answers/{{question_id}}" method="post" enctype="multipart/form-data">
         <textarea rows="5" cols="30" id="message" name="message" placeholder="Answer"></textarea>
         <br>
+        <input type="file" name="file" id="file">
         <button type="submit"> Add new Answer</button>
     </form>
 <a href="/answers/{{ question_id }}">Back</a>
