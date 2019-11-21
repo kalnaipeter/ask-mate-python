@@ -91,6 +91,22 @@ def route_list_answers(question_id=None):
         print(answers)
         return render_template("answer.html",question_title=question_title,answers=answers,question_id=question_id)
 
+#
+# @app.route('/answer/<int:question_id>/edit',methods=["GET","POST"])
+# def route_edit_question(answer_id):
+#     if request.method == "GET":
+#         question_title = data_handler.get_question_title(question_id)
+#         question_message = data_handler.get_question_message(question_id)
+#         return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
+#     if request.method == "POST":
+#         if request.files['file']:
+#             file = request.files['file']
+#             file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+#             data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
+#         else:
+#             data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
+#         return redirect('/list')
+
 
 @app.route('/answers/<int:question_id>/add-new-answer')
 def route_add_new_answer(question_id=None):
@@ -204,17 +220,24 @@ def sort_by_view():
     story = data_handler.sort_by_view()
     return render_template('questions.html', stories=story, fancy_word=None)
 
+
 @app.route('/question/order_by_vote')
 def sort_by_vote():
     story = data_handler.sort_by_vote()
     return render_template('questions.html', stories=story, fancy_word=None)
+
 
 @app.route('/question/order_by_title')
 def sort_by_title():
     story = data_handler.sort_by_title()
     return render_template('questions.html', stories=story, fancy_word=None)
 
+
 @app.route('/question/order_by_message')
 def sort_by_message():
     story = data_handler.sort_by_message()
     return render_template('questions.html', stories=story, fancy_word=None)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
