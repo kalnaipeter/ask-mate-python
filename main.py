@@ -37,7 +37,6 @@ def route_list_questions():
 
     if request.method == "GET":
         stories = data_handler.read_questions()
-        print(stories)
         return render_template('questions.html', stories=stories,fancy_word=None)
 
 
