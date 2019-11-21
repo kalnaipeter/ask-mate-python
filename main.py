@@ -48,7 +48,7 @@ def route_edit_question(question_id):
     if request.method == "POST":
         data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"))
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories)
+        return render_template('questions.html', stories=stories,fancy_word=None)
 
 
 @app.route('/question/<int:question_id>/delete')

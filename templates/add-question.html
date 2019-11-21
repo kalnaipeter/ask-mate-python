@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Add a question</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_question.css') }}">
 </head>
 <body>
     <h2>Add Question</h2>
-    <form action="/list" method="POST">
-{#        <input type="hidden" name="question_id" value="{{ question_id }}">#}
-{#        <input type="hidden" name="view_number" value="{{ question_view_number }}">#}
-{#        <input type="hidden" name="vote_number" value="{{ question_vote_number }}">#}
-{#        <input type="hidden" name="image" value="{{ question_image }}">#}
-        <label for="title">Story Title:</label>
-        <input id="title" type="text" name="title" placeholder="{{ question_title }}">
-        <br>
-        <br>
-        <textarea rows="5" cols="30" id="message" name="message" placeholder="{{question_message}}"></textarea>
-        <br>
-        <input type="file" name="file" id="file">
-        <button type="submit">Add new Question</button>
-    </form>
+     <h4>
+         <form action="/" >
+            <button id="button" class="button button1"> Home</button>
+        </form>
+     </h4>
+    <h3>
+        <form action="/list" method="POST">
+            <label for="title">Story Title:</label>
+            <input id="title" type="text" name="title" placeholder="{{ question_title }}">
+            <br>
+            <br>
+            <textarea rows="8" cols="100" id="message" name="message" placeholder="{{question_message}}"></textarea>
+            <br>
+            <input type="file" name="file" id="file">
+            <button type="submit">Add new Question</button>
+        </form>
+    </h3>
 </body>
 </html>

@@ -2,11 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add a question</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <title>Edit question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_question.css') }}">
 </head>
 <body>
     <h2>Edit Question</h2>
+    <h4>
+         <form action="/" >
+            <button id="button" class="button button1"> Home</button>
+        </form>
+     </h4>
+    <h3>
     <form action="/question/{{ question_id }}/edit" method="POST">
         <label for="title">Story Title:</label>
         <input id="title" type="text" name="title" value="{{ question_title }}">
@@ -16,5 +22,6 @@
         <br>
         <button type="submit">Save edit</button>
     </form>
+        </h3>
 </body>
 </html>
