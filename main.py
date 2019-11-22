@@ -7,6 +7,7 @@ import os
 app = Flask(__name__)
 path = os.path.dirname(__file__)
 
+
 @app.route('/')
 def start():
     return redirect('/list')
@@ -67,7 +68,8 @@ def route_list_answers(question_id=None):
         question_comments = data_handler.read_question_comments(question_id)
         answer_comments = data_handler.read_comments()
         question_title = data_handler.get_question_title(question_id)
-        return render_template("answer.html",question_title=question_title,question_id=question_id,answers=answers,
+        image = data_handler.get_image(question_id)
+        return render_template("answer.html",image=image,question_title=question_title,question_id=question_id,answers=answers,
                                question_comments=question_comments,answer_comments=answer_comments)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
