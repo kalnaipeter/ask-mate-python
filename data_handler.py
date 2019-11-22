@@ -11,10 +11,11 @@ def get_the_current_date():
 def sort_by_view(cursor):
     cursor.execute("""
                         SELECT * FROM question 
-                        ORDER BY view_number DESC 
+                        ORDER BY view_number DESC
                         """)
     number = cursor.fetchall()
     return number
+
 
 @database_common.connection_handler
 def sort_by_vote(cursor):

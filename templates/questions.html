@@ -8,16 +8,16 @@
 <body>
 <h1>Ask Mate Python</h1>
 <h2>
-     <form id="search" action="/question/search" method="POST">
-            <input  id="search" type="text" placeholder="Search.." name="search"  size="39.5" >
+     <form action="/question/search" method="POST">
+            <input type="text" placeholder="Search.." name="search"  size="39.5" >
      </form>
 </h2>
-<h5 class="fa-bars" >
+<h5>
     <form action="/" >
-            <button id="button" class="button button1"> Home</button>
+            <button class="button button1"> Home</button>
     </form>
     <form action="/add-question">
-            <button  id="button" class="button button2">Add a question</button>
+            <button class="button button2">Add a question</button>
     </form>
 </h5>
 <table>
@@ -54,6 +54,8 @@
             <td></td>
         {% endif %}
         <td id="edit_delete"><a href="/question/{{ story.id }}/edit">Edit</a>
+            <br/>
+            <br/>
         <a href="/question/{{story.id}}/delete">Delete</a>
         </td>
     </tr>

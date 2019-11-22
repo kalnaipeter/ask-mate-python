@@ -62,11 +62,11 @@
         </td>
         <td>
             <details>
-            <summary>{{ story.message }}</summary>
+            <summary id="message">{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
-                    <p id="answer_comment">{{ comment.message }},   {{ comment.submission_time }}</p>
-                    <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
+                    <p id="comment">{{ comment.message }}</p>
+                    <p id="comment2">{{ comment.submission_time }}     <a href="/comment/{{ comment.id }}/edit">Edit</a>,   <a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
             </details>
@@ -79,13 +79,16 @@
         <td class="edit_delete">
             <a href="/answer/{{ story.id }}/edit">Edit</a>
             <br/>
+            <br/>
             <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
+            <br/>
             <br/>
             <a href="/answer/{{ story.id }}/delete">Delete</a>
         </td>
     </tr>
     {% endfor %}
     </tbody>
+
 </table>
     <a id="new_answer" href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
 <br/>

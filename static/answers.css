@@ -35,6 +35,15 @@ a:-webkit-any-link {
     text-decoration: #9C1A1C;}
 
 
+#message {font-size: 25px}
+
+
+#comment {font-style: inherit;
+            font-size: 15px;
+            text-decoration: underline;}
+
+#comment2 {font-style: normal;
+            font-size: 13px;}
 
 #new_answer {border-style: groove;
              border-width: medium;

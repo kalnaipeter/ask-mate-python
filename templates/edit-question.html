@@ -14,12 +14,12 @@
      </h4>
     <h3>
     <form action="/question/{{ question_id }}/edit" method="POST" enctype="multipart/form-data">
-        <label for="title">Story Title:</label>
+        <label for="title">Question Title:</label>
         <input size="39" id="title" type="text" name="title" value="{{ question_title }}">
-        <br>
-        <br>
+        <br/>
+        <br/>
         <textarea rows="8" cols="100" name="message" id="message" >{{ question_message }}</textarea>
-        <br>
+        <br/>
         <input type="file" name="file" id="file">
         <button type="submit">Save edit</button>
     </form>

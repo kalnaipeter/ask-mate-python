@@ -3,8 +3,9 @@ from datetime import datetime
 import data_handler
 import re
 import os
-app = Flask(__name__)
 
+app = Flask(__name__)
+path = os.path.dirname(__file__)
 
 @app.route('/')
 def start():
@@ -17,7 +18,7 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save( path+ "/static/images/" + file.filename)
             data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
@@ -25,6 +26,7 @@ def route_list_questions():
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
         stories = data_handler.read_questions()
+        print(stories)
         return render_template('questions.html', stories=stories,fancy_word=None)
 
 
@@ -37,7 +39,7 @@ def route_edit_question(question_id):
     if request.method == "POST":
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save( path+ "/static/images/" + file.filename)
             data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
         else:
             data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
@@ -68,12 +70,10 @@ def route_list_answers(question_id=None):
         return render_template("answer.html",question_title=question_title,question_id=question_id,answers=answers,
                                question_comments=question_comments,answer_comments=answer_comments)
     if request.method == "POST":
-        answers = data_handler.read_answers(question_id)
-        question_title = data_handler.get_question_title(question_id)
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save( path+ "/static/images/" + file.filename)
             data_handler.write_answer(time,0,question_id,request.form.get("message"),file.filename)
         else:
             data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)
@@ -90,7 +90,7 @@ def route_edit_answer(answer_id):
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
         if request.files['file']:
             file = request.files['file']
-            file.save("/home/kalnaipeter/PycharmProjects/ask-mate-python/static/images/" + file.filename)
+            file.save( path+ "/static/images/" + file.filename)
             data_handler.edit_answer(answer_id, request.form.get("message"),file.filename)
         else:
             data_handler.edit_answer(answer_id, request.form.get("message"),data_handler.get_answer_image(answer_id))
@@ -204,6 +204,7 @@ def latest_time():
     story = data_handler.display_latest()
     return render_template('questions.html', stories=story, fancy_word=None)
 
+
 @app.route('/question/order_by_view')
 def sort_by_view():
     story = data_handler.sort_by_view()
@@ -225,6 +226,7 @@ def sort_by_title():
 @app.route('/question/order_by_message')
 def sort_by_message():
     story = data_handler.sort_by_message()
+    print(story)
     return render_template('questions.html', stories=story, fancy_word=None)
 
 

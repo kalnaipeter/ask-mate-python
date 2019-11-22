@@ -13,14 +13,13 @@ table{border-style: solid;
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
-h5{margin-block: auto;}
+
+h5{margin-block: auto;
+    margin-left: 43%;}
 
 
 
-
-
-
-.button {margin:auto;
+button.button {margin-right: 78%;
   background-color: darkred; /* Green */
   border: none;
   padding: 15px 32px;
@@ -42,11 +41,13 @@ div{margin: auto;
 
 .button1 {margin-left: 45%}
 
-h2{margin-left: 37%;
+h2{margin-left:40%;
     border-radius: 12px;}
 
-.highlight {background: red}
-asdasd
+.highlight {background: green}
+
+
+
 #vote_up {margin: auto;
           border-radius: 12px;}
 #vote_down{margin: auto;
