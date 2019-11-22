@@ -65,7 +65,7 @@
             <summary>{{ story.message }}</summary>
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
-                    <p>{{ comment.message }},   {{ comment.submission_time }}</p>
+                    <p id="answer_comment">{{ comment.message }},   {{ comment.submission_time }}</p>
                     <p><a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
                 {% endif %}
             {% endfor %}
