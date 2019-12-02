@@ -1,93 +1,52 @@
-table{border-style: solid;
-      background:  darkred;
-      margin-block: auto;
-    width: 75%;
-    height: 10%;
-    font-family: "DejaVu Sans";
-    margin-left: 14%;
-      border-radius: 12px;
-        }
-
-#edit_delete{background: black}
-
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 
-h5{margin-block: auto;
-    margin-left: 43%;}
-
-
-
-button.button {margin-right: 78%;
-  background-color: darkred; /* Green */
-  border: none;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    border-radius: 12px;
-        }
-
-.button1:hover {background-color: white;}
-.button2:hover {background-color: white;}
-
-div{margin: auto;
-    width: 15%;}
-
-.button2 {margin-left: 10%;}
-
-.button1 {margin-left: 10%}
-
-h2{margin-left:40%;
-    border-radius: 12px;}
-
-.highlight {background: green}
-
-
-
-#vote_up {margin: auto;
-          border-radius: 12px;}
-#vote_down{margin: auto;
-            border-radius: 12px;}
-p {   border-style: solid;
-      background: darkred;
-      cursor: pointer;
-      margin: auto;
-      text-align: center;
-      border-radius: 12px;
+.navbar{
+    background: darkgrey !important;
+    color : red;
 }
-#vote_number {margin: auto;
-             border-radius: 12px;}
-
-a:-webkit-any-link {
+#vote_down{border-radius: 50px;
+            border-style: hidden;
+            background: #9C1A1C}
+#vote_up{border-radius: 50px;
+            border-style: hidden;
+            background: #9C1A1C}
+.dropdown{
     color: red;
-    cursor: pointer;
-    text-decoration: #9C1A1C;}
+    border-radius:0;
+    border:0;
+}
+.dropdown-menu{
+    color: red;
+    background: #0c73cc;
+    border:0;
+    top:80%;
+    border-radius:0px 0px 5px 5px;
+}
+.dropdown-item:hover{
+    background:#085ca5;
+    color:red;
+}
+.dropdown-menu a{
+    color:red;
+}
+.navbar .nav-item .nav-link{
+    color:red !important;
 
-h1 {border-style: groove;
-    background:  darkred;
-    border-color: darkgrey;
-    margin: auto;
-    width: 30%;
-    text-align: center;
-    border-radius: 12px;}
+}
+.navbar .nav-item .nav-link:hover .navbar .nav-item .nav-link{
+    color:blue !important;
 
-th.headline {
-    position: relative;
-    color: white;
-            background: black;
-            border-style: groove;
-            border-radius: 12px}
+}
+.navbar .navbar-brand {
+    color: red;
+    background: white;
+    padding:10px;
+    border-radius: 10px;}
 
-td {border-style: groove;
-    border-color: darkgrey;
-    background: honeydew;
-    margin: 50px;
-    text-align: center;
-    border-radius: 12px;
-    }
+#my_head {
+            text-align: center;}
 
+#edit_delete {background: #212529}
 
