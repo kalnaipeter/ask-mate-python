@@ -1,6 +1,52 @@
 import database_common
 from datetime import datetime
 import re
+import bcrypt
+
+
+def get_hash_from_password(password):
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    decoded_hash = hashed_password.decode('utf-8')
+    return decoded_hash
+
+
+def verify_password(password, hash):
+    hashed_bytes_password = hash.encode('utf-8')
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_bytes_password)
+
+
+@database_common.connection_handler
+def get_usernames_from_database(cursor):
+    cursor.execute("""
+                    SELECT username FROM usertable
+                    """,)
+    names = cursor.fetchall()
+    return [item["username"] for item in names]
+
+
+@database_common.connection_handler
+def get_hash_from_database(cursor,username):
+    cursor.execute("""
+                    SELECT password FROM usertable
+                    WHERE username = %(username)s
+                    """,
+                   {"username":username})
+    hash = cursor.fetchone()
+    return hash["password"]
+
+
+@database_common.connection_handler
+def registration(cursor,username,password):
+    hashed_bytes = get_hash_from_password(password)
+    current_date = get_the_current_date()
+    cursor.execute("""
+                    INSERT INTO usertable (username,password,submission_time)
+                    VALUES (%(username)s,%(hashed_bytes)s,%(current_date)s);
+                   """,
+                   {"username":username,
+                    "hashed_bytes":hashed_bytes,
+                    "current_date":current_date})
+
 
 def get_the_current_date():
     now = datetime.now()

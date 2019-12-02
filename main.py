@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for,make_response
+from flask import Flask, render_template, request, redirect, url_for,make_response,session
 from datetime import datetime
 import data_handler
 import re
@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 path = os.path.dirname(__file__)
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/set-cookie')
 def cookie_insertion():
@@ -18,7 +18,29 @@ def cookie_insertion():
 
 @app.route('/')
 def start():
-    return redirect('/list')
+    return render_template("registration.html")
+
+
+@app.route('/registration',methods=["GET","POST"])
+def registration():
+    if request.method == "POST":
+        if request.form["username"] in data_handler.get_usernames_from_database():
+            error = "This username is already in use"
+            return render_template("registration.html",error=error)
+        data_handler.registration(request.form["username"], request.form["password"])
+        return render_template("login.html")
+
+
+@app.route('/login',methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        database_password = data_handler.get_hash_from_database(request.form["username"])
+        verify_password = data_handler.verify_password(request.form["password"],database_password)
+        if verify_password:
+            session["username"] = request.form["username"]
+            return redirect(url_for("route_list_questions"))
+        error = "Invalid username or password"
+        return render_template("login.html",error=error)
 
 
 @app.route('/list', methods=["GET", "POST"])
@@ -36,7 +58,6 @@ def route_list_questions():
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
         stories = data_handler.read_questions()
-        print(stories)
         return render_template('questions.html', stories=stories, fancy_word=None)
 
 

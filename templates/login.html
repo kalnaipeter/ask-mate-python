@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Login</title>
 </head>
 <body>
-<h3 style="background: #3A7734">Registration</h3>
+<h3 style="background: #3A7734">Login</h3>
 <div class="row">
     <div class="card col">
-        <form action="/registration" method="POST">
+        <form action="/login" method="POST">
+            <p style="color: #9C1A1C">{{ error }}</p>
             <label for="username"<b>Username</b></label><br/>
             <input type="text" name="username" placeholder="username"><br/>
-            <p style="color: #9C1A1C">{{ error }}</p>
+
             <label for="password"<b>Password</b></label><br/>
             <input type="password" name="password" placeholder="password"><br/>
-            <button type="submit">Register</button><br/>
+            <button type="submit">Login</button><br/>
         </form>
     </div>
 </body>
