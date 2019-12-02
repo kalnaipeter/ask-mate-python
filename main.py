@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect,url_for
+from flask import Flask, render_template, request, redirect, url_for,make_response
 from datetime import datetime
 import data_handler
 import re
@@ -6,6 +6,14 @@ import os
 
 app = Flask(__name__)
 path = os.path.dirname(__file__)
+
+
+@app.route('/set-cookie')
+def cookie_insertion():
+    redirect_to_index = redirect('/')
+    response = make_response(redirect_to_index)
+    response.set_cookie('cookie-name', value='values')
+    return response
 
 
 @app.route('/')
@@ -19,31 +27,35 @@ def route_list_questions():
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save( path+ "/static/images/" + file.filename)
-            data_handler.write_question(time,0,0, request.form.get("title"), request.form.get("message"),file.filename)
+            file.save(path + "/static/images/" + file.filename)
+            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),
+                                        file.filename)
         else:
-            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),None)
+            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"), None)
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
         stories = data_handler.read_questions()
         print(stories)
-        return render_template('questions.html', stories=stories,fancy_word=None)
+        return render_template('questions.html', stories=stories, fancy_word=None)
 
 
-@app.route('/question/<int:question_id>/edit',methods=["GET","POST"])
+@app.route('/question/<int:question_id>/edit', methods=["GET", "POST"])
 def route_edit_question(question_id):
     if request.method == "GET":
         question_title = data_handler.get_question_title(question_id)
         question_message = data_handler.get_question_message(question_id)
-        return render_template("edit-question.html",question_title=question_title,question_message=question_message,question_id=question_id)
+        return render_template("edit-question.html", question_title=question_title, question_message=question_message,
+                               question_id=question_id)
     if request.method == "POST":
         if request.files['file']:
             file = request.files['file']
-            file.save( path+ "/static/images/" + file.filename)
-            data_handler.edit_question(question_id,request.form.get("title"), request.form.get("message"),file.filename)
+            file.save(path + "/static/images/" + file.filename)
+            data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),
+                                       file.filename)
         else:
-            data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),data_handler.get_image(question_id))
+            data_handler.edit_question(question_id, request.form.get("title"), request.form.get("message"),
+                                       data_handler.get_image(question_id))
         return redirect('/list')
 
 
@@ -69,34 +81,34 @@ def route_list_answers(question_id=None):
         answer_comments = data_handler.read_comments()
         question_title = data_handler.get_question_title(question_id)
         image = data_handler.get_image(question_id)
-        return render_template("answer.html",image=image,question_title=question_title,question_id=question_id,answers=answers,
-                               question_comments=question_comments,answer_comments=answer_comments)
+        return render_template("answer.html", image=image, question_title=question_title, question_id=question_id,
+                               answers=answers,
+                               question_comments=question_comments, answer_comments=answer_comments)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
-            file.save( path+ "/static/images/" + file.filename)
-            data_handler.write_answer(time,0,question_id,request.form.get("message"),file.filename)
+            file.save(path + "/static/images/" + file.filename)
+            data_handler.write_answer(time, 0, question_id, request.form.get("message"), file.filename)
         else:
             data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)
-        return redirect(url_for("route_list_answers",question_id=question_id))
+        return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route('/answer/<int:answer_id>/edit',methods=["GET","POST"])
+@app.route('/answer/<int:answer_id>/edit', methods=["GET", "POST"])
 def route_edit_answer(answer_id):
     if request.method == "GET":
         answer_message = data_handler.get_answer_message(answer_id)
-        print(answer_message)
-        return render_template("edit_answer.html",answer_message=answer_message,answer_id=answer_id)
+        return render_template("edit_answer.html", answer_message=answer_message, answer_id=answer_id)
     if request.method == "POST":
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
         if request.files['file']:
             file = request.files['file']
-            file.save( path+ "/static/images/" + file.filename)
-            data_handler.edit_answer(answer_id, request.form.get("message"),file.filename)
+            file.save(path + "/static/images/" + file.filename)
+            data_handler.edit_answer(answer_id, request.form.get("message"), file.filename)
         else:
-            data_handler.edit_answer(answer_id, request.form.get("message"),data_handler.get_answer_image(answer_id))
-        return redirect(url_for("route_list_answers",question_id=question_id))
+            data_handler.edit_answer(answer_id, request.form.get("message"), data_handler.get_answer_image(answer_id))
+        return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route('/answers/<int:question_id>/add-new-answer')
@@ -108,7 +120,7 @@ def route_add_new_answer(question_id=None):
 def route_delete_answer(answer_id):
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
     data_handler.delete_answer(answer_id)
-    return redirect(url_for("route_list_answers",question_id=question_id))
+    return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route('/comment/<int:comment_id>/delete')
@@ -121,26 +133,26 @@ def route_delete_comment(comment_id):
     return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route('/question/<int:question_id>/new-comment',methods=["GET","POST"])
+@app.route('/question/<int:question_id>/new-comment', methods=["GET", "POST"])
 def route_new_question_comment(question_id):
     if request.method == "GET":
         return render_template("add_new_question_comment.html", id=question_id)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
-        data_handler.write_question_comments(question_id,request.form.get("message"),time)
-        return redirect(url_for("route_list_answers",question_id=question_id))
+        data_handler.write_question_comments(question_id, request.form.get("message"), time)
+        return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route('/answer/<int:answer_id>/new-comment',methods=["GET","POST"])
+@app.route('/answer/<int:answer_id>/new-comment', methods=["GET", "POST"])
 def route_new_answer_comment(answer_id):
     if request.method == "GET":
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
-        return render_template("add_new_answer_comment.html", id=answer_id,question_id=question_id)
+        return render_template("add_new_answer_comment.html", id=answer_id, question_id=question_id)
     if request.method == "POST":
         time = data_handler.get_the_current_date()
         data_handler.write_answer_comments(answer_id, request.form.get("message"), time)
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
-        return redirect(url_for("route_list_answers",question_id=question_id))
+        return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
@@ -151,9 +163,10 @@ def route_edit_comment(comment_id=None):
         if question_id is None:
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
             question_id = data_handler.get_question_id_from_answer_id(answer_id)
-        return render_template("edit-comment.html", comment_id=comment_id,comment_message=comment_message,question_id=question_id)
+        return render_template("edit-comment.html", comment_id=comment_id, comment_message=comment_message,
+                               question_id=question_id)
     if request.method == "POST":
-        data_handler.edit_comment(comment_id,request.form.get("message"))
+        data_handler.edit_comment(comment_id, request.form.get("message"))
         question_id = data_handler.get_question_id_from_comment_id(comment_id)
         if question_id is None:
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
@@ -177,24 +190,24 @@ def question_vote_down(question_id=None):
 def answer_vote_up(answer_id=None):
     data_handler.answer_vote_up(answer_id)
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
-    return redirect(url_for("route_list_answers",question_id=question_id))
+    return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route("/answer/<int:answer_id>/vote_down", methods=["POST"])
 def answer_vote_down(answer_id=None):
     data_handler.answer_vote_down(answer_id)
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
-    return redirect(url_for("route_list_answers",question_id=question_id))
+    return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-
-@app.route("/question/search",methods=["POST"])
+@app.route("/question/search", methods=["POST"])
 def search():
     search_result = request.form.get("search")
     fancy_word = request.form.get("search")
     story = data_handler.get_search_result(search_result)
 
     return render_template('questions.html', stories=story, fancy_word=fancy_word)
+
 
 @app.context_processor
 def highlight_phrase():
