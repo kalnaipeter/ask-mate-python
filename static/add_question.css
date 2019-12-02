@@ -40,3 +40,37 @@ h3{display: inline-block;
     border-radius: 12px;
         }
 .button1:hover {background-color: white;}
+
+.navbar{
+    background: darkgrey !important;
+    color : red;
+}
+
+.dropdown{
+    color: red;
+    border-radius:0;
+    border:0;
+}
+.dropdown-menu{
+    color: red;
+    background: #0c73cc;
+    border:0;
+    top:80%;
+    border-radius:0px 0px 5px 5px;
+}
+.dropdown-item:hover{
+    background:#085ca5;
+    color:red;
+}
+.dropdown-menu a{
+    color:red;
+}
+.navbar .nav-item .nav-link{
+    color:red !important;
+
+}
+.navbar .nav-item .nav-link:hover .navbar .nav-item .nav-link{
+    color:red !important;
+
+}
+.navbar .navbar-brand {color: red;}

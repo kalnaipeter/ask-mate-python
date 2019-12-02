@@ -338,6 +338,8 @@ def get_question_data(cursor, question_id):
 
 @database_common.connection_handler
 def get_search_result(cursor,item):
+    print(item)
+
     cursor.execute("""
                     SELECT * FROM question
                     WHERE title LIKE %(item)s OR message LIKE %(item)s;
