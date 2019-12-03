@@ -5,11 +5,11 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>List Questions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <title>Add question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_question.css') }}">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm   navbar-light bg-light">
+<nav class="navbar navbar-expand-sm  sticky-top  navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -36,14 +36,32 @@
     <h2>Add Question</h2>
     <h3>
         <form action="/list" method="POST" enctype="multipart/form-data">
-            <label for="title">Question Title:</label>
-            <input id="title" type="text" name="title">
+            <div class="input-group mb-3">
+          <div class="input-group-prepend">
+                <span  class="input-group-text" id="basic-addon3">Title</span>
+            </div>
+
+              <input type="text" class="form-control" id="basic-url"  name="title" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group">
+                 <div class="input-group-prepend">
+                    <span class="input-group-text">Your question</span>
+                 </div>
+                 <textarea name="message" class="form-control" aria-label="With textarea"></textarea>
+            </div>
             <br>
-            <br>
-            <textarea rows="8" cols="100" id="message" name="message"></textarea>
-            <br>
-            <input type="file" name="file" id="file">
-            <button type="submit">Add new Question</button>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">IMG</span>
+                  <br>
+              </div><br>
+              <div class="custom-file">
+                  <br>
+                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01"></label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-lg">Ask question!</button>
         </form>
     </h3>
 </body>

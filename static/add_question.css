@@ -1,45 +1,15 @@
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
-#title {margin-top:2px}
-
-h4 {margin-block: auto;
-    margin-left: 43%;}
-
 h2 {
-    background: darkred;
+    margin-left: 25%;
+    background:whitesmoke;
+    max-width: 50%;
     font-size: 40px;
     border-style: groove;
     border-color: whitesmoke;
-    margin-block: auto;
-    margin-left: 40.5%;
-    width: 13.4%;
     text-align: center;
- border-radius: 10px}
-
-h3{display: inline-block;
-    background: darkred;
-    font-size: 40px;
-    border-style: groove;
-    border-color: whitesmoke;
-    margin-block: auto;
-    margin-left: 13%;
-    width: 70%;
-     border-radius: 10px;
-    text-align: center;
-    }
-.button {margin:auto;
-  background-color: darkred; /* Green */
-  border: none;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    border-radius: 12px;
-        }
-.button1:hover {background-color: white;}
+    border-radius: 10px}
 
 .navbar{
     background: darkgrey !important;
@@ -70,7 +40,24 @@ h3{display: inline-block;
 
 }
 .navbar .nav-item .nav-link:hover .navbar .nav-item .nav-link{
-    color:red !important;
+    color:blue !important;
 
 }
-.navbar .navbar-brand {color: red;}
+.navbar .navbar-brand {
+    color: red;
+    background: white;
+    padding:10px;
+    border-radius: 10px;}
+
+/*upload button*/
+div.input-group.mb-3{max-width: 50%;
+                    text-align: center;
+                margin-left: 35%}
+/*title*/
+.form-control{max-width: 39%;}
+/*question area*/
+div.custom-file{max-width: 16%;
+                text-align: center;}
+div.input-group{margin-left: 30%}
+div.input-group.input-group-prepend{max-width: 50%;}
+.btn.btn-secondary.btn-lg{margin-left: 42%}

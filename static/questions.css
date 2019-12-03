@@ -2,6 +2,10 @@ body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 
+.table td{vertical-align: middle}
+.table th{vertical-align: middle}
+
+
 .navbar{
     background: darkgrey !important;
     color : red;
