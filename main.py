@@ -22,7 +22,6 @@ def cookie_insertion():
 def start():
     return render_template("login_and_registration.html")
 
-
 @app.route('/registration',methods=["GET","POST"])
 def registration():
     if request.method == "POST":
