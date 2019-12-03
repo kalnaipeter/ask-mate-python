@@ -32,7 +32,7 @@ def get_hash_from_database(cursor,username):
                     """,
                    {"username":username})
     hash = cursor.fetchone()
-    return hash["password"]
+    return hash
 
 
 @database_common.connection_handler

@@ -8,6 +8,8 @@ app = Flask(__name__)
 path = os.path.dirname(__file__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
+
 @app.route('/set-cookie')
 def cookie_insertion():
     redirect_to_index = redirect('/')
@@ -18,29 +20,35 @@ def cookie_insertion():
 
 @app.route('/')
 def start():
-    return render_template("registration.html")
+    return render_template("login_and_registration.html")
 
 
 @app.route('/registration',methods=["GET","POST"])
 def registration():
     if request.method == "POST":
-        if request.form["username"] in data_handler.get_usernames_from_database():
-            error = "This username is already in use"
-            return render_template("registration.html",error=error)
-        data_handler.registration(request.form["username"], request.form["password"])
-        return render_template("login.html")
+        if " " not in request.form["username"] and " " not in request.form["password"] \
+                and request.form["username"] is not "" and request.form["password"] is not "":
+            if request.form["username"] in data_handler.get_usernames_from_database():
+                error = "This username is already in use"
+                return render_template("login_and_registration.html", error=error)
+            data_handler.registration(request.form["username"], request.form["password"])
+            return render_template("login_and_registration.html")
+        error = "Wrong characters..."
+        return render_template("login_and_registration.html", error=error)
 
 
 @app.route('/login',methods=["GET","POST"])
 def login():
     if request.method == "POST":
-        database_password = data_handler.get_hash_from_database(request.form["username"])
-        verify_password = data_handler.verify_password(request.form["password"],database_password)
-        if verify_password:
-            session["username"] = request.form["username"]
-            return redirect(url_for("route_list_questions"))
+        if data_handler.get_hash_from_database(request.form["username"]) is not None:
+            database_password = data_handler.get_hash_from_database(request.form["username"])
+            verify_password = data_handler.verify_password(request.form["password"],database_password["password"])
+            if verify_password:
+                session["username"] = request.form["username"]
+                return redirect(url_for("route_list_questions"))
         error = "Invalid username or password"
-        return render_template("login.html",error=error)
+        return render_template("login_and_registration.html", error=error)
+    return render_template("login_and_registration.html")
 
 
 @app.route('/list', methods=["GET", "POST"])
@@ -57,8 +65,9 @@ def route_list_questions():
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
+        username = session["username"]
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories, fancy_word=None)
+        return render_template('questions.html', username=username,stories=stories, fancy_word=None)
 
 
 @app.route('/question/<int:question_id>/edit', methods=["GET", "POST"])
@@ -227,7 +236,7 @@ def search():
     fancy_word = request.form.get("search")
     story = data_handler.get_search_result(search_result)
 
-    return render_template('questions.html', stories=story, fancy_word=fancy_word)
+    return render_template('questions.html',username = session["username"],stories=story, fancy_word=fancy_word)
 
 
 @app.context_processor
