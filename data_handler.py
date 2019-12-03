@@ -215,7 +215,7 @@ def get_answer_ids_with_question_id(cursor,question_id):
 def read_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question
-                    ORDER BY id;
+                    ORDER BY submission_time DESC;
                    """)
     questions = cursor.fetchall()
     return questions

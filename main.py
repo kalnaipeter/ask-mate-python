@@ -20,8 +20,8 @@ def cookie_insertion():
 
 @app.route('/')
 def start():
-    return render_template("login_and_registration.html")
-
+    # return render_template("login_and_registration.html")
+    return redirect("/list")
 @app.route('/registration',methods=["GET","POST"])
 def registration():
     if request.method == "POST":
