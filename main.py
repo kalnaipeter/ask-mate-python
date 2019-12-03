@@ -9,7 +9,6 @@ path = os.path.dirname(__file__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-
 @app.route('/set-cookie')
 def cookie_insertion():
     redirect_to_index = redirect('/')
@@ -21,6 +20,7 @@ def cookie_insertion():
 @app.route('/')
 def start():
     return render_template("login_and_registration.html")
+
 
 @app.route('/registration',methods=["GET","POST"])
 def registration():
@@ -59,14 +59,15 @@ def list_users():
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
     if request.method == "POST":
+        user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
             file.save(path + "/static/images/" + file.filename)
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"),
-                                        file.filename)
+                                        file.filename,user_id)
         else:
-            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"), None)
+            data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"), None,user_id)
         stories = data_handler.read_questions()
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
@@ -120,13 +121,13 @@ def route_list_answers(question_id=None):
                                answers=answers,
                                question_comments=question_comments, answer_comments=answer_comments)
     if request.method == "POST":
+        user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
         if request.files['file']:
             file = request.files['file']
             file.save(path + "/static/images/" + file.filename)
-            data_handler.write_answer(time, 0, question_id, request.form.get("message"), file.filename)
-        else:
-            data_handler.write_answer(time, 0, question_id, request.form.get("message"), None)
+            data_handler.write_answer(time, 0, question_id, request.form.get("message"), file.filename,user_id)
+        data_handler.write_answer(time, 0, question_id, request.form.get("message"), None,user_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
 
 
@@ -173,8 +174,9 @@ def route_new_question_comment(question_id):
     if request.method == "GET":
         return render_template("add_new_question_comment.html", id=question_id)
     if request.method == "POST":
+        user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
-        data_handler.write_question_comments(question_id, request.form.get("message"), time)
+        data_handler.write_question_comments(question_id, request.form.get("message"), time,user_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
 
 
@@ -184,8 +186,9 @@ def route_new_answer_comment(answer_id):
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return render_template("add_new_answer_comment.html", id=answer_id, question_id=question_id)
     if request.method == "POST":
+        user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
-        data_handler.write_answer_comments(answer_id, request.form.get("message"), time)
+        data_handler.write_answer_comments(answer_id, request.form.get("message"), time,user_id)
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
 
@@ -207,6 +210,11 @@ def route_edit_comment(comment_id=None):
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
             question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
+
+#
+# @app.route('/user_page')
+# def user_page():
+#
 
 
 @app.route("/question/<int:question_id>/vote_up", methods=["POST"])

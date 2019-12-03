@@ -16,6 +16,47 @@ def verify_password(password, hash):
 
 
 @database_common.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute("""
+                    SELECT id FROM usertable
+                    WHERE username = %(username)s
+                    """,
+                   {"username":username})
+    id_dict = cursor.fetchone()
+    return id_dict["id"]
+
+#
+# @database_common.connection_handler
+# def insert_user_id_into_question_table(cursor, user_id):
+#     cursor.execute("""
+#                     INSERT INTO question (user_id)
+#                     VALUES (%(user_id)s)
+#                     WHERE user_id = "";
+#                     """,
+#                    {"user_id": user_id})
+#
+#
+# @database_common.connection_handler
+# def insert_user_id_into_answer_table(cursor, user_id):
+#     cursor.execute("""
+#                     INSERT INTO answer (user_id)
+#                     VALUES (%(user_id)s)
+#                     WHERE user_id = "";
+#                     """,
+#                    {"user_id":user_id})
+#
+#
+# @database_common.connection_handler
+# def insert_user_id_into_comment_table(cursor, user_id):
+#     cursor.execute("""
+#                     INSERT INTO comment (user_id)
+#                     VALUES (%(user_id)s)
+#                     WHERE user_id = "";
+#                     """,
+#                    {"user_id": user_id})
+
+
+@database_common.connection_handler
 def get_usernames_from_database(cursor):
     cursor.execute("""
                     SELECT username FROM usertable
@@ -83,6 +124,7 @@ def sort_by_vote(cursor):
     voted = cursor.fetchall()
     return voted
 
+
 @database_common.connection_handler
 def sort_by_title(cursor):
     cursor.execute("""
@@ -92,6 +134,7 @@ def sort_by_title(cursor):
     title = cursor.fetchall()
     return title
 
+
 @database_common.connection_handler
 def sort_by_message(cursor):
     cursor.execute("""
@@ -100,6 +143,7 @@ def sort_by_message(cursor):
                         """)
     message = cursor.fetchall()
     return message
+
 
 def my_highlight_phrase():
     def _highlight_phrase(text_content, phrase):
@@ -265,53 +309,57 @@ def edit_comment(cursor, comment_id, message):
 
 
 @database_common.connection_handler
-def write_question_comments(cursor, question_id, message, submission_time):
+def write_question_comments(cursor, question_id, message, submission_time,user_id):
     cursor.execute("""
-                    INSERT INTO comment (question_id,message,submission_time)
-                    VALUES (%(question_id)s,%(message)s,%(submission_time)s);
+                    INSERT INTO comment (question_id,message,submission_time,user_id)
+                    VALUES (%(question_id)s,%(message)s,%(submission_time)s,%(user_id)s);
                     """,
                    {"question_id": question_id,
                     "message": message,
-                    "submission_time": submission_time})
+                    "submission_time": submission_time,
+                    "user_id":user_id})
 
 
 @database_common.connection_handler
-def write_answer_comments(cursor, answer_id, message, submission_time):
+def write_answer_comments(cursor, answer_id, message, submission_time,user_id):
     cursor.execute("""
-                    INSERT INTO comment (answer_id,message,submission_time)
-                    VALUES (%(answer_id)s,%(message)s,%(submission_time)s);
+                    INSERT INTO comment (answer_id,message,submission_time,user_id)
+                    VALUES (%(answer_id)s,%(message)s,%(submission_time)s,%(user_id)s);
                     """,
                    {"answer_id": answer_id,
                     "message": message,
-                    "submission_time": submission_time})
+                    "submission_time": submission_time,
+                    "user_id":user_id})
 
 
 @database_common.connection_handler
-def write_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def write_question(cursor, submission_time, view_number, vote_number, title, message, image,user_id):
     cursor.execute("""
-                    INSERT INTO question (submission_time,view_number,vote_number,title,message,image)
-                    VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s);
+                    INSERT INTO question (submission_time,view_number,vote_number,title,message,image,user_id)
+                    VALUES (%(submission_time)s,%(view_number)s,%(vote_number)s,%(title)s,%(message)s,%(image)s,%(user_id)s);
                     """,
                    {"submission_time": submission_time,
                     "view_number": view_number,
                     "vote_number": vote_number,
                     "title": title,
                     "message": message,
-                    "image":image})
+                    "image":image,
+                    "user_id":user_id})
 
 
 @database_common.connection_handler
-def write_answer(cursor, submission_time, vote_number, question_id, message,image):
+def write_answer(cursor, submission_time, vote_number, question_id, message,image,user_id):
     cursor.execute("""
-                INSERT INTO answer (submission_time,vote_number,question_id,message,image)
-                VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s);
+                INSERT INTO answer (submission_time,vote_number,question_id,message,image,user_id)
+                VALUES (%(submission_time)s,%(vote_number)s,%(question_id)s,%(message)s,%(image)s,%(user_id)s);
                     """,
 
                    {"submission_time": submission_time,
                     "vote_number": vote_number,
                     "message": message,
                     "question_id": question_id,
-                    "image":image})
+                    "image":image,
+                    "user_id":user_id})
 
 
 @database_common.connection_handler
