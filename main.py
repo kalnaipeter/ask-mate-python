@@ -51,6 +51,12 @@ def login():
     return render_template("login_and_registration.html")
 
 
+@app.route('/list_users')
+def list_users():
+    users = data_handler.list_users()
+    return render_template("list_users.html",users=users)
+
+
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
     if request.method == "POST":

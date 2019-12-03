@@ -48,10 +48,21 @@ def registration(cursor,username,password):
                     "current_date":current_date})
 
 
+@database_common.connection_handler
+def list_users(cursor):
+    cursor.execute("""
+                    SELECT username,submission_time
+                    FROM usertable
+                    """,)
+    users = cursor.fetchall()
+    return users
+
+
 def get_the_current_date():
     now = datetime.now()
     dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
     return dt_string
+
 
 @database_common.connection_handler
 def sort_by_view(cursor):

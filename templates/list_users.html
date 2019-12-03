@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='list_users.css') }}">
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="list list-row block">
+                <h2 class="title">Available Users<h2/>
+                {% for user in users %}
+                    <div class="list-item" data-id="19">
+                        <div><a href="#" data-abc="true"><span class="w-48 avatar gd-warning">{{ user.username[0] }}</span></a></div>
+                        <div class="flex"> <a href="#" class="item-author text-color" data-abc="true">{{ user.username }}</a></div>
+                        <div class="no-wrap">
+                            <div class="item-date text-muted text-sm d-none d-md-block">{{ user.submission_time }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <a class="nav-link" href="/list">Home <span class="sr-only">(current)</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
