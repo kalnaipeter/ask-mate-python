@@ -6,10 +6,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>List Questions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='answers.css') }}">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm   navbar-light bg-light">
+<nav class="navbar navbar-expand-sm   sticky-top navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -33,16 +33,19 @@
     </form>
   </div>
 </nav>
+<div class="text-center">
+  <img src="/static/images/{{ image }}" width="300" height="300" class="rounded" alt="...">
+</div>
 <h2>{{ question_title }}</h2>
 {% if question_comments %}
-<table id="comments" class="comments">
-    <thead>
-    <tr class="headline">
-        <th class="headline">Comment</th>
-        <th class="headline">Submission Time</th>
+<table class="table table-hover table-dark table-sm">
+  <thead>
+    <tr>
+       <th>Comment</th>
+        <th>Submission Time</th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     {% for comment in question_comments %}
     <tr>
         <td>{{ comment.message }}</td>
@@ -51,29 +54,29 @@
         <td id="edit_delete"><a href="/comment/{{comment.id}}/delete">Delete</a></td>
     </tr>
     {% endfor %}
-    </tbody>
+  </tbody>
 </table>
     {% else %}
-<h4>There is no comments</h4>
+    <h4>There is no comments</h4>
 {% endif %}
-    <a id="add_comment" href="/question/{{question_id}}/new-comment" >Add comment</a>
+    <a id="add_comment" href="/question/{{question_id}}/new-comment"  class="btn btn-primary" role="button">Add comment</a>
 <br/>
-<table class="info">
-    <thead>
-    <tr class="headline2">
-        <th class="headline">ID</th>
-        <th class="headline">Submission Time</th>
-        <th class="headline">Vote Number</th>
-        <th class="headline">Message</th>
-        <th class="headline">Image</th>
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th>ID</th>
+        <th>Submission Time</th>
+        <th>Vote Number</th>
+        <th>Message</th>
+        <th>Image</th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     {% for story in answers %}
     <tr>
         <td>{{story.id }}</td>
         <td>{{story.submission_time}}</td>
-        <td>
+        <td id="votes">
             <form action="/answer/{{story.id}}/vote_up" method="POST">
                 <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
             </form>
@@ -110,10 +113,6 @@
     </tr>
     {% endfor %}
     </tbody>
-
 </table>
-    <a id="new_answer" href="/answers/{{question_id}}/add-new-answer">Add new answer</a>
-<br/>
-<img src="/static/images/{{ image }}" width="300" height="300"></td>
-</body>
+    <a id="new_answer" href="/answers/{{question_id}}/add-new-answer" class="btn btn-primary" href="#" role="button">Add new answer</a>
 </html>

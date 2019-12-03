@@ -18,8 +18,8 @@ def cookie_insertion():
 
 @app.route('/')
 def start():
-    return render_template("registration.html")
-
+    # return render_template("registration.html")
+    return redirect("/list")
 
 @app.route('/registration',methods=["GET","POST"])
 def registration():
@@ -58,7 +58,7 @@ def route_list_questions():
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories, fancy_word=None)
+        return render_template('questions.html',username=session["username"], stories=stories, fancy_word=None)
 
 
 @app.route('/question/<int:question_id>/edit', methods=["GET", "POST"])
