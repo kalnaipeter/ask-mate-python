@@ -10,6 +10,13 @@ h2{border-style: groove;
     text-align: center;
     margin-left: 24%}
 
+h4{border-style: groove;
+        border-radius: 12px;
+    background: whitesmoke;
+    max-width: 50%;
+    text-align: center;
+    margin-left: 24%}
+
 #vote_down{border-radius: 50px;
             border-style: hidden;
             background: #9C1A1C}
@@ -67,3 +74,9 @@ h2{border-style: groove;
 .btn.btn-primary{background-color: whitesmoke;
                 color: black;
                 margin-left: 20%}
+
+#comment {background: darkgrey;
+    color: red;
+    margin-bottom: 0%}
+#comment2 {background: darkgrey;
+            margin-top: 0%}

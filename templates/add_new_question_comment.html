@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>List Questions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_comments.css') }}">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm  sticky-top  navbar-light bg-light">
@@ -36,17 +36,16 @@
   </div>
 </nav>
     <h1>Make a new Comment</h1>
-    <h2>
         <form action="/question/{{ id }}/new-comment" method="post">
-            <textarea rows="5" cols="30" id="message" name="message" placeholder="Comment"></textarea>
-            <br>
-            <button type="submit"> Add new Comment</button>
-        </form>
-    </h2>
+            <div class="input-group mb-3">
+        <div class="input-group">
+             <textarea id="message" name="message" class="form-control" aria-label="With textarea" placeholder="Your comment" ></textarea>
+        </div>
+     </div>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-secondary btn-lg">Add comment</button>
+    </form>
+
 </body>
-    <h3>
-        <form action="/answers/{{ id }}">
-            <button id="button" class="button button1">Back</button>
-        </form>
-    </h3>
 </html>

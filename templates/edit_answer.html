@@ -40,22 +40,21 @@
     <div class="input-group mb-3">
 
             <div class="input-group">
-                 <textarea id="message" name="message" class="form-control" aria-label="With textarea" placeholder="Your answer" ></textarea>
+                 <textarea id="message" name="message" class="form-control" aria-label="With textarea" placeholder="Your answer" >{{ answer_message }}</textarea>
             </div>
             <br>
-            <div class="input-group mb-3 select">
+     <div class="input-group mb-3 select">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupFileAddon01">IMG</span>
-              </div>
                   <br>
               </div><br>
-                  <div class="custom-file">
-                      <br>
-                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01"></label>
+              <div class="custom-file">
+                  <br>
+                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01"></label>
               </div>
             </div>
-            <button type="submit" class="btn btn-secondary btn-lg">Add answer</button>
+            <button type="submit" class="btn btn-secondary btn-lg">Edit Answer</button>
         </form>
 </body>
 </html>

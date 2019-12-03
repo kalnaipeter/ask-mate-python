@@ -79,9 +79,9 @@ a:not([href]):not([tabindex]):focus {
         max-width: 41.6666666667%
     }
 
-    .col-sm-6 {
+    .col-sm-6 {margin-left: 20%;
         flex: 0 0 50%;
-        max-width: 50%
+        max-width: 100%
     }
 
     .col-sm-7 {
@@ -224,16 +224,16 @@ a:not([href]):not([tabindex]):focus {
 }
 
 .text-muted {
-    color: #99a0ac !important
+    color: red !important
 }
 
 .block,
 .card {
-    background: #fff;
+    background: darkgrey;
     border-width: 0;
     border-radius: .25rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
-    margin-bottom: 1.5rem
+    margin-bottom: 1.5rem;
 }
 
 .avatar {
@@ -281,7 +281,7 @@ a:not([href]):not([tabindex]):focus {
 .gd-warning {
     color: #fff;
     border: none;
-    background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
+    background: red linear-gradient(45deg, indianred, darkred)
 }
 
 @media (min-width:992px) {
@@ -361,15 +361,48 @@ a:link {
     text-decoration: none
 }
 
-.title {color: #d2922e}
+.title {color: red}
 
 
+.navbar{
+    background: darkgrey !important;
+    color : red;
+}
+#vote_down{border-radius: 50px;
+            border-style: hidden;
+            background: #9C1A1C}
+#vote_up{border-radius: 50px;
+            border-style: hidden;
+            background: #9C1A1C}
+.dropdown{
+    color: red;
+    border-radius:0;
+    border:0;
+}
+.dropdown-menu{
+    color: red;
+    background: #0c73cc;
+    border:0;
+    top:80%;
+    border-radius:0px 0px 5px 5px;
+}
+.dropdown-item:hover{
+    background:#085ca5;
+    color:red;
+}
+.dropdown-menu a{
+    color:red;
+}
 .navbar .nav-item .nav-link{
     color:red !important;
 
 }
 .navbar .nav-item .nav-link:hover .navbar .nav-item .nav-link{
-    color:red !important;
+    color:blue !important;
 
 }
-.navbar .navbar-brand {color: red;}
+.navbar .navbar-brand {
+    color: red;
+    background: white;
+    padding:10px;
+    border-radius: 10px;}

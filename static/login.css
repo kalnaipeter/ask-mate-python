@@ -1,5 +1,6 @@
 body {
     font-family: "Lato", sans-serif;
+    background-color: darkgrey;
 }
 
 
@@ -12,7 +13,7 @@ body {
 
 .sidenav {
     height: 100%;
-    background-color: #000;
+    background-image: url("red_black_abstract.jpg");
     overflow-x: hidden;
     padding-top: 20px;
 }

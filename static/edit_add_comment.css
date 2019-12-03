@@ -55,7 +55,7 @@ div.input-group.mb-3{max-width: 80%;
                     text-align: center;
                     margin-top: 5%;
                      margin-left: 34%}
-div.input-group.mb-3.select{max-width: 80%;
+div.input-group.mb-3.select{max-width: 70%;
                             text-align: center;
                              margin-left: 10%}
 /*title*/
@@ -64,3 +64,5 @@ div.input-group.mb-3.select{max-width: 80%;
 /*question area*/
 div.custom-file{max-width:10%;
                 text-align: center;}
+
+#comment {background: darkgrey}
