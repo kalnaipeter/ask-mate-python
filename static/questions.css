@@ -2,9 +2,13 @@ body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 
-.table td{vertical-align: middle}
-.table th{vertical-align: middle}
+.table td{vertical-align: middle;
+width: 30%}
+.table th{vertical-align: middle;
+width: 30%}
 
+.table{width: 80%;
+        margin-left: 9%}
 
 .navbar{
     background: darkgrey !important;

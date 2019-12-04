@@ -6,7 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>List Questions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='questions.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_add_comment.css') }}">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm  sticky-top  navbar-light bg-light">
@@ -34,13 +34,25 @@
   </div>
 </nav>
     <h1>Make a new Answer</h1>
-    <h2>
-        <form action="/answers/{{question_id}}" method="post" enctype="multipart/form-data">
-        <textarea rows="5" cols="30" id="message" name="message" placeholder="Answer"></textarea>
-        <br>
-        <input type="file" name="file" id="file">
-        <button type="submit"> Add new Answer</button>
-    </form>
-    </h2>
+    <form action="/answers/{{question_id}}" method="post" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+
+            <div class="input-group">
+                 <textarea id="message" name="message" class="form-control" aria-label="With textarea" placeholder="Your answer" ></textarea>
+            </div>
+            <br>
+            <div class="input-group mb-3 select">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">IMG</span>
+                  <br>
+              </div><br>
+              <div class="custom-file">
+                  <br>
+                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01"></label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-lg">Add answer</button>
+        </form>
 </body>
 </html>

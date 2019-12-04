@@ -1,44 +1,13 @@
 body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
-h1 {border-style: groove;
-    background:darkred;
-    margin-block: auto;
-    margin-left: 39.5%;
-    width: 20%;
-    text-align: center;
-    border-radius: 12px;}
 
-h2{
-    background: darkred;
-    font-size: 40px;
-    border-style: groove;
-    border-color: whitesmoke;
-    margin-block: auto;
-    margin-left: 38%;
-    width: 20%;
-    padding: 20px;
+h1{border-style: groove;
+        border-radius: 12px;
+    background: whitesmoke;
+    max-width: 50%;
     text-align: center;
- border-radius: 10px}
-.button {
-          background-color: darkred; /* Green */
-          border: none;
-          color: white;
-          padding: 15px 32px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          -webkit-transition-duration: 0.4s; /* Safari */
-          transition-duration: 0.4s;
-          border-radius: 12px;}
-
-.button1:hover {
-  background-color: white;
-    color: black;
-}
-h3 {margin-block: auto;
-    margin-left: 45.5%;}
+    margin-left: 24%}
 
 .navbar{
     background: darkgrey !important;
@@ -72,4 +41,28 @@ h3 {margin-block: auto;
     color:red !important;
 
 }
-.navbar .navbar-brand {color: red;}
+.navbar .navbar-brand {
+    color: red;
+    background: white;
+    padding:10px;
+    border-radius: 10px;}
+
+.btn.btn-secondary.btn-lg{background-color: whitesmoke;
+                color: black;
+                margin-left: 10%}
+
+div.input-group.mb-3{max-width: 80%;
+                    text-align: center;
+                    margin-top: 5%;
+                     margin-left: 34%}
+div.input-group.mb-3.select{max-width: 70%;
+                            text-align: center;
+                             margin-left: 10%}
+/*title*/
+.form-control{max-width: 39%;
+    height: 150%}
+/*question area*/
+div.custom-file{max-width:10%;
+                text-align: center;}
+
+#comment {background: darkgrey}

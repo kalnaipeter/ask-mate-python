@@ -13,18 +13,18 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand">Ask Mate</a>
+  <a class="navbar-brand" href="/list">Ask Mate</a>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <a class="nav-link" href="/list">Home <span class="sr-only">(current)</span></a>
-      </li>
+{#      <li class="nav-item">#}
+{#        <a class="nav-link" href="/list">Home <span class="sr-only"></span></a>#}
+{#      </li>#}
       <li class="nav-item">
         <a class="nav-link" href="/add-question">Ask question</a>
     </li>
         <li>
-            <a class="nav-link" href="#">User page</a>
+            <a class="nav-link" href="/user_page">User page</a>
         </li>
         <li><a class="nav-link" href="/list_users">List users</a></li>
     </ul>
@@ -57,8 +57,8 @@
                 <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
             </form>
             <a id="vote_number" >{{story.vote_number}}</a>
-            <form action="/question/{{story.id}}/vote_down" method="POST">
-                <button name="vote_down" id="vote_down" type="submit">&#8681;</button>
+            <form action="/question/{{story.id}}/vote_down"  method="POST">
+                <button name="vote_down" id="vote_down" type="submit" >&#8681;</button>
             </form>
            </td>
         <td><a href="/answers/{{story.id}}" >{{ highlight_phrase(story.title,fancy_word) | safe}}</a></td>

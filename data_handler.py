@@ -88,6 +88,17 @@ def registration(cursor,username,password):
                     "hashed_bytes":hashed_bytes,
                     "current_date":current_date})
 
+@database_common.connection_handler
+def list_users(cursor,user):
+    cursor.execute("""
+                    SELECT username,submission_time
+                    FROM usertable
+                    WHERE username = 
+                    """,)
+    users = cursor.fetchall()
+    return users
+
+
 
 @database_common.connection_handler
 def list_users(cursor):
@@ -259,7 +270,7 @@ def get_answer_ids_with_question_id(cursor,question_id):
 def read_questions(cursor):
     cursor.execute("""
                     SELECT * FROM question
-                    ORDER BY id;
+                    ORDER BY submission_time DESC;
                    """)
     questions = cursor.fetchall()
     return questions

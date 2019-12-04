@@ -5,8 +5,8 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>List Questions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='edit_comments.css') }}">
+    <title>List users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='list_users.css') }}">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm  sticky-top  navbar-light bg-light">
@@ -35,17 +35,24 @@
       <li><b>{{ username }}</b></li>
   </div>
 </nav>
-    <h1>Make a new Comment</h1>
-        <form action="/question/{{ id }}/new-comment" method="post">
-            <div class="input-group mb-3">
-        <div class="input-group">
-             <textarea id="message" name="message" class="form-control" aria-label="With textarea" placeholder="Your comment" ></textarea>
+<div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="list list-row block">
+                <h2 class="title">{{user.username}}<h2/>
+                {% for user in users %}
+                    <div class="list-item" data-id="19">
+                        <div class="no-wrap">
+                            <div class="item-date text-muted text-sm d-none d-md-block">{{ user.submission_time }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
-        <br>
-        <br>
-        <button type="submit" class="btn btn-secondary btn-lg">Add comment</button>
-    </form>
-
+    </div>
+</div>
 </body>
 </html>
