@@ -10,6 +10,12 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 
+@app.route('/user_page')
+def show_user_page():
+    return render_template('user_page.html')
+
+
+
 @app.route('/set-cookie')
 def cookie_insertion():
     redirect_to_index = redirect('/')
@@ -21,6 +27,9 @@ def cookie_insertion():
 @app.route('/')
 def start():
     return render_template("login_and_registration.html")
+
+
+
 
 @app.route('/registration',methods=["GET","POST"])
 def registration():

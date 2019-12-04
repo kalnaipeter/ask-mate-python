@@ -47,6 +47,17 @@ def registration(cursor,username,password):
                     "hashed_bytes":hashed_bytes,
                     "current_date":current_date})
 
+@database_common.connection_handler
+def list_users(cursor,user):
+    cursor.execute("""
+                    SELECT username,submission_time
+                    FROM usertable
+                    WHERE username = 
+                    """,)
+    users = cursor.fetchall()
+    return users
+
+
 
 @database_common.connection_handler
 def list_users(cursor):
