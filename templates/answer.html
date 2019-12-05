@@ -22,11 +22,19 @@
     </li>
         <li><a class="nav-link" href="/list_users">List users</a></li>
     </ul>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+              <a class="nav-link" href="/user_page">{{ username }}</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/" onclick="return confirm('Are you sure you want to Logout?')">Logout</a><li/>
+          </ul>
+  </div>
     <form class="form-inline my-2 my-lg-0" action="/question/search" method="POST">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
       <button class="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
     </form>
-      <li><b>{{ question_user_name }}</b></li>
   </div>
 </nav>
 <div class="text-center">
@@ -113,4 +121,5 @@
     </tbody>
 </table>
     <a id="new_answer" href="/answers/{{question_id}}/add-new-answer" class="btn btn-primary" href="#" role="button">Add new answer</a>
+</body>
 </html>

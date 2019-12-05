@@ -11,9 +11,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/user_page')
 def show_user_page():
+    username = session["username"]
     user_id = data_handler.get_user_id(session["username"])
+    user_questions = data_handler.get_user_questions(user_id)
+    user_answers = data_handler.get_user_answers(user_id)
     user_data=data_handler.get_user_data(user_id)
-    return render_template('user_page.html', user_data=user_data)
+    answer_comments = data_handler.read_comments()
+    return render_template('user_page.html', user_data=user_data, username=username, user_questions=user_questions,answer_comments=answer_comments, user_answers=user_answers,fancy_word=None)
 
 
 @app.route('/set-cookie')
@@ -131,10 +135,11 @@ def route_list_answers(question_id=None):
         question_user_name = data_handler.get_username_of_a_question(user_id)
         comment_user_name = data_handler.get_username_of_a_comment(user_id)
         answer_user_name = data_handler.get_username_of_an_answer(user_id)
+        username = session["username"]
         return render_template("answer.html", question_user_name = question_user_name,answer_user_name=answer_user_name,
                                comment_user_name=comment_user_name,image=image, question_title=question_title,
                                question_id=question_id,answers=answers,question_comments=question_comments,
-                               answer_comments=answer_comments)
+                               answer_comments=answer_comments,username=username)
     if request.method == "POST":
         user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()

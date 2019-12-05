@@ -2,9 +2,9 @@ body {background-image:url("red_black_abstract.jpg");
       background-repeat: no-repeat;
         background-size: cover}
 h2 {
-    margin-left: 25%;
+    margin-left: 37%;
     background:whitesmoke;
-    max-width: 50%;
+    max-width: 30%;
     font-size: 40px;
     border-style: groove;
     border-color: whitesmoke;
@@ -51,13 +51,23 @@ h2 {
 
 /*upload button*/
 div.input-group.mb-3{max-width: 100%;
+    vertical-align: middle;
                     text-align: center;
-                margin-left: 35%}
+                margin-left: 43.8%}
+div.input-group.mb-3.title{max-width: 100%;
+    vertical-align: middle;
+                    text-align: center;
+                         margin-left: 33%}
 /*title*/
-.form-control{max-width: 39%;}
+.form-control{max-width: 39%;
+vertical-align: middle;}
 /*question area*/
-div.custom-file{max-width: 16%;
+div.custom-file{max-width: 7%;
                 text-align: center;}
-div.input-group{margin-left: 30%}
-div.input-group.input-group-prepend{max-width: 50%;}
-.btn.btn-secondary.btn-lg{margin-left: 42%}
+.custom-file-label::after {padding: 0}
+div.custom-file-label{
+vertical-align: middle;}
+div.input-group{margin-left: 30%; text-align: center;vert-align: middle}
+div.input-group.input-group-prepend{max-width: 50%;
+vertical-align: middle;}
+.btn.btn-secondary.btn-lg{margin-left: 45.5%}
