@@ -25,36 +25,6 @@ def get_user_id(cursor, username):
     id_dict = cursor.fetchone()
     return id_dict["id"]
 
-#
-# @database_common.connection_handler
-# def insert_user_id_into_question_table(cursor, user_id):
-#     cursor.execute("""
-#                     INSERT INTO question (user_id)
-#                     VALUES (%(user_id)s)
-#                     WHERE user_id = "";
-#                     """,
-#                    {"user_id": user_id})
-#
-#
-# @database_common.connection_handler
-# def insert_user_id_into_answer_table(cursor, user_id):
-#     cursor.execute("""
-#                     INSERT INTO answer (user_id)
-#                     VALUES (%(user_id)s)
-#                     WHERE user_id = "";
-#                     """,
-#                    {"user_id":user_id})
-#
-#
-# @database_common.connection_handler
-# def insert_user_id_into_comment_table(cursor, user_id):
-#     cursor.execute("""
-#                     INSERT INTO comment (user_id)
-#                     VALUES (%(user_id)s)
-#                     WHERE user_id = "";
-#                     """,
-#                    {"user_id": user_id})
-
 
 @database_common.connection_handler
 def get_usernames_from_database(cursor):
@@ -64,6 +34,52 @@ def get_usernames_from_database(cursor):
     names = cursor.fetchall()
     return [item["username"] for item in names]
 
+
+@database_common.connection_handler
+def get_user_id_with_question_id(cursor,question_id):
+    cursor.execute("""
+                    SELECT user_id FROM question
+                    WHERE id = %(question_id)s
+                    """,
+                   {"question_id":question_id})
+    user_id_dict = cursor.fetchone()
+    return user_id_dict["user_id"]
+
+
+@database_common.connection_handler
+def get_username_of_a_question(cursor,user_id):
+    cursor.execute("""
+                    SELECT username FROM usertable
+                        JOIN question
+                        ON %(user_id)s = usertable.id
+                    """,
+                   {"user_id":user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
+
+
+@database_common.connection_handler
+def get_username_of_a_comment(cursor,user_id):
+    cursor.execute("""
+                        SELECT username FROM usertable
+                            JOIN comment
+                            ON %(user_id)s = usertable.id
+                        """,
+                   {"user_id": user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
+
+
+@database_common.connection_handler
+def get_username_of_an_answer(cursor,user_id):
+    cursor.execute("""
+                            SELECT username FROM usertable
+                                JOIN answer
+                                ON %(user_id)s = usertable.id
+                            """,
+                   {"user_id": user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
 
 @database_common.connection_handler
 def get_hash_from_database(cursor,username):

@@ -10,6 +10,13 @@ h2{border-style: groove;
     text-align: center;
     margin-left: 24%}
 
+h5{border-style: groove;
+        border-radius: 12px;
+    background: whitesmoke;
+    max-width: 10%;
+    text-align: center;
+    margin-left: 45%}
+
 h4{border-style: groove;
         border-radius: 12px;
     background: whitesmoke;
@@ -75,8 +82,21 @@ h4{border-style: groove;
                 color: black;
                 margin-left: 20%}
 
-#comment {background: darkgrey;
+#comment_message {background: darkgrey;
     color: red;
     margin-bottom: 0%}
-#comment2 {background: darkgrey;
-            margin-top: 0%}
+#comment_time {background: darkgrey;
+            margin-top: 0%;
+            font-size: x-small}
+
+#comment_user_name {background: darkgrey;
+                margin-top: 0%;
+            font-size: small}
+
+div.div_comments {
+    background: #32383e;
+    text-align: center;
+    max-width: 20%;
+    margin-left: 40%;
+    color:white}
+
