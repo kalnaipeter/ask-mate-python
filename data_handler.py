@@ -153,46 +153,6 @@ def get_the_current_date():
     return dt_string
 
 
-@database_common.connection_handler
-def sort_by_view(cursor):
-    cursor.execute("""
-                        SELECT * FROM question 
-                        ORDER BY view_number DESC
-                        """)
-    number = cursor.fetchall()
-    return number
-
-
-@database_common.connection_handler
-def sort_by_vote(cursor):
-    cursor.execute("""
-                        SELECT * FROM question 
-                        ORDER BY vote_number DESC 
-                        """)
-    voted = cursor.fetchall()
-    return voted
-
-
-@database_common.connection_handler
-def sort_by_title(cursor):
-    cursor.execute("""
-                        SELECT * FROM question 
-                        ORDER BY title ASC 
-                        """)
-    title = cursor.fetchall()
-    return title
-
-
-@database_common.connection_handler
-def sort_by_message(cursor):
-    cursor.execute("""
-                        SELECT * FROM question 
-                        ORDER BY message ASC 
-                        """)
-    message = cursor.fetchall()
-    return message
-
-
 def my_highlight_phrase():
     def _highlight_phrase(text_content, phrase):
         if phrase == None:
@@ -222,6 +182,7 @@ def get_comment_message(cursor, comment_id):
                    {"comment_id": comment_id})
     comment_message_dictionary = cursor.fetchone()
     return comment_message_dictionary["message"]
+
 
 @database_common.connection_handler
 def display_latest(cursor):
@@ -304,10 +265,12 @@ def get_answer_ids_with_question_id(cursor,question_id):
 
 
 @database_common.connection_handler
-def read_questions(cursor):
-    cursor.execute("""
-                    SELECT * FROM question
-                    ORDER BY submission_time DESC;
+def read_questions(cursor,column,direction):
+    cursor.execute(f"""
+                    SELECT question.* ,username FROM question
+                        LEFT JOIN usertable
+                        ON question.user_id = usertable.id
+                    ORDER BY {column} {direction};
                    """)
     questions = cursor.fetchall()
     return questions
@@ -316,7 +279,9 @@ def read_questions(cursor):
 @database_common.connection_handler
 def read_answers(cursor, question_id):
     cursor.execute("""
-                        SELECT * FROM answer
+                        SELECT answer.*,username FROM answer
+                            JOIN usertable
+                            ON answer.user_id = usertable.id
                         WHERE question_id = %(question_id)s
                         ORDER BY id;
                        """,
@@ -328,8 +293,9 @@ def read_answers(cursor, question_id):
 @database_common.connection_handler
 def read_question_comments(cursor, question_id):
     cursor.execute("""
-                    SELECT comment.* FROM comment
-                    
+                    SELECT comment.* ,username FROM comment
+                        JOIN usertable
+                        ON comment.user_id = usertable.id
                     WHERE question_id = %(question_id)s
                     """,
                    {"question_id": question_id})
@@ -340,7 +306,9 @@ def read_question_comments(cursor, question_id):
 @database_common.connection_handler
 def read_comments(cursor):
     cursor.execute("""
-                    SELECT * FROM comment;
+                    SELECT comment.*,username FROM comment
+                        JOIN usertable
+                        ON comment.user_id = usertable.id;
                     """,)
     comments = cursor.fetchall()
     return comments

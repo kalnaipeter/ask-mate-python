@@ -80,7 +80,14 @@ def route_list_questions():
         return render_template('questions.html', stories=stories, fancy_word=None)
     if request.method == "GET":
         username = session["username"]
-        stories = data_handler.read_questions()
+        column = "submission_time"
+        direction = "DESC"
+        opportunities = ["submission_time","vote_number","view_number","title","message"]
+        if request.args.get("order_by") in opportunities:
+            column = request.args.get("order_by")
+        if request.args.get("direction") in opportunities:
+            direction = request.args.get("direction")
+        stories = data_handler.read_questions(column,direction)
         return render_template('questions.html', username=username,stories=stories, fancy_word=None)
 
 
@@ -129,11 +136,10 @@ def route_list_answers(question_id=None):
         image = data_handler.get_image(question_id)
         user_id = data_handler.get_user_id_with_question_id(question_id)
         question_user_name = data_handler.get_username_of_a_question(user_id)
-        comment_user_name = data_handler.get_username_of_a_comment(user_id)
-        answer_user_name = data_handler.get_username_of_an_answer(user_id)
-        return render_template("answer.html", question_user_name = question_user_name,answer_user_name=answer_user_name,
-                               comment_user_name=comment_user_name,image=image, question_title=question_title,
-                               question_id=question_id,answers=answers,question_comments=question_comments,
+        username = session["username"]
+        return render_template("answer.html",username=username,image=image, question_user_name=question_user_name,
+                               question_title=question_title,question_id=question_id,answers=answers,
+                               question_comments=question_comments,
                                answer_comments=answer_comments)
     if request.method == "POST":
         user_id = data_handler.get_user_id(session["username"])
@@ -286,36 +292,6 @@ def search():
 @app.context_processor
 def highlight_phrase():
     return data_handler.my_highlight_phrase()
-
-
-@app.route('/question/order_by_time')
-def latest_time():
-    story = data_handler.display_latest()
-    return render_template('questions.html', stories=story, fancy_word=None)
-
-
-@app.route('/question/order_by_view')
-def sort_by_view():
-    story = data_handler.sort_by_view()
-    return render_template('questions.html', stories=story, fancy_word=None)
-
-
-@app.route('/question/order_by_vote')
-def sort_by_vote():
-    story = data_handler.sort_by_vote()
-    return render_template('questions.html', stories=story, fancy_word=None)
-
-
-@app.route('/question/order_by_title')
-def sort_by_title():
-    story = data_handler.sort_by_title()
-    return render_template('questions.html', stories=story, fancy_word=None)
-
-
-@app.route('/question/order_by_message')
-def sort_by_message():
-    story = data_handler.sort_by_message()
-    return render_template('questions.html', stories=story, fancy_word=None)
 
 
 if __name__ == "__main__":

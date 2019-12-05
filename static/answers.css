@@ -73,13 +73,13 @@ h4{border-style: groove;
 
 }
 .navbar .navbar-brand {
-    color: red;
+    color: red !important;
     background: white;
     padding:10px;
     border-radius: 10px;}
 
 .btn.btn-primary{background-color: whitesmoke;
-                color: black;
+                color: black !important;
                 margin-left: 20%}
 
 #comment_message {background: darkgrey;
@@ -100,3 +100,5 @@ div.div_comments {
     margin-left: 40%;
     color:white}
 
+a {
+    color: white !important;}

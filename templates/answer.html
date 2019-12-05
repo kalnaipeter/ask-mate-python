@@ -22,16 +22,26 @@
     </li>
         <li><a class="nav-link" href="/list_users">List users</a></li>
     </ul>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+              <a class="nav-link" href="/user_page">{{ username }}</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/" onclick="return confirm('Are you sure you want to Logout?')">Logout</a><li/>
+          </ul>
+  </div>
     <form class="form-inline my-2 my-lg-0" action="/question/search" method="POST">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
       <button class="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
     </form>
-      <li><b>{{ question_user_name }}</b></li>
   </div>
 </nav>
+{% if image %}
 <div class="text-center">
   <img src="/static/images/{{ image }}" width="300" height="300" class="rounded" alt="...">
 </div>
+{% endif %}
 <h2>{{ question_title }}</h2>
 <h5>Created by:{{ question_user_name }}</h5>
 {% if question_comments %}
@@ -43,9 +53,14 @@
                 <tr>
                     <td>{{ comment.message }}</td><br/>
                     <td>{{ comment.submission_time }}</td><br/>
-                    <td>By: {{ comment_user_name }}</td>
+                    <td>By: {{ comment.username }}</td>
+                    {% if comment.username == username %}
                     <td id="edit_delete"><a href="/comment/{{ comment.id }}/edit">Edit</a></td>
                     <td id="edit_delete"><a href="/comment/{{comment.id}}/delete">Delete</a></td>
+                    {% else %}
+                    <td><a>Edit</a></td>
+                    <td><a>Delete</a></td>
+                    {% endif %}
                 </tr><br/>
             {% endfor %}
 
@@ -87,27 +102,35 @@
             {% for comment in answer_comments %}
                 {% if comment.answer_id == story.id %}
                     <p id="comment_message">{{ comment.message }}</p>
-                    <p id="comment_user_name">By: {{ comment_user_name }}</p>
-                    <p id="comment_time">{{ comment.submission_time }}     <a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
+                    <p id="comment_user_name">By: {{ comment.username }}</p>
+                    <p id="comment_time">{{ comment.submission_time }}
+                        {% if comment.username == username %}
+                            <a href="/comment/{{ comment.id }}/edit">Edit</a>,<a href="/comment/{{comment.id}}/delete">Delete</a></p>
+                            {% else %}<a>Edit</a>,<a>Delete</a></p>
+                        {% endif %}
                 {% endif %}
             {% endfor %}
             </details>
-        <p>By: {{ answer_user_name }}</p>
+        <p>By: {{ story.username }}</p>
         </td>
         {% if story.image %}
             <td><img src="/static/images/{{ story.image }}" width="100" height="100"></td>
             {% else %}
             <td></td>
         {% endif %}
+    {% if story.username == username %}
         <td class="edit_delete">
-            <a href="/answer/{{ story.id }}/edit">Edit</a>
-            <br/>
-            <br/>
-            <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a>
-            <br/>
-            <br/>
+            <a href="/answer/{{ story.id }}/edit">Edit</a><br/><br/>
+            <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a><br/><br/>
             <a href="/answer/{{ story.id }}/delete">Delete</a>
         </td>
+    {% else %}
+        <td class="edit_delete">
+            <a>Edit</a><br/><br/>
+            <a id="add_comment_answer" href="/answer/{{ story.id }}/new-comment">Add comment</a><br/><br/>
+            <a>Delete</a>
+        </td>
+    {% endif %}
     </tr>
     {% endfor %}
     </tbody>

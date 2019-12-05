@@ -40,11 +40,11 @@
 <table class="text-center table table-hover table-sm table-dark">
   <thead>
         <th>ID</th>
-        <th><a href="/question/order_by_time" >Submission Time</a></th>
-        <th><a href="/question/order_by_view" >View Number</a></th>
-        <th><a href="/question/order_by_vote" >Vote Number</a></th>
-        <th><a href="/question/order_by_title" >Title</a></th>
-        <th><a href="/question/order_by_message" >Message</a></th>
+        <th><a href="{{url_for("route_list_questions", order_by = "submission_time",direction = "DESC")}}" >Submission Time</a></th>
+        <th><a href= "{{ url_for("route_list_questions", order_by = "view_number",direction = "DESC")}}" >View Number</a></th>
+        <th><a href="{{ url_for("route_list_questions", order_by = "vote_number",direction = "DESC")}}" >Vote Number</a></th>
+        <th><a href="{{ url_for("route_list_questions", order_by = "title",direction = "ASC")}}" >Title</a></th>
+        <th><a href="{{ url_for("route_list_questions", order_by = "message",direction = "ASC")}}" >Message</a></th>
         <th>Image</th>
     </thead>
   <tbody>
@@ -70,11 +70,17 @@
             {% else %}
             <td></td>
         {% endif %}
+        {% if story.username == username %}
         <td id="edit_delete"><a href="/question/{{ story.id }}/edit">Edit</a>
             <br/>
             <br/>
-        <a href="/question/{{story.id}}/delete">Delete</a>
-        </td>
+        <a href="/question/{{story.id}}/delete">Delete</a></td>
+            {% else %}
+            <td id="edit_delete"><a>Edit</a>
+            <br/>
+            <br/>
+        <a>Delete</a></td>
+            {% endif %}
     </tr>
     {% endfor %}
     </tbody>
