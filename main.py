@@ -9,13 +9,11 @@ path = os.path.dirname(__file__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-
 @app.route('/user_page')
 def show_user_page():
     user_id = data_handler.get_user_id(session["username"])
     user_data=data_handler.get_user_data(user_id)
     return render_template('user_page.html', user_data=user_data)
-
 
 
 @app.route('/set-cookie')
@@ -29,8 +27,6 @@ def cookie_insertion():
 @app.route('/')
 def start():
     return render_template("login_and_registration.html")
-
-
 
 
 @app.route('/registration',methods=["GET","POST"])
@@ -131,10 +127,14 @@ def route_list_answers(question_id=None):
         answer_comments = data_handler.read_comments()
         question_title = data_handler.get_question_title(question_id)
         image = data_handler.get_image(question_id)
-        username = session["username"]
-        return render_template("answer.html", image=image, question_title=question_title, question_id=question_id,
-                               answers=answers,
-                               question_comments=question_comments, answer_comments=answer_comments,username=username)
+        user_id = data_handler.get_user_id_with_question_id(question_id)
+        question_user_name = data_handler.get_username_of_a_question(user_id)
+        comment_user_name = data_handler.get_username_of_a_comment(user_id)
+        answer_user_name = data_handler.get_username_of_an_answer(user_id)
+        return render_template("answer.html", question_user_name = question_user_name,answer_user_name=answer_user_name,
+                               comment_user_name=comment_user_name,image=image, question_title=question_title,
+                               question_id=question_id,answers=answers,question_comments=question_comments,
+                               answer_comments=answer_comments)
     if request.method == "POST":
         user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
@@ -230,11 +230,6 @@ def route_edit_comment(comment_id=None):
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
             question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return redirect(url_for("route_list_answers", question_id=question_id))
-
-#
-# @app.route('/user_page')
-# def user_page():
-#
 
 
 @app.route("/question/<int:question_id>/vote_up", methods=["POST"])

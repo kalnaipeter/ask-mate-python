@@ -55,6 +55,52 @@ def get_usernames_from_database(cursor):
 
 
 @database_common.connection_handler
+def get_user_id_with_question_id(cursor,question_id):
+    cursor.execute("""
+                    SELECT user_id FROM question
+                    WHERE id = %(question_id)s
+                    """,
+                   {"question_id":question_id})
+    user_id_dict = cursor.fetchone()
+    return user_id_dict["user_id"]
+
+
+@database_common.connection_handler
+def get_username_of_a_question(cursor,user_id):
+    cursor.execute("""
+                    SELECT username FROM usertable
+                        JOIN question
+                        ON %(user_id)s = usertable.id
+                    """,
+                   {"user_id":user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
+
+
+@database_common.connection_handler
+def get_username_of_a_comment(cursor,user_id):
+    cursor.execute("""
+                        SELECT username FROM usertable
+                            JOIN comment
+                            ON %(user_id)s = usertable.id
+                        """,
+                   {"user_id": user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
+
+
+@database_common.connection_handler
+def get_username_of_an_answer(cursor,user_id):
+    cursor.execute("""
+                            SELECT username FROM usertable
+                                JOIN answer
+                                ON %(user_id)s = usertable.id
+                            """,
+                   {"user_id": user_id})
+    username_dict = cursor.fetchone()
+    return username_dict["username"]
+
+@database_common.connection_handler
 def get_hash_from_database(cursor,username):
     cursor.execute("""
                     SELECT password FROM usertable
