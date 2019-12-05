@@ -307,7 +307,8 @@ def read_answers(cursor, question_id):
 @database_common.connection_handler
 def read_question_comments(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM comment
+                    SELECT comment.* FROM comment
+                    
                     WHERE question_id = %(question_id)s
                     """,
                    {"question_id": question_id})
