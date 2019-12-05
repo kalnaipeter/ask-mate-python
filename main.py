@@ -11,7 +11,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/user_page')
 def show_user_page():
-    return render_template('user_page.html')
+    user_id = data_handler.get_user_id(session["username"])
+    user_data=data_handler.get_user_data(user_id)
+    return render_template('user_page.html', user_data=user_data)
 
 
 @app.route('/set-cookie')
@@ -35,7 +37,7 @@ def registration():
             if request.form["username"] in data_handler.get_usernames_from_database():
                 error = "This username is already in use"
                 return render_template("login_and_registration.html", error=error)
-            data_handler.registration(request.form["username"], request.form["password"])
+            data_handler.registration(request.form["username"], request.form["password"], 0)
             return render_template("login_and_registration.html")
         error = "Wrong characters..."
         return render_template("login_and_registration.html", error=error)
@@ -57,8 +59,9 @@ def login():
 
 @app.route('/list_users')
 def list_users():
+    username = session["username"]
     users = data_handler.list_users()
-    return render_template("list_users.html",users=users)
+    return render_template("list_users.html",users=users,username=username)
 
 
 @app.route('/list', methods=["GET", "POST"])
@@ -84,10 +87,11 @@ def route_list_questions():
 @app.route('/question/<int:question_id>/edit', methods=["GET", "POST"])
 def route_edit_question(question_id):
     if request.method == "GET":
+        username = session["username"]
         question_title = data_handler.get_question_title(question_id)
         question_message = data_handler.get_question_message(question_id)
         return render_template("edit-question.html", question_title=question_title, question_message=question_message,
-                               question_id=question_id)
+                               question_id=question_id,username=username)
     if request.method == "POST":
         if request.files['file']:
             file = request.files['file']
@@ -110,7 +114,8 @@ def route_delete_question(question_id):
 
 @app.route('/add-question')
 def route_add_new_question():
-    return render_template("add-question.html")
+    username = session["username"]
+    return render_template("add-question.html",username=username)
 
 
 @app.route('/answers/<int:question_id>', methods=["GET", "POST"])
@@ -145,7 +150,8 @@ def route_list_answers(question_id=None):
 def route_edit_answer(answer_id):
     if request.method == "GET":
         answer_message = data_handler.get_answer_message(answer_id)
-        return render_template("edit_answer.html", answer_message=answer_message, answer_id=answer_id)
+        username = session["username"]
+        return render_template("edit_answer.html", answer_message=answer_message, answer_id=answer_id,username=username)
     if request.method == "POST":
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
         if request.files['file']:
@@ -159,7 +165,8 @@ def route_edit_answer(answer_id):
 
 @app.route('/answers/<int:question_id>/add-new-answer')
 def route_add_new_answer(question_id=None):
-    return render_template("add-new-answer.html", question_id=question_id)
+    username = session["username"]
+    return render_template("add-new-answer.html", question_id=question_id, username=username)
 
 
 @app.route('/answer/<int:answer_id>/delete')
@@ -182,7 +189,8 @@ def route_delete_comment(comment_id):
 @app.route('/question/<int:question_id>/new-comment', methods=["GET", "POST"])
 def route_new_question_comment(question_id):
     if request.method == "GET":
-        return render_template("add_new_question_comment.html", id=question_id)
+        username = session["username"]
+        return render_template("add_new_question_comment.html", id=question_id,username=username)
     if request.method == "POST":
         user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
@@ -193,8 +201,9 @@ def route_new_question_comment(question_id):
 @app.route('/answer/<int:answer_id>/new-comment', methods=["GET", "POST"])
 def route_new_answer_comment(answer_id):
     if request.method == "GET":
+        username = session["username"]
         question_id = data_handler.get_question_id_from_answer_id(answer_id)
-        return render_template("add_new_answer_comment.html", id=answer_id, question_id=question_id)
+        return render_template("add_new_answer_comment.html", id=answer_id, question_id=question_id,username=username)
     if request.method == "POST":
         user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
@@ -206,13 +215,14 @@ def route_new_answer_comment(answer_id):
 @app.route('/comment/<int:comment_id>/edit', methods=["GET", "POST"])
 def route_edit_comment(comment_id=None):
     if request.method == "GET":
+        username = session["username"]
         comment_message = data_handler.get_comment_message(comment_id)
         question_id = data_handler.get_question_id_from_comment_id(comment_id)
         if question_id is None:
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
             question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return render_template("edit-comment.html", comment_id=comment_id, comment_message=comment_message,
-                               question_id=question_id)
+                               question_id=question_id,username=username)
     if request.method == "POST":
         data_handler.edit_comment(comment_id, request.form.get("message"))
         question_id = data_handler.get_question_id_from_comment_id(comment_id)
@@ -224,18 +234,30 @@ def route_edit_comment(comment_id=None):
 
 @app.route("/question/<int:question_id>/vote_up", methods=["POST"])
 def question_vote_up(question_id=None):
+    user_id = data_handler.get_user_id(session["username"])
+    question_user = data_handler.get_user_id_by_question_id(question_id)
+    if user_id == question_user:
+        data_handler.question_reputaion_up(user_id)
     data_handler.question_vote_up(question_id)
-    return redirect(url_for("route_list_questions"))
+    return redirect(url_for("route_list_questions",))
 
 
 @app.route("/question/<int:question_id>/vote_down", methods=["POST"])
 def question_vote_down(question_id=None):
+    user_id = data_handler.get_user_id(session["username"])
+    question_user = data_handler.get_user_id_by_question_id(question_id)
+    if user_id == question_user:
+        data_handler.question_reputaion_down(user_id)
     data_handler.question_vote_down(question_id)
     return redirect(url_for("route_list_questions"))
 
 
 @app.route("/answer/<int:answer_id>/vote_up", methods=["POST"])
 def answer_vote_up(answer_id=None):
+    user_id = data_handler.get_user_id(session["username"])
+    answer_user = data_handler.get_user_id_by_answer_id(answer_id)
+    if user_id == answer_user:
+        data_handler.answer_reputaion_up(user_id)
     data_handler.answer_vote_up(answer_id)
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
     return redirect(url_for("route_list_answers", question_id=question_id))
@@ -243,6 +265,10 @@ def answer_vote_up(answer_id=None):
 
 @app.route("/answer/<int:answer_id>/vote_down", methods=["POST"])
 def answer_vote_down(answer_id=None):
+    user_id = data_handler.get_user_id(session["username"])
+    answer_user = data_handler.get_user_id_by_answer_id(answer_id)
+    if user_id == answer_user:
+        data_handler.answer_reputaion_down(user_id)
     data_handler.answer_vote_down(answer_id)
     question_id = data_handler.get_question_id_from_answer_id(answer_id)
     return redirect(url_for("route_list_answers", question_id=question_id))
@@ -289,7 +315,6 @@ def sort_by_title():
 @app.route('/question/order_by_message')
 def sort_by_message():
     story = data_handler.sort_by_message()
-    print(story)
     return render_template('questions.html', stories=story, fancy_word=None)
 
 

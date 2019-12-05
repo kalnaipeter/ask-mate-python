@@ -25,6 +25,25 @@ def get_user_id(cursor, username):
     id_dict = cursor.fetchone()
     return id_dict["id"]
 
+@database_common.connection_handler
+def get_user_id_by_question_id(cursor,question_id):
+    cursor.execute("""
+                        SELECT user_id FROM question
+                        WHERE id = %(id)s
+                        """,
+                   {"id": question_id})
+    id_dict = cursor.fetchone()
+    return id_dict["user_id"]
+
+@database_common.connection_handler
+def get_user_id_by_answer_id(cursor,answer_id):
+    cursor.execute("""
+                        SELECT user_id FROM answer
+                        WHERE id = %(id)s
+                        """,
+                   {"id": answer_id})
+    id_dict = cursor.fetchone()
+    return id_dict["user_id"]
 
 @database_common.connection_handler
 def get_usernames_from_database(cursor):
@@ -93,26 +112,28 @@ def get_hash_from_database(cursor,username):
 
 
 @database_common.connection_handler
-def registration(cursor,username,password):
+def registration(cursor,username,password,reputation):
     hashed_bytes = get_hash_from_password(password)
     current_date = get_the_current_date()
     cursor.execute("""
-                    INSERT INTO usertable (username,password,submission_time)
-                    VALUES (%(username)s,%(hashed_bytes)s,%(current_date)s);
+                    INSERT INTO usertable (username,password,submission_time,reputation)
+                    VALUES (%(username)s,%(hashed_bytes)s,%(current_date)s,%(reputation)s);
                    """,
                    {"username":username,
                     "hashed_bytes":hashed_bytes,
-                    "current_date":current_date})
+                    "current_date":current_date,
+                    "reputation":reputation})
 
 @database_common.connection_handler
-def list_users(cursor,user):
+def get_user_data(cursor,user):
     cursor.execute("""
-                    SELECT username,submission_time
+                    SELECT username,submission_time,reputation
                     FROM usertable
-                    WHERE username = 
-                    """,)
-    users = cursor.fetchall()
-    return users
+                    WHERE id = %(user_id)s;
+                    """,
+                   {"user_id":user})
+    user_data = cursor.fetchall()
+    return user_data
 
 
 
@@ -502,6 +523,43 @@ def increase_view_number(cursor, question_id):
                     """,
                    {"question_id": question_id})
 
+@database_common.connection_handler
+def question_reputaion_up(cursor,user_id):
+    cursor.execute("""
+                       UPDATE usertable
+                       SET reputation = reputation + 5
+                       WHERE id = %(user_id)s;
+                       """,
+                   {"user_id":user_id})
+
+@database_common.connection_handler
+def answer_reputaion_up(cursor,user_id):
+    cursor.execute("""
+                       UPDATE usertable
+                       SET reputation = reputation + 5
+                       WHERE id = %(user_id)s;
+                       """,
+                   {"user_id":user_id})
+@database_common.connection_handler
+def question_reputaion_down(cursor,user_id):
+    cursor.execute("""
+                       UPDATE usertable
+                       SET reputation = reputation -2
+                       WHERE id = %(user_id)s;
+                       """,
+                   {"user_id":user_id})
+
+@database_common.connection_handler
+def answer_reputaion_down(cursor,user_id):
+    cursor.execute("""
+                       UPDATE usertable
+                       SET reputation = reputation -2
+                       WHERE id = %(user_id)s;
+                       """,
+                   {"user_id":user_id})
+
+
+
 
 @database_common.connection_handler
 def question_vote_up(cursor, question_id):
@@ -510,7 +568,8 @@ def question_vote_up(cursor, question_id):
                     SET vote_number = vote_number +1
                     WHERE id = %(question_id)s;
                     """,
-                   {"question_id": question_id})
+                   {"question_id": question_id
+                    })
 
 
 @database_common.connection_handler
@@ -520,7 +579,8 @@ def question_vote_down(cursor, question_id):
                     SET vote_number = vote_number -1
                     WHERE id = %(question_id)s;
                     """,
-                   {"question_id": question_id})
+                   {"question_id": question_id,
+                    })
 
 
 @database_common.connection_handler
@@ -528,9 +588,10 @@ def answer_vote_up(cursor, answer_id):
     cursor.execute("""
                     UPDATE answer
                     SET vote_number = vote_number +1
-                    WHERE id = %(answer_id)s;
+                    WHERE id = %(answer_id)s;        
                     """,
-                   {"answer_id": answer_id})
+                   {"answer_id": answer_id,
+                  })
 
 
 @database_common.connection_handler
