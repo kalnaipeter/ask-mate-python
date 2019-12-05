@@ -11,9 +11,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/user_page')
 def show_user_page():
+    username = session["username"]
     user_id = data_handler.get_user_id(session["username"])
+    user_questions = data_handler.get_user_questions(user_id)
+    user_answers = data_handler.get_user_answers(user_id)
     user_data=data_handler.get_user_data(user_id)
-    return render_template('user_page.html', user_data=user_data)
+    answer_comments = data_handler.read_comments()
+    return render_template('user_page.html', user_data=user_data, username=username, user_questions=user_questions,answer_comments=answer_comments, user_answers=user_answers,fancy_word=None)
 
 
 @app.route('/set-cookie')

@@ -14,6 +14,27 @@ def verify_password(password, hash):
     hashed_bytes_password = hash.encode('utf-8')
     return bcrypt.checkpw(password.encode('utf-8'), hashed_bytes_password)
 
+@database_common.connection_handler
+def get_user_questions(cursor,user_id):
+    cursor.execute("""
+                    SELECT id,submission_time,view_number,vote_number,title,message,image FROM question
+                    WHERE user_id = %(user_id)s
+                       """,
+                   {"user_id":user_id})
+    data = cursor.fetchall()
+    return data
+
+@database_common.connection_handler
+def get_user_answers(cursor,user_id):
+    cursor.execute("""
+                    SELECT id,submission_time,vote_number,message,image FROM answer
+                    WHERE user_id = %(user_id)s
+                       """,
+                   {"user_id":user_id})
+    data = cursor.fetchall()
+    return data
+
+
 
 @database_common.connection_handler
 def get_user_id(cursor, username):
