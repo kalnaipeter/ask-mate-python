@@ -313,7 +313,8 @@ a:link {
     text-decoration: none
 }
 
-.title {color: red}
+.title {color: red;
+        text-align: center}
 
 
 .navbar{
