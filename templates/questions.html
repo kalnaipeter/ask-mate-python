@@ -55,11 +55,12 @@
         <td>{{story.view_number}}</td>
         <td>
 
-            <form action="/question/{{story.id}}/vote_up" method="POST">
-                <button name="vote_up" id="vote_up" type="submit">&#8679;</button>
-            </form>
+{#            <form action="/question/{{story.id}}/vote_up" method="POST">#}
+                <form action="{{ url_for("question_vote", question_id="{{ story.id }}",answer_id=None,vote="up") }}" method="POST">
+                    <button name="vote_up" id="vote_up" type="submit">&#8679;</button></form>
             <a id="vote_number" >{{story.vote_number}}</a>
-            <form action="/question/{{story.id}}/vote_down"  method="POST">
+{#            <form action="/question/{{story.id}}/vote_down"  method="POST">#}
+                <form action="{{ url_for("question_vote",question_id="{{story.id}}",answer_id=None,vote="down") }}"method="POST">
                 <button name="vote_down" id="vote_down" type="submit" >&#8681;</button>
             </form>
            </td>

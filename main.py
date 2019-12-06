@@ -71,6 +71,7 @@ def list_users():
 @app.route('/list', methods=["GET", "POST"])
 def route_list_questions():
     if request.method == "POST":
+        username = session["username"]
         user_id = data_handler.get_user_id(session["username"])
         time = data_handler.get_the_current_date()
         if request.files['file']:
@@ -81,7 +82,7 @@ def route_list_questions():
         else:
             data_handler.write_question(time, 0, 0, request.form.get("title"), request.form.get("message"), None,user_id)
         stories = data_handler.read_questions()
-        return render_template('questions.html', stories=stories, fancy_word=None)
+        return render_template('questions.html', username=username,stories=stories, fancy_word=None)
     if request.method == "GET":
         username = session["username"]
         column = "submission_time"
@@ -227,12 +228,11 @@ def route_edit_comment(comment_id=None):
     if request.method == "GET":
         username = session["username"]
         comment_message = data_handler.get_comment_message(comment_id)
-        question_id = data_handler.get_question_id_from_comment_id(comment_id)
+        # question_id = data_handler.get_question_id_from_comment_id(comment_id)
         if question_id is None:
             answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
-            question_id = data_handler.get_question_id_from_answer_id(answer_id)
-        return render_template("edit-comment.html", comment_id=comment_id, comment_message=comment_message,
-                               question_id=question_id,username=username)
+            # question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        return render_template("edit-comment.html", comment_id=comment_id, comment_message=comment_message,username=username)
     if request.method == "POST":
         data_handler.edit_comment(comment_id, request.form.get("message"))
         question_id = data_handler.get_question_id_from_comment_id(comment_id)
@@ -242,46 +242,63 @@ def route_edit_comment(comment_id=None):
         return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route("/question/<int:question_id>/vote_up", methods=["POST"])
-def question_vote_up(question_id=None):
-    user_id = data_handler.get_user_id(session["username"])
-    question_user = data_handler.get_user_id_by_question_id(question_id)
-    if user_id == question_user:
+@app.route("/question/vote_up", methods=["POST"])
+def question_vote(question_id=None,answer_id=None,vote=None):
+    column = "submission_time"
+    direction = "DESC"
+    print(question_id)
+    if question_id:
+        print("ideis")
+        user_id = data_handler.get_user_id_with_question_id(question_id)
         data_handler.question_reputaion_up(user_id)
-    data_handler.question_vote_up(question_id)
-    return redirect(url_for("route_list_questions",))
-
-
-@app.route("/question/<int:question_id>/vote_down", methods=["POST"])
-def question_vote_down(question_id=None):
-    user_id = data_handler.get_user_id(session["username"])
-    question_user = data_handler.get_user_id_by_question_id(question_id)
-    if user_id == question_user:
-        data_handler.question_reputaion_down(user_id)
-    data_handler.question_vote_down(question_id)
-    return redirect(url_for("route_list_questions"))
-
-
-@app.route("/answer/<int:answer_id>/vote_up", methods=["POST"])
-def answer_vote_up(answer_id=None):
-    user_id = data_handler.get_user_id(session["username"])
-    answer_user = data_handler.get_user_id_by_answer_id(answer_id)
-    if user_id == answer_user:
+        if vote == "up":
+            data_handler.question_vote_up(question_id)
+        data_handler.question_vote_down(question_id)
+        print("ittleszabaj")
+        return redirect(url_for("route_list_questions"))
+    if answer_id:
+        user_id = data_handler.get_user_id_by_answer_id(answer_id)
         data_handler.answer_reputaion_up(user_id)
-    data_handler.answer_vote_up(answer_id)
-    question_id = data_handler.get_question_id_from_answer_id(answer_id)
-    return redirect(url_for("route_list_answers", question_id=question_id))
+        data_handler.answer_vote_up(answer_id)
+        if vote == "up":
+            data_handler.answer_vote_up(answer_id)
+        data_handler.answer_vote_down(answer_id)
+        return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route("/answer/<int:answer_id>/vote_down", methods=["POST"])
-def answer_vote_down(answer_id=None):
-    user_id = data_handler.get_user_id(session["username"])
-    answer_user = data_handler.get_user_id_by_answer_id(answer_id)
-    if user_id == answer_user:
-        data_handler.answer_reputaion_down(user_id)
-    data_handler.answer_vote_down(answer_id)
-    question_id = data_handler.get_question_id_from_answer_id(answer_id)
-    return redirect(url_for("route_list_answers", question_id=question_id))
+
+# @app.route("/question/<int:question_id>/vote_up", methods=["POST"])
+# def question_vote_up(question_id=None):
+#     user_id = data_handler.get_user_id_with_question_id(question_id)
+#     data_handler.question_reputaion_up(user_id)
+#     data_handler.question_vote_up(question_id)
+#     return redirect(url_for("route_list_questions",))
+#
+#
+# @app.route("/question/<int:question_id>/vote_down", methods=["POST"])
+# def question_vote_down(question_id=None):
+#     user_id = data_handler.get_user_id_with_question_id(question_id)
+#     data_handler.question_reputaion_down(user_id)
+#     data_handler.question_vote_down(question_id)
+#     return redirect(url_for("route_list_questions"))
+#
+#
+# @app.route("/answer/<int:answer_id>/vote_up", methods=["POST"])
+# def answer_vote_up(answer_id=None):
+#     user_id = data_handler.get_user_id_by_answer_id(answer_id)
+#     data_handler.answer_reputaion_up(user_id)
+#     data_handler.answer_vote_up(answer_id)
+#     question_id = data_handler.get_question_id_from_answer_id(answer_id)
+#     return redirect(url_for("route_list_answers", question_id=question_id))
+#
+#
+# @app.route("/answer/<int:answer_id>/vote_down", methods=["POST"])
+# def answer_vote_down(answer_id=None):
+#     user_id = data_handler.get_user_id_by_answer_id(answer_id)
+#     data_handler.answer_reputaion_down(user_id)
+#     data_handler.answer_vote_down(answer_id)
+#     question_id = data_handler.get_question_id_from_answer_id(answer_id)
+#     return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 @app.route("/question/search", methods=["POST"])
