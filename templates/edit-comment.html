@@ -10,45 +10,47 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm  sticky-top  navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="/list">Ask Mate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/list">Ask Mate</a>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <a class="nav-link" href="/add-question">Ask question</a>
-    </li>
-        <li><a class="nav-link" href="/list_users">List users</a></li>
-    </ul>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-              <a class="nav-link" href="/user_page">{{ username }}</a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/" onclick="return confirm('Are you sure you want to Logout?')">Logout</a><li/>
-          </ul>
-  </div>
-    <form class="form-inline my-2 my-lg-0" action="/question/search" method="POST">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
-      <button class="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-    <h1>Edit Comment</h1>
-    <h2>
-        <form action="/comment/{{ comment_id }}/edit" method="POST">
-            <div class="input-group mb-3">
-        <div class="input-group">
-             <textarea id="message" name="message" class="form-control" aria-label="With textarea" >{{ comment_message }}</textarea>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="/add-question">Ask question</a>
+            </li>
+            <li><a class="nav-link" href="/list_users">List users</a></li>
+        </ul>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user_page">{{ username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/" onclick="return confirm('Are you sure you want to Logout?')">Logout</a>
+                </li>
+            </ul>
         </div>
-     </div>
-        <br>
-        <br>
-        <button type="submit" class="btn btn-secondary btn-lg">Edit comment</button>
-    </form>
+        <form class="form-inline my-2 my-lg-0" action="/question/search" method="POST">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search" aria-label="Search">
+            <button class="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<h1>Edit Comment</h1>
+<form action="/comment/{{ comment_id }}/edit" method="POST">
+    <div class="input-group mb-3">
+        <div class="input-group">
+            <textarea id="message" name="message" class="form-control"
+                      aria-label="With textarea">{{ comment_message }}</textarea>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-secondary btn-lg">Edit comment</button>
+</form>
 
 </body>
 </html>
