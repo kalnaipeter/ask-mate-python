@@ -229,9 +229,9 @@ def route_edit_comment(comment_id=None):
         username = session["username"]
         comment_message = data_handler.get_comment_message(comment_id)
         # question_id = data_handler.get_question_id_from_comment_id(comment_id)
-        if question_id is None:
-            answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
-            # question_id = data_handler.get_question_id_from_answer_id(answer_id)
+        # if question_id is None:
+        # answer_id = data_handler.get_answer_id_from_comment_id(comment_id)
+        # question_id = data_handler.get_question_id_from_answer_id(answer_id)
         return render_template("edit-comment.html", comment_id=comment_id, comment_message=comment_message,username=username)
     if request.method == "POST":
         data_handler.edit_comment(comment_id, request.form.get("message"))
@@ -242,28 +242,33 @@ def route_edit_comment(comment_id=None):
         return redirect(url_for("route_list_answers", question_id=question_id))
 
 
-@app.route("/question/vote_up", methods=["POST"])
-def question_vote(question_id=None,answer_id=None,vote=None):
-    column = "submission_time"
-    direction = "DESC"
-    print(question_id)
-    if question_id:
-        print("ideis")
-        user_id = data_handler.get_user_id_with_question_id(question_id)
-        data_handler.question_reputaion_up(user_id)
-        if vote == "up":
-            data_handler.question_vote_up(question_id)
-        data_handler.question_vote_down(question_id)
-        print("ittleszabaj")
-        return redirect(url_for("route_list_questions"))
-    if answer_id:
-        user_id = data_handler.get_user_id_by_answer_id(answer_id)
-        data_handler.answer_reputaion_up(user_id)
-        data_handler.answer_vote_up(answer_id)
-        if vote == "up":
+@app.route("/question/vote_up",methods=["GET","POST"])
+def question_vote():
+    if request.method == "GET":
+        question_id = request.args.get("question_id")
+        print(question_id)
+        answer_id = request.args.get("answer_id")
+        print(answer_id)
+        vote = request.args.get("vote")
+        print(vote)
+        print("belép")
+        if question_id:
+            print("ideis")
+            user_id = data_handler.get_user_id_with_question_id(question_id)
+            data_handler.question_reputaion_up(user_id)
+            if vote == "up":
+                data_handler.question_vote_up(question_id)
+            data_handler.question_vote_down(question_id)
+            print("ittleszabaj")
+            return redirect(url_for("route_list_questions"))
+        if answer_id:
+            user_id = data_handler.get_user_id_by_answer_id(answer_id)
+            data_handler.answer_reputaion_up(user_id)
             data_handler.answer_vote_up(answer_id)
-        data_handler.answer_vote_down(answer_id)
-        return redirect(url_for("route_list_answers", question_id=question_id))
+            if vote == "up":
+                data_handler.answer_vote_up(answer_id)
+            data_handler.answer_vote_down(answer_id)
+            return redirect(url_for("route_list_answers", question_id=question_id))
 
 
 

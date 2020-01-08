@@ -14,7 +14,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="/list">Ask Mate</a>
-
+column = request.args.get("order_by")
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
@@ -51,16 +51,17 @@
     {% for story in stories %}
     <tr>
         <td>{{story.id }}</td>
-        <td>{{story.submission_time}}</td>
+        <td>{{story.submission_time}}</td>    if request.args.get("response"):
+        response = requests.get(request.args.get("response")).json()
         <td>{{story.view_number}}</td>
         <td>
 
-{#            <form action="/question/{{story.id}}/vote_up" method="POST">#}
-                <form action="{{ url_for("question_vote", question_id="{{ story.id }}",answer_id=None,vote="up") }}" method="POST">
+{#            <form action="/question/{{story.id}}/vote_up?vote=up&question_id={{ story.id }}&answer_id=None" method="get">#}
+                <form action="{{ url_for("question_vote",vote="up", question_id="{{ story.id }}",answer_id=None) }}" method="get">
                     <button name="vote_up" id="vote_up" type="submit">&#8679;</button></form>
             <a id="vote_number" >{{story.vote_number}}</a>
 {#            <form action="/question/{{story.id}}/vote_down"  method="POST">#}
-                <form action="{{ url_for("question_vote",question_id="{{story.id}}",answer_id=None,vote="down") }}"method="POST">
+                <form action="{{ url_for("question_vote",vote="down",question_id="{{story.id}}",answer_id=None) }}"method="get">
                 <button name="vote_down" id="vote_down" type="submit" >&#8681;</button>
             </form>
            </td>
